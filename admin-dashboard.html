@@ -1928,7 +1928,6 @@ function renderLaboratories() {
             .join("");
 }
 
-
 /* =========================================================
    LOAD SUBSCRIPTIONS
    ========================================================= */
@@ -1939,13 +1938,22 @@ async function loadSubscription() {
     return;
   }
 
+  console.log(
+    "SUBSCRIPTION TEST",
+    {
+      user_id: currentUser?.id,
+      laboratory_id: currentLaboratory?.id
+    }
+  );
+
   const {
     data,
     error
   } = await supabaseClient.rpc(
     "get_laboratory_subscription",
     {
-      p_laboratory_id: currentLaboratory.id
+      p_laboratory_id:
+        currentLaboratory.id
     }
   );
 
@@ -1962,14 +1970,19 @@ async function loadSubscription() {
 
   }
 
+  console.log(
+    "SUBSCRIPTION RPC RESULT:",
+    data
+  );
+
   currentSubscription =
     data && data.length
       ? data[0]
       : null;
 
   renderSubscription();
-}
 
+}
 /* =========================================================
    RENDER SUBSCRIPTIONS
    ========================================================= */

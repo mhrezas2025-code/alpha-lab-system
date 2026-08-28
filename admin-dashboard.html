@@ -1,0 +1,2037 @@
+```html
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPHA LAB | پنل مدیریت مرکزی</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .topbar {
+            background: #0f172a;
+            color: white;
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: white;
+        }
+
+        .brand-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .brand-subtitle {
+            font-size: 12px;
+            opacity: .7;
+            margin-top: 3px;
+        }
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+        }
+
+        .logout-btn {
+            border: 0;
+            background: #ef4444;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 75px);
+        }
+
+        .sidebar {
+            width: 245px;
+            background: #111827;
+            color: white;
+            padding: 20px 12px;
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            opacity: .55;
+            padding: 10px 14px;
+            margin-top: 5px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            margin: 4px 0;
+            border-radius: 8px;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .main {
+            flex: 1;
+            padding: 28px;
+            overflow-x: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 8px;
+            font-size: 26px;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-expired {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-suspended {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .status-cancelled {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(160px, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, .06);
+            border: 1px solid #e5e7eb;
+        }
+
+        .card-label {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .card-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, .05);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .panel-header h2 {
+            margin: 0;
+            font-size: 17px;
+        }
+
+        .panel-body {
+            padding: 20px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th,
+        td {
+            padding: 13px 12px;
+            text-align: right;
+            border-bottom: 1px solid #eef2f7;
+            font-size: 13px;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+        }
+
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+        .btn {
+            border: 0;
+            padding: 9px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .btn-success {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        .actions {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px;
+            color: #64748b;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        .alert {
+            padding: 13px 16px;
+            border-radius: 9px;
+            margin-bottom: 18px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-backdrop.show {
+            display: flex;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 560px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
+        }
+
+        .modal-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .close-btn {
+            border: 0;
+            background: transparent;
+            font-size: 25px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+
+        .activation-box {
+            margin-top: 15px;
+            padding: 18px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+        }
+
+        .activation-code {
+            direction: ltr;
+            text-align: center;
+            font-family: monospace;
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            background: white;
+            border: 1px dashed #22c55e;
+            padding: 15px;
+            border-radius: 9px;
+            margin: 12px 0;
+        }
+
+        .warning-box {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 1000px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sidebar {
+                width: 210px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                display: flex;
+                overflow-x: auto;
+                padding: 8px;
+            }
+
+            .sidebar-title {
+                display: none;
+            }
+
+            .menu-item {
+                white-space: nowrap;
+            }
+
+            .main {
+                padding: 15px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                padding: 12px 15px;
+            }
+
+            .user-area {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <img
+            class="brand-logo"
+            src="لوگو.jfif"
+            alt="ALPHA LAB"
+            onerror="this.style.display='none'"
+        >
+
+        <div>
+            <div class="brand-title">ALPHA LAB</div>
+            <div class="brand-subtitle">پنل مدیریت مرکزی</div>
+        </div>
+    </div>
+
+    <div class="user-area">
+        <span id="userEmail">در حال بررسی...</span>
+        <button class="logout-btn" id="logoutBtn">خروج از حساب</button>
+    </div>
+</header>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-title">مدیریت مرکزی</div>
+
+        <div class="menu-item active" data-section="dashboard">
+            🏠 داشبورد
+        </div>
+
+        <div class="menu-item" data-section="laboratories">
+            🏥 آزمایشگاه‌ها
+        </div>
+
+        <div class="menu-item" data-section="subscriptions">
+            📋 اشتراک‌ها
+        </div>
+
+        <div class="menu-item" data-section="requests">
+            🧪 درخواست‌ها
+        </div>
+
+        <div class="menu-item" data-section="financial">
+            💰 مالی
+        </div>
+
+        <div class="menu-item" data-section="users">
+            👥 کاربران
+        </div>
+
+        <div class="sidebar-title">سیستم</div>
+
+        <div class="menu-item" data-section="settings">
+            ⚙️ تنظیمات
+        </div>
+
+    </aside>
+
+    <main class="main">
+
+        <div id="globalAlert" class="alert"></div>
+
+        <section id="dashboardSection">
+
+            <div class="page-header">
+                <div>
+                    <h1>داشبورد مرکزی</h1>
+                    <p>مدیریت متمرکز آزمایشگاه‌های عضو ALPHA LAB</p>
+                </div>
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-label">تعداد آزمایشگاه‌ها</div>
+                    <div class="card-value" id="totalLabs">0</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-label">اشتراک‌های فعال</div>
+                    <div class="card-value" id="activeSubscriptions">0</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-label">در انتظار فعال‌سازی</div>
+                    <div class="card-value" id="pendingSubscriptions">0</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-label">اشتراک‌های منقضی</div>
+                    <div class="card-value" id="expiredSubscriptions">0</div>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>آزمایشگاه‌های ثبت‌شده</h2>
+
+                    <button
+                        class="btn btn-primary"
+                        id="refreshBtn"
+                    >
+                        🔄 بروزرسانی
+                    </button>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>نام آزمایشگاه</th>
+                                    <th>کد</th>
+                                    <th>شهر</th>
+                                    <th>وضعیت</th>
+                                    <th>اشتراک</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="labsTableBody">
+
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        در حال بارگذاری...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="laboratoriesSection" style="display:none">
+
+            <div class="page-header">
+                <div>
+                    <h1>آزمایشگاه‌ها</h1>
+                    <p>مدیریت آزمایشگاه‌های عضو سیستم</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-body">
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>نام</th>
+                                    <th>کد آزمایشگاه</th>
+                                    <th>تلفن</th>
+                                    <th>ایمیل</th>
+                                    <th>استان</th>
+                                    <th>شهر</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="allLabsTableBody">
+                                <tr>
+                                    <td colspan="7" class="loading">
+                                        در حال بارگذاری...
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <section id="subscriptionsSection" style="display:none">
+
+            <div class="page-header">
+                <div>
+                    <h1>اشتراک‌ها</h1>
+                    <p>مدیریت اشتراک ماهانه و سالانه آزمایشگاه‌ها</p>
+                </div>
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>اشتراک‌های ثبت‌شده</h2>
+                    <button
+                        class="btn btn-primary"
+                        id="refreshSubscriptionsBtn"
+                    >
+                        🔄 بروزرسانی
+                    </button>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>آزمایشگاه</th>
+                                    <th>پلن</th>
+                                    <th>وضعیت</th>
+                                    <th>شروع</th>
+                                    <th>پایان</th>
+                                    <th>فعال‌شده</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="subscriptionsTableBody">
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        در حال بارگذاری...
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="requestsSection" style="display:none">
+            <div class="page-header">
+                <div>
+                    <h1>درخواست‌ها</h1>
+                    <p>این بخش در مرحله بعد تکمیل خواهد شد.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="empty">
+                    مدیریت درخواست‌ها در مرحله بعد به پنل اضافه می‌شود.
+                </div>
+            </div>
+        </section>
+
+        <section id="financialSection" style="display:none">
+            <div class="page-header">
+                <div>
+                    <h1>مدیریت مالی</h1>
+                    <p>این بخش در مرحله بعد تکمیل خواهد شد.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="empty">
+                    بخش مالی در مرحله بعد تکمیل خواهد شد.
+                </div>
+            </div>
+        </section>
+
+        <section id="usersSection" style="display:none">
+            <div class="page-header">
+                <div>
+                    <h1>کاربران</h1>
+                    <p>این بخش در مرحله بعد تکمیل خواهد شد.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="empty">
+                    مدیریت کاربران در مرحله بعد تکمیل خواهد شد.
+                </div>
+            </div>
+        </section>
+
+        <section id="settingsSection" style="display:none">
+            <div class="page-header">
+                <div>
+                    <h1>تنظیمات</h1>
+                    <p>تنظیمات سیستم در مراحل بعدی اضافه خواهد شد.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="empty">
+                    تنظیمات مرکزی ALPHA LAB
+                </div>
+            </div>
+        </section>
+
+        <div class="footer">
+            ALPHA LAB © 2026 — Central Management System
+        </div>
+
+    </main>
+
+</div>
+
+<!-- Subscription Modal -->
+
+<div class="modal-backdrop" id="subscriptionModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <h3>
+                ایجاد اشتراک آزمایشگاه
+            </h3>
+
+            <button
+                class="close-btn"
+                id="closeModalBtn"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div id="modalAlert" class="alert"></div>
+
+            <div class="form-group">
+
+                <label>
+                    آزمایشگاه
+                </label>
+
+                <input
+                    id="modalLabName"
+                    class="form-control"
+                    readonly
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    نوع اشتراک
+                </label>
+
+                <select
+                    id="subscriptionPlan"
+                    class="form-control"
+                >
+
+                    <option value="yearly">
+                        سالانه
+                    </option>
+
+                    <option value="monthly">
+                        ماهانه
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    توضیحات
+                </label>
+
+                <textarea
+                    id="subscriptionNotes"
+                    class="form-control"
+                    rows="3"
+                    placeholder="اختیاری"
+                ></textarea>
+
+            </div>
+
+            <div
+                id="activationResult"
+                class="activation-box"
+                style="display:none"
+            >
+
+                <strong>
+                    کد فعال‌سازی ایجاد شد
+                </strong>
+
+                <div
+                    class="activation-code"
+                    id="activationCode"
+                ></div>
+
+                <button
+                    class="btn btn-success"
+                    id="copyCodeBtn"
+                    style="width:100%"
+                >
+                    📋 کپی کد
+                </button>
+
+                <div class="warning-box" style="margin-top:12px">
+                    این کد فقط اکنون نمایش داده می‌شود.
+                    کد خام در دیتابیس ذخیره نشده است.
+                    آن را برای آزمایشگاه ارسال و در جای امن نگهداری کنید.
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="btn btn-secondary"
+                id="cancelModalBtn"
+            >
+                بستن
+            </button>
+
+            <button
+                class="btn btn-primary"
+                id="createSubscriptionBtn"
+            >
+                🔑 صدور کد فعال‌سازی
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   SUPABASE CONFIGURATION
+   ========================================================= */
+
+```javascript
+const SUPABASE_URL = "https://iskadzhvfadtonbbxjoj.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_46725iYaI--CYc2SJJzA7Q_Lf0qsh_x";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+```
+
+
+/* =========================================================
+   GLOBAL STATE
+   ========================================================= */
+
+let currentUser = null;
+let currentLaboratories = [];
+let currentSubscriptions = [];
+let selectedLaboratory = null;
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const userEmail = document.getElementById("userEmail");
+const logoutBtn = document.getElementById("logoutBtn");
+const refreshBtn = document.getElementById("refreshBtn");
+
+const labsTableBody =
+    document.getElementById("labsTableBody");
+
+const allLabsTableBody =
+    document.getElementById("allLabsTableBody");
+
+const subscriptionsTableBody =
+    document.getElementById("subscriptionsTableBody");
+
+const subscriptionModal =
+    document.getElementById("subscriptionModal");
+
+const closeModalBtn =
+    document.getElementById("closeModalBtn");
+
+const cancelModalBtn =
+    document.getElementById("cancelModalBtn");
+
+const createSubscriptionBtn =
+    document.getElementById("createSubscriptionBtn");
+
+const copyCodeBtn =
+    document.getElementById("copyCodeBtn");
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function showAlert(message, type = "error") {
+
+    const alert = document.getElementById("globalAlert");
+
+    alert.textContent = message;
+
+    alert.className =
+        "alert show " +
+        (type === "success"
+            ? "alert-success"
+            : "alert-error");
+
+    setTimeout(() => {
+        alert.classList.remove("show");
+    }, 5000);
+}
+
+
+function showModalAlert(message, type = "error") {
+
+    const alert = document.getElementById("modalAlert");
+
+    alert.textContent = message;
+
+    alert.className =
+        "alert show " +
+        (type === "success"
+            ? "alert-success"
+            : "alert-error");
+}
+
+
+function clearModalAlert() {
+
+    const alert = document.getElementById("modalAlert");
+
+    alert.className = "alert";
+    alert.textContent = "";
+}
+
+
+function escapeHtml(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function formatDate(value) {
+
+    if (!value) {
+        return "—";
+    }
+
+    try {
+
+        return new Intl.DateTimeFormat(
+            "fa-AF",
+            {
+                dateStyle: "medium",
+                timeStyle: "short"
+            }
+        ).format(new Date(value));
+
+    } catch {
+
+        return value;
+    }
+}
+
+
+function statusLabel(status) {
+
+    const labels = {
+        pending_activation: "در انتظار فعال‌سازی",
+        active: "فعال",
+        expired: "منقضی",
+        suspended: "معلق",
+        cancelled: "لغوشده"
+    };
+
+    return labels[status] || status || "—";
+}
+
+
+function statusClass(status) {
+
+    return {
+        pending_activation: "status-pending",
+        active: "status-active",
+        expired: "status-expired",
+        suspended: "status-suspended",
+        cancelled: "status-cancelled"
+    }[status] || "status-pending";
+}
+
+
+function planLabel(plan) {
+
+    if (plan === "monthly") {
+        return "ماهانه";
+    }
+
+    if (plan === "yearly") {
+        return "سالانه";
+    }
+
+    return plan || "—";
+}
+
+
+/* =========================================================
+   AUTHENTICATION
+   ========================================================= */
+
+async function checkAuthentication() {
+
+    const {
+        data,
+        error
+    } = await supabaseClient.auth.getSession();
+
+    if (error) {
+        console.error(error);
+        showAlert("خطا در بررسی نشست کاربر.");
+        return;
+    }
+
+    const session = data.session;
+
+    if (!session) {
+
+        window.location.href = "admin-login.html";
+
+        return;
+    }
+
+    currentUser = session.user;
+
+    userEmail.textContent =
+        currentUser.email || "Super Admin";
+
+    await verifySuperAdmin();
+
+    await loadDashboard();
+}
+
+
+/* =========================================================
+   SUPER ADMIN CHECK
+   ========================================================= */
+
+async function verifySuperAdmin() {
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("profiles")
+        .select("id, role, laboratory_id")
+        .eq("id", currentUser.id)
+        .maybeSingle();
+
+    if (error) {
+
+        console.error(error);
+
+        showAlert(
+            "خطا در بررسی نقش کاربر: " +
+            error.message
+        );
+
+        return;
+    }
+
+    if (!data || data.role !== "super_admin") {
+
+        showAlert(
+            "این حساب دسترسی Super Admin ندارد."
+        );
+
+        await supabaseClient.auth.signOut();
+
+        setTimeout(() => {
+            window.location.href = "admin-login.html";
+        }, 1500);
+
+        return;
+    }
+
+    console.log(
+        "Super Admin verified:",
+        currentUser.id
+    );
+}
+
+
+/* =========================================================
+   LOAD DASHBOARD
+   ========================================================= */
+
+async function loadDashboard() {
+
+    await Promise.all([
+        loadLaboratories(),
+        loadSubscriptions()
+    ]);
+
+    updateStatistics();
+}
+
+
+/* =========================================================
+   LOAD LABORATORIES
+   ========================================================= */
+
+async function loadLaboratories() {
+
+    labsTableBody.innerHTML = `
+        <tr>
+            <td colspan="6" class="loading">
+                در حال بارگذاری آزمایشگاه‌ها...
+            </td>
+        </tr>
+    `;
+
+    allLabsTableBody.innerHTML = `
+        <tr>
+            <td colspan="7" class="loading">
+                در حال بارگذاری...
+            </td>
+        </tr>
+    `;
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("laboratories")
+        .select(`
+            id,
+            name,
+            legal_name,
+            lab_code,
+            phone,
+            email,
+            country,
+            province,
+            city,
+            address,
+            is_active,
+            created_at
+        `)
+        .order("created_at", {
+            ascending: false
+        });
+
+    if (error) {
+
+        console.error(error);
+
+        showAlert(
+            "خطا در دریافت آزمایشگاه‌ها: " +
+            error.message
+        );
+
+        return;
+    }
+
+    currentLaboratories = data || [];
+
+    renderLaboratories();
+}
+
+
+/* =========================================================
+   RENDER LABORATORIES
+   ========================================================= */
+
+function renderLaboratories() {
+
+    if (!currentLaboratories.length) {
+
+        labsTableBody.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    هنوز آزمایشگاهی ثبت نشده است.
+                </td>
+            </tr>
+        `;
+
+        allLabsTableBody.innerHTML = `
+            <tr>
+                <td colspan="7" class="empty">
+                    هنوز آزمایشگاهی ثبت نشده است.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    labsTableBody.innerHTML =
+        currentLaboratories.map(lab => {
+
+            const subscription =
+                currentSubscriptions.find(
+                    sub =>
+                        sub.laboratory_id === lab.id &&
+                        (
+                            sub.status === "active" ||
+                            sub.status === "pending_activation"
+                        )
+                );
+
+            let subscriptionText = "بدون اشتراک";
+
+            if (subscription) {
+
+                subscriptionText = `
+                    ${planLabel(subscription.plan)}
+                    <br>
+                    <span class="status-badge ${statusClass(subscription.status)}">
+                        ${statusLabel(subscription.status)}
+                    </span>
+                `;
+            }
+
+            const canCreate =
+                !subscription;
+
+            return `
+                <tr>
+
+                    <td>
+                        <strong>
+                            ${escapeHtml(lab.name)}
+                        </strong>
+                    </td>
+
+                    <td dir="ltr">
+                        ${escapeHtml(lab.lab_code)}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(lab.city || "—")}
+                    </td>
+
+                    <td>
+                        <span class="status-badge ${
+                            lab.is_active
+                                ? "status-active"
+                                : "status-cancelled"
+                        }">
+                            ${
+                                lab.is_active
+                                    ? "فعال"
+                                    : "غیرفعال"
+                            }
+                        </span>
+                    </td>
+
+                    <td>
+                        ${subscriptionText}
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="openSubscriptionModal('${lab.id}')"
+                                ${canCreate ? "" : "disabled"}
+                            >
+                                🔑 صدور اشتراک
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+
+
+    allLabsTableBody.innerHTML =
+        currentLaboratories.map(lab => {
+
+            return `
+                <tr>
+
+                    <td>
+                        ${escapeHtml(lab.name)}
+                    </td>
+
+                    <td dir="ltr">
+                        ${escapeHtml(lab.lab_code)}
+                    </td>
+
+                    <td dir="ltr">
+                        ${escapeHtml(lab.phone || "—")}
+                    </td>
+
+                    <td dir="ltr">
+                        ${escapeHtml(lab.email || "—")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(lab.province || "—")}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(lab.city || "—")}
+                    </td>
+
+                    <td>
+
+                        <span class="status-badge ${
+                            lab.is_active
+                                ? "status-active"
+                                : "status-cancelled"
+                        }">
+
+                            ${
+                                lab.is_active
+                                    ? "فعال"
+                                    : "غیرفعال"
+                            }
+
+                        </span>
+
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================================================
+   LOAD SUBSCRIPTIONS
+   ========================================================= */
+
+async function loadSubscriptions() {
+
+    subscriptionsTableBody.innerHTML = `
+        <tr>
+            <td colspan="6" class="loading">
+                در حال بارگذاری اشتراک‌ها...
+            </td>
+        </tr>
+    `;
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("laboratory_subscriptions")
+        .select(`
+            id,
+            laboratory_id,
+            plan,
+            status,
+            starts_at,
+            expires_at,
+            activated_at,
+            created_at
+        `)
+        .order("created_at", {
+            ascending: false
+        });
+
+    if (error) {
+
+        console.error(error);
+
+        showAlert(
+            "خطا در دریافت اشتراک‌ها: " +
+            error.message
+        );
+
+        return;
+    }
+
+    currentSubscriptions = data || [];
+
+    renderSubscriptions();
+}
+
+
+/* =========================================================
+   RENDER SUBSCRIPTIONS
+   ========================================================= */
+
+function renderSubscriptions() {
+
+    if (!currentSubscriptions.length) {
+
+        subscriptionsTableBody.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    هیچ اشتراکی ثبت نشده است.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    subscriptionsTableBody.innerHTML =
+        currentSubscriptions.map(sub => {
+
+            const lab =
+                currentLaboratories.find(
+                    item => item.id === sub.laboratory_id
+                );
+
+            return `
+                <tr>
+
+                    <td>
+                        ${
+                            escapeHtml(
+                                lab?.name ||
+                                sub.laboratory_id
+                            )
+                        }
+
+                        <br>
+
+                        <small dir="ltr">
+                            ${
+                                escapeHtml(
+                                    lab?.lab_code || ""
+                                )
+                            }
+                        </small>
+                    </td>
+
+                    <td>
+                        ${planLabel(sub.plan)}
+                    </td>
+
+                    <td>
+                        <span class="status-badge ${statusClass(sub.status)}">
+                            ${statusLabel(sub.status)}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${formatDate(sub.starts_at)}
+                    </td>
+
+                    <td>
+                        ${formatDate(sub.expires_at)}
+                    </td>
+
+                    <td>
+                        ${formatDate(sub.activated_at)}
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+function updateStatistics() {
+
+    document.getElementById("totalLabs")
+        .textContent =
+        currentLaboratories.length;
+
+    document.getElementById("activeSubscriptions")
+        .textContent =
+        currentSubscriptions.filter(
+            x => x.status === "active"
+        ).length;
+
+    document.getElementById("pendingSubscriptions")
+        .textContent =
+        currentSubscriptions.filter(
+            x => x.status === "pending_activation"
+        ).length;
+
+    document.getElementById("expiredSubscriptions")
+        .textContent =
+        currentSubscriptions.filter(
+            x => x.status === "expired"
+        ).length;
+}
+
+
+/* =========================================================
+   OPEN SUBSCRIPTION MODAL
+   ========================================================= */
+
+window.openSubscriptionModal =
+    function(laboratoryId) {
+
+        const lab =
+            currentLaboratories.find(
+                item => item.id === laboratoryId
+            );
+
+        if (!lab) {
+            showAlert("آزمایشگاه پیدا نشد.");
+            return;
+        }
+
+        const existing =
+            currentSubscriptions.find(
+                sub =>
+                    sub.laboratory_id === laboratoryId &&
+                    (
+                        sub.status === "active" ||
+                        sub.status === "pending_activation"
+                    )
+            );
+
+        if (existing) {
+
+            showAlert(
+                "این آزمایشگاه دارای اشتراک فعال یا در انتظار فعال‌سازی است."
+            );
+
+            return;
+        }
+
+        selectedLaboratory = lab;
+
+        document.getElementById("modalLabName")
+            .value =
+            `${lab.name} — ${lab.lab_code}`;
+
+        document.getElementById("subscriptionPlan")
+            .value = "yearly";
+
+        document.getElementById("subscriptionNotes")
+            .value = "";
+
+        document.getElementById("activationResult")
+            .style.display = "none";
+
+        document.getElementById("activationCode")
+            .textContent = "";
+
+        createSubscriptionBtn.disabled = false;
+        createSubscriptionBtn.style.display = "inline-block";
+
+        clearModalAlert();
+
+        subscriptionModal.classList.add("show");
+    };
+
+
+/* =========================================================
+   CLOSE MODAL
+   ========================================================= */
+
+function closeSubscriptionModal() {
+
+    subscriptionModal.classList.remove("show");
+
+    selectedLaboratory = null;
+}
+
+
+closeModalBtn.addEventListener(
+    "click",
+    closeSubscriptionModal
+);
+
+cancelModalBtn.addEventListener(
+    "click",
+    closeSubscriptionModal
+);
+
+
+/* =========================================================
+   CREATE SUBSCRIPTION
+   ========================================================= */
+
+createSubscriptionBtn.addEventListener(
+    "click",
+    async () => {
+
+        if (!selectedLaboratory) {
+
+            showModalAlert(
+                "آزمایشگاه انتخاب نشده است."
+            );
+
+            return;
+        }
+
+        const plan =
+            document.getElementById(
+                "subscriptionPlan"
+            ).value;
+
+        const notes =
+            document.getElementById(
+                "subscriptionNotes"
+            ).value.trim() || null;
+
+        createSubscriptionBtn.disabled = true;
+
+        createSubscriptionBtn.textContent =
+            "در حال صدور...";
+
+        clearModalAlert();
+
+        try {
+
+            const {
+                data,
+                error
+            } = await supabaseClient.rpc(
+                "create_laboratory_subscription",
+                {
+                    p_laboratory_id:
+                        selectedLaboratory.id,
+
+                    p_plan:
+                        plan,
+
+                    p_starts_at:
+                        new Date().toISOString(),
+
+                    p_notes:
+                        notes
+                }
+            );
+
+            if (error) {
+
+                console.error(error);
+
+                throw new Error(
+                    error.message
+                );
+            }
+
+            if (!data || !data.length) {
+
+                throw new Error(
+                    "تابع صدور اشتراک نتیجه‌ای برنگرداند."
+                );
+            }
+
+            const result = data[0];
+
+            document.getElementById(
+                "activationCode"
+            ).textContent =
+                result.activation_code;
+
+            document.getElementById(
+                "activationResult"
+            ).style.display = "block";
+
+            createSubscriptionBtn.style.display =
+                "none";
+
+            showModalAlert(
+                "اشتراک با موفقیت ایجاد شد.",
+                "success"
+            );
+
+            await loadSubscriptions();
+
+            renderLaboratories();
+
+            updateStatistics();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showModalAlert(
+                "خطا در ایجاد اشتراک: " +
+                error.message
+            );
+
+            createSubscriptionBtn.disabled = false;
+
+        } finally {
+
+            createSubscriptionBtn.textContent =
+                "🔑 صدور کد فعال‌سازی";
+        }
+
+    }
+);
+
+
+/* =========================================================
+   COPY ACTIVATION CODE
+   ========================================================= */
+
+copyCodeBtn.addEventListener(
+    "click",
+    async () => {
+
+        const code =
+            document.getElementById(
+                "activationCode"
+            ).textContent.trim();
+
+        if (!code) {
+            return;
+        }
+
+        try {
+
+            await navigator.clipboard.writeText(code);
+
+            copyCodeBtn.textContent =
+                "✅ کد کپی شد";
+
+            setTimeout(() => {
+
+                copyCodeBtn.textContent =
+                    "📋 کپی کد";
+
+            }, 2000);
+
+        } catch {
+
+            showModalAlert(
+                "کپی خودکار انجام نشد. کد را دستی کپی کنید."
+            );
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REFRESH
+   ========================================================= */
+
+refreshBtn.addEventListener(
+    "click",
+    async () => {
+
+        refreshBtn.disabled = true;
+
+        try {
+
+            await loadDashboard();
+
+            showAlert(
+                "اطلاعات با موفقیت بروزرسانی شد.",
+                "success"
+            );
+
+        } finally {
+
+            refreshBtn.disabled = false;
+        }
+    }
+);
+
+
+document.getElementById(
+    "refreshSubscriptionsBtn"
+).addEventListener(
+    "click",
+    async () => {
+
+        await loadSubscriptions();
+
+        updateStatistics();
+
+        showAlert(
+            "اشتراک‌ها بروزرسانی شدند.",
+            "success"
+        );
+    }
+);
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+logoutBtn.addEventListener(
+    "click",
+    async () => {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href =
+            "admin-login.html";
+    }
+);
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+document
+    .querySelectorAll(".menu-item")
+    .forEach(item => {
+
+        item.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".menu-item")
+                    .forEach(
+                        x =>
+                            x.classList.remove(
+                                "active"
+                            )
+                    );
+
+                item.classList.add("active");
+
+                const section =
+                    item.dataset.section;
+
+                document
+                    .querySelectorAll("main section")
+                    .forEach(
+                        x =>
+                            x.style.display = "none"
+                    );
+
+                const target =
+                    document.getElementById(
+                        section + "Section"
+                    );
+
+                if (target) {
+
+                    target.style.display = "block";
+                }
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   AUTH STATE
+   ========================================================= */
+
+supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+        console.log(
+            "Auth state:",
+            event,
+            session?.user?.id || null
+        );
+
+        if (
+            event === "SIGNED_OUT" &&
+            !window.location.pathname.endsWith(
+                "admin-login.html"
+            )
+        ) {
+
+            window.location.href =
+                "admin-login.html";
+        }
+    }
+);
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        console.log(
+            "ALPHA LAB Admin Dashboard started."
+        );
+
+        checkAuthentication();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```

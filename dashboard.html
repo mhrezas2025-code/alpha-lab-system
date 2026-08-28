@@ -237,6 +237,11 @@
       border-color: rgba(239,68,68,.3);
     }
 
+    .logout-btn:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
     /* =========================
        MAIN
        ========================= */
@@ -462,7 +467,7 @@
     }
 
     /* =========================
-       SYSTEM ROADMAP
+       ROADMAP
        ========================= */
 
     .roadmap {
@@ -586,6 +591,7 @@
         transform: scale(1);
         opacity: 1;
       }
+
       50% {
         transform: scale(.94);
         opacity: .7;
@@ -709,10 +715,6 @@
 
 <body>
 
-  <!-- =========================
-       LOADING
-       ========================= -->
-
   <div class="loading-screen" id="loadingScreen">
     <div class="loading-box">
       <div class="loading-logo">α</div>
@@ -723,9 +725,7 @@
   <div class="app">
 
 ```
-<!-- =========================
-     SIDEBAR
-     ========================= -->
+<!-- SIDEBAR -->
 
 <aside class="sidebar" id="sidebar">
 
@@ -737,7 +737,6 @@
       <small>Laboratory Management System</small>
     </div>
   </div>
-
 
   <nav class="nav">
 
@@ -773,7 +772,6 @@
       <span>نتایج</span>
     </button>
 
-
     <div class="nav-title">مدیریت</div>
 
     <button class="nav-item" type="button">
@@ -793,23 +791,15 @@
 
   </nav>
 
-
   <div class="sidebar-bottom">
 
     <div class="user-mini">
 
-      <div class="avatar" id="avatar">
-        A
-      </div>
+      <div class="avatar" id="avatar">A</div>
 
       <div>
-        <strong id="userEmail">
-          در حال بارگذاری...
-        </strong>
-
-        <small>
-          کاربر سیستم
-        </small>
+        <strong id="userEmail">در حال بارگذاری...</strong>
+        <small>کاربر سیستم</small>
       </div>
 
     </div>
@@ -826,27 +816,15 @@
 
 </aside>
 
-
-<!-- =========================
-     MAIN
-     ========================= -->
+<!-- MAIN -->
 
 <main class="main">
-
-  <!-- Mobile Header -->
 
   <div class="mobile-header">
 
     <div class="mobile-brand">
-
-      <div class="logo">
-        α
-      </div>
-
-      <strong>
-        ALPHA LAB
-      </strong>
-
+      <div class="logo">α</div>
+      <strong>ALPHA LAB</strong>
     </div>
 
     <button
@@ -860,16 +838,11 @@
 
   </div>
 
-
-  <!-- Topbar -->
-
   <div class="topbar">
 
     <div class="page-title">
 
-      <h1>
-        داشبورد اصلی
-      </h1>
+      <h1>داشبورد اصلی</h1>
 
       <p>
         مدیریت جامع سیستم آزمایشگاه ALPHA LAB
@@ -887,9 +860,6 @@
     </div>
 
   </div>
-
-
-  <!-- Welcome -->
 
   <section class="welcome">
 
@@ -910,193 +880,103 @@
 
   </section>
 
-
-  <!-- Statistics -->
-
   <section class="stats">
 
     <div class="stat-card">
 
-      <div class="stat-icon">
-        👥
-      </div>
+      <div class="stat-icon">👥</div>
 
-      <strong id="patientsCount">
-        —
-      </strong>
+      <strong id="patientsCount">—</strong>
 
-      <span>
-        بیماران
-      </span>
+      <span>بیماران</span>
 
     </div>
 
-
     <div class="stat-card">
 
-      <div class="stat-icon">
-        📋
-      </div>
+      <div class="stat-icon">📋</div>
 
-      <strong id="requestsCount">
-        —
-      </strong>
+      <strong id="requestsCount">—</strong>
 
-      <span>
-        درخواست‌ها
-      </span>
+      <span>درخواست‌ها</span>
 
     </div>
 
-
     <div class="stat-card">
 
-      <div class="stat-icon">
-        🧪
-      </div>
+      <div class="stat-icon">🧪</div>
 
-      <strong id="testsCount">
-        —
-      </strong>
+      <strong id="testsCount">—</strong>
 
-      <span>
-        آزمایش‌ها
-      </span>
+      <span>آزمایش‌ها</span>
 
     </div>
 
-
     <div class="stat-card">
 
-      <div class="stat-icon">
-        💰
-      </div>
+      <div class="stat-icon">💰</div>
 
-      <strong id="financeCount">
-        —
-      </strong>
+      <strong id="financeCount">—</strong>
 
-      <span>
-        وضعیت مالی
-      </span>
+      <span>وضعیت مالی</span>
 
     </div>
 
   </section>
 
-
-  <!-- Content -->
-
   <section class="content-grid">
-
-
-    <!-- Quick Actions -->
 
     <div class="panel">
 
       <div class="panel-header">
 
         <div>
-          <h3>
-            دسترسی سریع
-          </h3>
-
-          <span>
-            بخش‌های اصلی سیستم
-          </span>
+          <h3>دسترسی سریع</h3>
+          <span>بخش‌های اصلی سیستم</span>
         </div>
 
       </div>
 
-
       <div class="quick-actions">
 
-        <button
-          class="quick-btn"
-          type="button"
-        >
+        <button class="quick-btn" type="button">
           <div class="quick-icon">👤</div>
-
-          <strong>
-            بیمار جدید
-          </strong>
-
-          <small>
-            ثبت بیمار
-          </small>
+          <strong>بیمار جدید</strong>
+          <small>ثبت بیمار</small>
         </button>
 
-
-        <button
-          class="quick-btn"
-          type="button"
-        >
+        <button class="quick-btn" type="button">
           <div class="quick-icon">📋</div>
-
-          <strong>
-            درخواست جدید
-          </strong>
-
-          <small>
-            ثبت درخواست آزمایش
-          </small>
+          <strong>درخواست جدید</strong>
+          <small>ثبت درخواست آزمایش</small>
         </button>
 
-
-        <button
-          class="quick-btn"
-          type="button"
-        >
+        <button class="quick-btn" type="button">
           <div class="quick-icon">🧪</div>
-
-          <strong>
-            آزمایش‌ها
-          </strong>
-
-          <small>
-            مدیریت تست‌ها
-          </small>
+          <strong>آزمایش‌ها</strong>
+          <small>مدیریت تست‌ها</small>
         </button>
 
-
-        <button
-          class="quick-btn"
-          type="button"
-        >
+        <button class="quick-btn" type="button">
           <div class="quick-icon">📊</div>
-
-          <strong>
-            گزارش‌ها
-          </strong>
-
-          <small>
-            گزارش مدیریتی
-          </small>
+          <strong>گزارش‌ها</strong>
+          <small>گزارش مدیریتی</small>
         </button>
 
       </div>
 
     </div>
 
-
-    <!-- Roadmap -->
-
     <div class="panel">
 
       <div class="panel-header">
 
         <div>
-          <h3>
-            وضعیت توسعه سیستم
-          </h3>
-
-          <span>
-            ALPHA LAB
-          </span>
+          <h3>وضعیت توسعه سیستم</h3>
+          <span>ALPHA LAB</span>
         </div>
 
       </div>
-
 
       <div class="roadmap">
 
@@ -1106,9 +986,7 @@
 
           <div class="roadmap-text">
 
-            <strong>
-              Authentication
-            </strong>
+            <strong>Authentication</strong>
 
             <small>
               ورود امن با Supabase
@@ -1118,16 +996,13 @@
 
         </div>
 
-
         <div class="roadmap-item">
 
           <div class="roadmap-dot"></div>
 
           <div class="roadmap-text">
 
-            <strong>
-              Multi-Tenant
-            </strong>
+            <strong>Multi-Tenant</strong>
 
             <small>
               جداسازی اطلاعات آزمایشگاه‌ها
@@ -1137,16 +1012,13 @@
 
         </div>
 
-
         <div class="roadmap-item">
 
           <div class="roadmap-dot"></div>
 
           <div class="roadmap-text">
 
-            <strong>
-              License
-            </strong>
+            <strong>License</strong>
 
             <small>
               اشتراک ماهانه و سالانه
@@ -1156,16 +1028,13 @@
 
         </div>
 
-
         <div class="roadmap-item">
 
           <div class="roadmap-dot"></div>
 
           <div class="roadmap-text">
 
-            <strong>
-              Laboratory Modules
-            </strong>
+            <strong>Laboratory Modules</strong>
 
             <small>
               بیماران، تست‌ها، نتایج و مالی
@@ -1181,12 +1050,9 @@
 
   </section>
 
-
   <div class="notice">
 
-    <strong>
-      نکته امنیتی:
-    </strong>
+    <strong>نکته امنیتی:</strong>
 
     این داشبورد فعلاً فقط نشست کاربری Supabase را بررسی می‌کند.
     در مرحله بعد، قبل از نمایش اطلاعات واقعی، شناسه آزمایشگاه،
@@ -1222,6 +1088,10 @@
       SUPABASE CLIENT
       ============================================================
     */
+
+    if (!window.supabase) {
+      console.error("Supabase library could not be loaded.");
+    }
 
     const {
       createClient
@@ -1264,6 +1134,34 @@
 
     /*
       ============================================================
+      REDIRECT TO LOGIN
+      ============================================================
+    */
+
+    function redirectToLogin() {
+      window.location.replace("./index.html");
+    }
+
+
+    /*
+      ============================================================
+      HIDE LOADING
+      ============================================================
+    */
+
+    function hideLoading() {
+      if (loadingScreen) {
+        loadingScreen.classList.add("hide");
+
+        setTimeout(function () {
+          loadingScreen.style.display = "none";
+        }, 350);
+      }
+    }
+
+
+    /*
+      ============================================================
       AUTHENTICATION
       ============================================================
     */
@@ -1282,12 +1180,11 @@
         if (error) {
 
           console.error(
-            "Session Error:",
+            "ALPHA LAB Session Error:",
             error
           );
 
           redirectToLogin();
-
           return;
         }
 
@@ -1299,7 +1196,6 @@
         ) {
 
           redirectToLogin();
-
           return;
         }
 
@@ -1310,7 +1206,7 @@
 
         /*
           ----------------------------------------
-          User Information
+          USER INFORMATION
           ----------------------------------------
         */
 
@@ -1338,11 +1234,11 @@
 
         /*
           ----------------------------------------
-          Dashboard Ready
+          DASHBOARD READY
           ----------------------------------------
         */
 
-        loadingScreen.classList.add("hide");
+        hideLoading();
 
 
         console.log(
@@ -1354,27 +1250,13 @@
       } catch (error) {
 
         console.error(
-          "Dashboard Initialization Error:",
+          "ALPHA LAB Dashboard Initialization Error:",
           error
         );
 
         redirectToLogin();
 
       }
-
-    }
-
-
-    /*
-      ============================================================
-      REDIRECT LOGIN
-      ============================================================
-    */
-
-    function redirectToLogin() {
-
-      window.location.href =
-        "index.html";
 
     }
 
@@ -1389,8 +1271,7 @@
       "click",
       async function () {
 
-        logoutButton.disabled =
-          true;
+        logoutButton.disabled = true;
 
         logoutButton.textContent =
           "در حال خروج...";
@@ -1407,12 +1288,11 @@
           if (error) {
 
             console.error(
-              "Logout Error:",
+              "ALPHA LAB Logout Error:",
               error
             );
 
-            logoutButton.disabled =
-              false;
+            logoutButton.disabled = false;
 
             logoutButton.textContent =
               "خروج از حساب";
@@ -1421,22 +1301,23 @@
           }
 
 
-          window.location.href =
-            "index.html";
+          window.location.replace(
+            "./index.html"
+          );
 
 
         } catch (error) {
 
           console.error(
-            "Unexpected Logout Error:",
+            "ALPHA LAB Unexpected Logout Error:",
             error
           );
 
-          logoutButton.disabled =
-            false;
+          logoutButton.disabled = false;
 
           logoutButton.textContent =
             "خروج از حساب";
+
         }
 
       }
@@ -1465,8 +1346,10 @@
           event === "SIGNED_OUT"
         ) {
 
-          window.location.href =
-            "index.html";
+          window.location.replace(
+            "./index.html"
+          );
+
         }
 
       }
@@ -1493,7 +1376,7 @@
 
     /*
       ============================================================
-      CLOSE MOBILE SIDEBAR
+      NAVIGATION UI
       ============================================================
     */
 
@@ -1557,7 +1440,7 @@
             function () {
 
               console.log(
-                "Quick action clicked:",
+                "ALPHA LAB Quick Action:",
                 button.innerText.trim()
               );
 

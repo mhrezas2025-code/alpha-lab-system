@@ -463,7 +463,6 @@
   </div>
 
   <div class="hero-content">
-
     <h1>
       مدیریت هوشمند<br>
       <span>آزمایشگاه شما</span>
@@ -507,13 +506,11 @@
 
 </section>
 
-
 <section class="login-panel">
 
   <div class="login-box">
 
     <div class="mobile-brand">
-
       <div class="logo">α</div>
 
       <div>
@@ -522,41 +519,26 @@
           Laboratory Management System
         </div>
       </div>
-
     </div>
 
-
     <header class="login-header">
+      <div class="eyebrow">WELCOME BACK</div>
 
-      <div class="eyebrow">
-        WELCOME BACK
-      </div>
-
-      <h2>
-        ورود به سیستم
-      </h2>
+      <h2>ورود به سیستم</h2>
 
       <p>
         برای ورود به پنل مدیریت آزمایشگاه،
         اطلاعات حساب کاربری خود را وارد کنید.
       </p>
-
     </header>
-
 
     <form id="loginForm" autocomplete="on">
 
       <div class="field">
-
-        <label for="email">
-          ایمیل
-        </label>
+        <label for="email">ایمیل</label>
 
         <div class="input-wrap">
-
-          <span class="input-icon">
-            ✉
-          </span>
+          <span class="input-icon">✉</span>
 
           <input
             id="email"
@@ -567,23 +549,14 @@
             placeholder="example@laboratory.com"
             required
           >
-
         </div>
-
       </div>
 
-
       <div class="field">
-
-        <label for="password">
-          رمز عبور
-        </label>
+        <label for="password">رمز عبور</label>
 
         <div class="input-wrap">
-
-          <span class="input-icon">
-            🔒
-          </span>
+          <span class="input-icon">🔒</span>
 
           <input
             id="password"
@@ -602,25 +575,18 @@
           >
             نمایش
           </button>
-
         </div>
-
       </div>
-
 
       <div class="options">
 
         <label class="remember">
-
           <input
             type="checkbox"
             id="remember"
           >
-
           مرا به خاطر بسپار
-
         </label>
-
 
         <button
           type="button"
@@ -632,7 +598,6 @@
 
       </div>
 
-
       <button
         type="submit"
         class="login-btn"
@@ -643,28 +608,21 @@
 
     </form>
 
-
     <div
       id="status"
       class="status"
       role="alert"
     ></div>
 
-
     <div class="security-note">
-
-      <span class="security-icon">
-        ✓
-      </span>
+      <span class="security-icon">✓</span>
 
       <span>
         ارتباط حساب کاربری با Supabase Authentication انجام می‌شود.
         دسترسی به اطلاعات آزمایشگاه‌ها در مراحل بعدی با
         Row Level Security و ساختار Multi-Tenant کنترل خواهد شد.
       </span>
-
     </div>
-
 
     <div class="copyright">
       ALPHA LAB • Secure Laboratory Management System
@@ -746,24 +704,18 @@
     */
 
     function showStatus(message, type = "error") {
-
       statusBox.textContent = message;
-
-      statusBox.className =
-        "status show " + type;
+      statusBox.className = "status show " + type;
     }
 
 
     function clearStatus() {
-
       statusBox.textContent = "";
-
       statusBox.className = "status";
     }
 
 
     function setLoading(isLoading) {
-
       loginButton.disabled = isLoading;
 
       loginButton.textContent =
@@ -798,7 +750,6 @@
             ? "مخفی کردن رمز عبور"
             : "نمایش رمز عبور"
         );
-
       }
     );
 
@@ -810,14 +761,10 @@
     */
 
     const savedEmail =
-      localStorage.getItem(
-        "alpha_lab_login_email"
-      );
+      localStorage.getItem("alpha_lab_login_email");
 
     if (savedEmail) {
-
       emailInput.value = savedEmail;
-
       rememberInput.checked = true;
     }
 
@@ -894,9 +841,9 @@
 
             if (
               error.message &&
-              error.message
-                .toLowerCase()
-                .includes("email not confirmed")
+              error.message.toLowerCase().includes(
+                "email not confirmed"
+              )
             ) {
 
               message =
@@ -928,17 +875,6 @@
             "success"
           );
 
-
-          /*
-            فعلاً پس از ورود به dashboard.html
-            منتقل می‌شویم.
-
-            بررسی‌های Multi-Tenant در مراحل بعدی:
-            1. laboratory_id
-            2. role
-            3. subscription
-            4. license
-          */
 
           setTimeout(
             function () {
@@ -998,12 +934,18 @@
 
         try {
 
+          const basePath =
+            window.location.pathname.endsWith("/")
+              ? window.location.pathname
+              : window.location.pathname.substring(
+                  0,
+                  window.location.pathname.lastIndexOf("/") + 1
+                );
+
+
           const redirectUrl =
             window.location.origin +
-            window.location.pathname.replace(
-              /index\.html?$/i,
-              ""
-            ) +
+            basePath +
             "reset-password.html";
 
 
@@ -1075,11 +1017,6 @@
           data &&
           data.session
         ) {
-
-          /*
-            اگر نشست معتبر وجود داشته باشد،
-            کاربر مستقیماً به dashboard منتقل می‌شود.
-          */
 
           window.location.href =
             "dashboard.html";

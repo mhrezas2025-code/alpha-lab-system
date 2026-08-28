@@ -1866,72 +1866,102 @@
 
     }
 
+/*
+============================================================
+LOAD SUBSCRIPTION
+============================================================
+*/
 
-    /*
-    ============================================================
-    LOAD SUBSCRIPTION
-    ============================================================
-    */
-
-  async function loadSubscription() {
+async function loadSubscription() {
 
   if (!currentLaboratory) {
+
+    console.warn(
+      "LOAD SUBSCRIPTION: currentLaboratory is not available."
+    );
+
     return;
   }
 
   console.log(
     "SUBSCRIPTION TEST",
     {
-      user_id: currentUser?.id,
-      laboratory_id: currentLaboratory?.id
+      user_id: currentUser?.id || null,
+      laboratory_id: currentLaboratory.id,
+      lab_code: currentLaboratory.lab_code
     }
   );
 
-  const {
-    data,
-    error
-  } = await supabaseClient.rpc(
-    "get_laboratory_subscription",
-    {
-      p_laboratory_id:
-        currentLaboratory.id
-    }
-  );
+  try {
 
-  if (error) {
-
-    console.error(
-      "Subscription RPC Error:",
+    const {
+      data,
       error
+    } = await supabaseClient.rpc(
+      "get_laboratory_subscription",
+      {
+        p_laboratory_id:
+          currentLaboratory.id
+      }
     );
 
-    throw new Error(
-      error.message ||
-      "خطا در دریافت اطلاعات اشتراک."
-    );
+    if (error) {
 
-  }
+      console.error(
+        "Subscription RPC Error:",
+        error
+      );
 
-  console.log(
-    "SUBSCRIPTION RPC RESULT:",
-    data
-  );
+      /*
+        خطای اشتراک نباید کل داشبورد را از کار بیندازد.
+      */
 
-  currentSubscription =
-    data && data.length
-      ? data[0]
-      : null;
-
-  renderSubscription();
-
-}
-      currentSubscription =
-        data || null;
-
+      currentSubscription = null;
 
       renderSubscription();
 
+      showToast(
+        "خطا در دریافت اطلاعات اشتراک.",
+        "error"
+      );
+
+      return;
     }
+
+    console.log(
+      "SUBSCRIPTION RPC RESULT:",
+      data
+    );
+
+    /*
+      RPC ممکن است آرایه برگرداند.
+      آخرین/اولین رکورد معتبر را استفاده می‌کنیم.
+    */
+
+    currentSubscription =
+      Array.isArray(data) && data.length
+        ? data[0]
+        : null;
+
+    renderSubscription();
+
+  } catch (error) {
+
+    console.error(
+      "LOAD SUBSCRIPTION ERROR:",
+      error
+    );
+
+    currentSubscription = null;
+
+    renderSubscription();
+
+    showToast(
+      "خطا در دریافت اطلاعات اشتراک.",
+      "error"
+    );
+  }
+}
 
 
     /*

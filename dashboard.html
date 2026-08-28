@@ -1873,50 +1873,58 @@
     ============================================================
     */
 
-    async function loadSubscription() {
+  async function loadSubscription() {
 
-      if (!currentLaboratory) {
-        return;
-      }
+  if (!currentLaboratory) {
+    return;
+  }
 
+  console.log(
+    "SUBSCRIPTION TEST",
+    {
+      user_id: currentUser?.id,
+      laboratory_id: currentLaboratory?.id
+    }
+  );
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("laboratory_subscriptions")
-          .select(
-            "id,laboratory_id,plan,status,starts_at,expires_at,activated_at,created_at,activation_code_hint"
-          )
-          .eq(
-            "laboratory_id",
-            currentLaboratory.id
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          )
-          .limit(1)
-          .maybeSingle();
+  const {
+    data,
+    error
+  } = await supabaseClient.rpc(
+    "get_laboratory_subscription",
+    {
+      p_laboratory_id:
+        currentLaboratory.id
+    }
+  );
 
+  if (error) {
 
-      if (error) {
+    console.error(
+      "Subscription RPC Error:",
+      error
+    );
 
-        console.error(
-          "Subscription Error:",
-          error
-        );
+    throw new Error(
+      error.message ||
+      "خطا در دریافت اطلاعات اشتراک."
+    );
 
-        throw new Error(
-          "خطا در دریافت اطلاعات اشتراک."
-        );
+  }
 
-      }
+  console.log(
+    "SUBSCRIPTION RPC RESULT:",
+    data
+  );
 
+  currentSubscription =
+    data && data.length
+      ? data[0]
+      : null;
 
+  renderSubscription();
+
+}
       currentSubscription =
         data || null;
 

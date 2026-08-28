@@ -1933,67 +1933,42 @@ function renderLaboratories() {
    LOAD SUBSCRIPTIONS
    ========================================================= */
 
-async function loadSubscriptions() {
+async function loadSubscription() {
 
-    subscriptionsTableBody.innerHTML = `
-        <tr>
-            <td colspan="6" class="loading">
-                در حال بارگذاری اشتراک‌ها...
-            </td>
-        </tr>
-    `;
+  if (!currentLaboratory) {
+    return;
+  }
 
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("laboratory_subscriptions")
-        .select(`
-            id,
-            laboratory_id,
-            plan,
-            status,
-            starts_at,
-            expires_at,
-            activated_at,
-            created_at
-        `)
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
-
-    if (error) {
-
-        console.error(
-            "loadSubscriptions error:",
-            error
-        );
-
-        showAlert(
-            "خطا در دریافت اشتراک‌ها: " +
-            error.message
-        );
-
-        subscriptionsTableBody.innerHTML = `
-            <tr>
-                <td colspan="6" class="empty">
-                    خطا در دریافت اشتراک‌ها.
-                </td>
-            </tr>
-        `;
-
-        return;
+  const {
+    data,
+    error
+  } = await supabaseClient.rpc(
+    "get_laboratory_subscription",
+    {
+      p_laboratory_id: currentLaboratory.id
     }
+  );
 
-    currentSubscriptions =
-        data || [];
+  if (error) {
 
-    renderSubscriptions();
+    console.error(
+      "Subscription RPC Error:",
+      error
+    );
+
+    throw new Error(
+      "خطا در دریافت اطلاعات اشتراک."
+    );
+
+  }
+
+  currentSubscription =
+    data && data.length
+      ? data[0]
+      : null;
+
+  renderSubscription();
 }
-
 
 /* =========================================================
    RENDER SUBSCRIPTIONS

@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ALPHA LAB | داشبورد</title>
+
+  <meta name="description" content="ALPHA LAB - داشبورد مدیریت جامع آزمایشگاه">
+  <meta name="theme-color" content="#0f172a">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #020617;
+      --panel: #0f172a;
+      --panel-2: #111827;
+      --border: rgba(148,163,184,.14);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --muted-2: #64748b;
+      --blue: #2563eb;
+      --cyan: #38bdf8;
+      --green: #22c55e;
+      --orange: #f59e0b;
+      --red: #ef4444;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Tahoma, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(37,99,235,.12), transparent 30%),
+        radial-gradient(circle at 90% 90%, rgba(14,165,233,.08), transparent 30%),
+        linear-gradient(135deg, #020617, #0f172a 45%, #111827);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(to bottom, transparent, black, transparent);
+      z-index: 0;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =========================
+       SIDEBAR
+       ========================= */
+
+    .sidebar {
+      width: 270px;
+      min-height: 100vh;
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(2,6,23,.88);
+      border-left: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 8px 25px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #2563eb, #0ea5e9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 23px;
+      font-weight: 900;
+      box-shadow: 0 10px 25px rgba(37,99,235,.25);
+      flex-shrink: 0;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: .8px;
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted-2);
+      font-size: 10px;
+      margin-top: 4px;
+    }
+
+    .nav {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-title {
+      color: #475569;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 10px 12px 5px;
+    }
+
+    .nav-item {
+      width: 100%;
+      min-height: 45px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: transparent;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 0 13px;
+      cursor: pointer;
+      text-align: right;
+      font-size: 12px;
+      transition: .2s ease;
+    }
+
+    .nav-item:hover {
+      color: #e2e8f0;
+      background: rgba(255,255,255,.035);
+      border-color: var(--border);
+    }
+
+    .nav-item.active {
+      color: white;
+      background: rgba(37,99,235,.16);
+      border-color: rgba(59,130,246,.22);
+    }
+
+    .nav-icon {
+      width: 25px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+
+    .user-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      margin-bottom: 8px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1d4ed8, #0891b2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .user-mini div:last-child {
+      min-width: 0;
+    }
+
+    .user-mini strong {
+      display: block;
+      font-size: 11px;
+      color: #e2e8f0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-mini small {
+      display: block;
+      color: var(--muted-2);
+      font-size: 9px;
+      margin-top: 3px;
+    }
+
+    .logout-btn {
+      width: 100%;
+      height: 42px;
+      border-radius: 11px;
+      border: 1px solid rgba(239,68,68,.16);
+      background: rgba(239,68,68,.06);
+      color: #fca5a5;
+      cursor: pointer;
+      font-size: 11px;
+      transition: .2s ease;
+    }
+
+    .logout-btn:hover {
+      background: rgba(239,68,68,.12);
+      border-color: rgba(239,68,68,.3);
+    }
+
+    /* =========================
+       MAIN
+       ========================= */
+
+    .main {
+      width: calc(100% - 270px);
+      margin-right: 270px;
+      min-height: 100vh;
+      padding: 28px 32px 45px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .page-title h1 {
+      font-size: 27px;
+      margin-bottom: 7px;
+    }
+
+    .page-title p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1px solid rgba(34,197,94,.14);
+      border-radius: 10px;
+      background: rgba(34,197,94,.05);
+      color: #86efac;
+      font-size: 10px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px rgba(34,197,94,.6);
+    }
+
+    /* =========================
+       WELCOME
+       ========================= */
+
+    .welcome {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 27px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(37,99,235,.12), transparent 30%),
+        rgba(15,23,42,.65);
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome::after {
+      content: "α";
+      position: absolute;
+      left: 25px;
+      bottom: -45px;
+      font-size: 180px;
+      font-weight: 900;
+      color: rgba(56,189,248,.025);
+      pointer-events: none;
+    }
+
+    .welcome-label {
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .welcome h2 {
+      font-size: 23px;
+      margin-bottom: 9px;
+    }
+
+    .welcome p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+      max-width: 700px;
+    }
+
+    /* =========================
+       STATS
+       ========================= */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .stat-card {
+      min-height: 130px;
+      padding: 20px;
+      border-radius: 17px;
+      background: rgba(15,23,42,.65);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(37,99,235,.1);
+      font-size: 17px;
+      margin-bottom: 14px;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .stat-card span {
+      color: var(--muted-2);
+      font-size: 10px;
+    }
+
+    /* =========================
+       GRID
+       ========================= */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 18px;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: rgba(15,23,42,.62);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      min-height: 65px;
+      padding: 16px 19px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .panel-header h3 {
+      font-size: 14px;
+    }
+
+    .panel-header span {
+      color: var(--muted-2);
+      font-size: 10px;
+    }
+
+    .quick-actions {
+      padding: 17px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .quick-btn {
+      min-height: 85px;
+      border-radius: 13px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.025);
+      color: #cbd5e1;
+      cursor: pointer;
+      text-align: center;
+      transition: .2s ease;
+    }
+
+    .quick-btn:hover {
+      background: rgba(37,99,235,.09);
+      border-color: rgba(59,130,246,.24);
+      transform: translateY(-1px);
+    }
+
+    .quick-btn strong {
+      display: block;
+      color: #e2e8f0;
+      font-size: 11px;
+      margin-top: 7px;
+    }
+
+    .quick-btn small {
+      display: block;
+      color: var(--muted-2);
+      font-size: 9px;
+      margin-top: 4px;
+    }
+
+    .quick-icon {
+      font-size: 22px;
+    }
+
+    /* =========================
+       SYSTEM ROADMAP
+       ========================= */
+
+    .roadmap {
+      padding: 18px;
+    }
+
+    .roadmap-item {
+      display: flex;
+      gap: 11px;
+      padding-bottom: 17px;
+      position: relative;
+    }
+
+    .roadmap-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .roadmap-item:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      right: 8px;
+      top: 20px;
+      bottom: 0;
+      width: 1px;
+      background: rgba(148,163,184,.12);
+    }
+
+    .roadmap-dot {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: rgba(37,99,235,.18);
+      border: 1px solid rgba(59,130,246,.3);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .roadmap-item.done .roadmap-dot {
+      background: rgba(34,197,94,.18);
+      border-color: rgba(34,197,94,.3);
+    }
+
+    .roadmap-text strong {
+      display: block;
+      color: #cbd5e1;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+
+    .roadmap-text small {
+      color: var(--muted-2);
+      font-size: 9px;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       NOTICE
+       ========================= */
+
+    .notice {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(56,189,248,.12);
+      background: rgba(56,189,248,.035);
+      color: #94a3b8;
+      font-size: 10px;
+      line-height: 1.9;
+    }
+
+    .notice strong {
+      color: #7dd3fc;
+    }
+
+    /* =========================
+       LOADING
+       ========================= */
+
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      transition: opacity .3s ease;
+    }
+
+    .loading-screen.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-box {
+      text-align: center;
+    }
+
+    .loading-logo {
+      width: 65px;
+      height: 65px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #2563eb, #0ea5e9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 30px;
+      font-weight: 900;
+      animation: pulse 1.5s infinite;
+    }
+
+    .loading-box p {
+      color: #64748b;
+      font-size: 11px;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(.94);
+        opacity: .7;
+      }
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    .mobile-header {
+      display: none;
+    }
+
+    @media (max-width: 1100px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .sidebar {
+        transform: translateX(100%);
+        transition: transform .25s ease;
+        box-shadow: -20px 0 50px rgba(0,0,0,.35);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        width: 100%;
+        margin-right: 0;
+        padding: 20px 15px 35px;
+      }
+
+      .mobile-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 22px;
+      }
+
+      .mobile-menu {
+        width: 43px;
+        height: 43px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(15,23,42,.7);
+        color: white;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+
+      .mobile-brand .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+        font-size: 19px;
+      }
+
+      .mobile-brand strong {
+        font-size: 15px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .system-status {
+        display: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+      }
+
+      .stat-card {
+        min-height: 115px;
+        padding: 14px;
+      }
+
+      .stat-card strong {
+        font-size: 20px;
+      }
+
+      .welcome {
+        padding: 20px;
+      }
+
+      .welcome h2 {
+        font-size: 19px;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr 1fr;
+        padding: 12px;
+      }
+
+      .page-title h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- =========================
+       LOADING
+       ========================= -->
+
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-box">
+      <div class="loading-logo">α</div>
+      <p>در حال بررسی نشست کاربری...</p>
+    </div>
+  </div>
+
+  <div class="app">
+
+```
+<!-- =========================
+     SIDEBAR
+     ========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+  <div class="brand">
+    <div class="logo">α</div>
+
+    <div>
+      <strong>ALPHA LAB</strong>
+      <small>Laboratory Management System</small>
+    </div>
+  </div>
+
+
+  <nav class="nav">
+
+    <div class="nav-title">منوی اصلی</div>
+
+    <button class="nav-item active" type="button">
+      <span class="nav-icon">🏠</span>
+      <span>داشبورد</span>
+    </button>
+
+    <button class="nav-item" type="button">
+      <span class="nav-icon">👥</span>
+      <span>بیماران</span>
+    </button>
+
+    <button class="nav-item" type="button">
+      <span class="nav-icon">🧪</span>
+      <span>آزمایش‌ها</span>
+    </button>
+
+    <button class="nav-item" type="button">
+      <span class="nav-icon">📋</span>
+      <span>درخواست‌ها</span>
+    </button>
+
+    <button class="nav-item" type="button">
+      <span class="nav-icon">🧫</span>
+      <span>نمونه‌ها</span>
+    </button>
+
+    <button class="nav-item" type="button">
+      <span class="nav-icon">🧾</span>
+      <span>نتایج</span>
+    </button>
+
+
+    <div class="nav-title">مدیریت</div>
+
+    <button class="nav-item" type="button">
+      <span class="nav-icon">💰</span>
+      <span>امور مالی</span>
+    </button>
+
+    <button class="nav-item" type="button">
+      <span class="nav-icon">📊</span>
+      <span>گزارش‌ها</span>
+    </button>
+
+    <button class="nav-item" type="button">
+      <span class="nav-icon">⚙️</span>
+      <span>تنظیمات</span>
+    </button>
+
+  </nav>
+
+
+  <div class="sidebar-bottom">
+
+    <div class="user-mini">
+
+      <div class="avatar" id="avatar">
+        A
+      </div>
+
+      <div>
+        <strong id="userEmail">
+          در حال بارگذاری...
+        </strong>
+
+        <small>
+          کاربر سیستم
+        </small>
+      </div>
+
+    </div>
+
+    <button
+      class="logout-btn"
+      id="logoutButton"
+      type="button"
+    >
+      خروج از حساب
+    </button>
+
+  </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+     ========================= -->
+
+<main class="main">
+
+  <!-- Mobile Header -->
+
+  <div class="mobile-header">
+
+    <div class="mobile-brand">
+
+      <div class="logo">
+        α
+      </div>
+
+      <strong>
+        ALPHA LAB
+      </strong>
+
+    </div>
+
+    <button
+      class="mobile-menu"
+      id="mobileMenu"
+      type="button"
+      aria-label="منو"
+    >
+      ☰
+    </button>
+
+  </div>
+
+
+  <!-- Topbar -->
+
+  <div class="topbar">
+
+    <div class="page-title">
+
+      <h1>
+        داشبورد اصلی
+      </h1>
+
+      <p>
+        مدیریت جامع سیستم آزمایشگاه ALPHA LAB
+      </p>
+
+    </div>
+
+    <div class="top-actions">
+
+      <div class="system-status">
+        <span class="status-dot"></span>
+        سیستم آنلاین
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Welcome -->
+
+  <section class="welcome">
+
+    <div class="welcome-label">
+      ALPHA LAB • SECURE MANAGEMENT SYSTEM
+    </div>
+
+    <h2 id="welcomeTitle">
+      خوش آمدید 👋
+    </h2>
+
+    <p>
+      به داشبورد مدیریت آزمایشگاه خوش آمدید.
+      تمام بخش‌های اصلی سیستم از اینجا قابل دسترسی خواهند بود.
+      ساختار سیستم از ابتدا برای توسعه Multi-Tenant،
+      مدیریت اشتراک و کنترل مجوز طراحی شده است.
+    </p>
+
+  </section>
+
+
+  <!-- Statistics -->
+
+  <section class="stats">
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        👥
+      </div>
+
+      <strong id="patientsCount">
+        —
+      </strong>
+
+      <span>
+        بیماران
+      </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        📋
+      </div>
+
+      <strong id="requestsCount">
+        —
+      </strong>
+
+      <span>
+        درخواست‌ها
+      </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        🧪
+      </div>
+
+      <strong id="testsCount">
+        —
+      </strong>
+
+      <span>
+        آزمایش‌ها
+      </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        💰
+      </div>
+
+      <strong id="financeCount">
+        —
+      </strong>
+
+      <span>
+        وضعیت مالی
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- Content -->
+
+  <section class="content-grid">
+
+
+    <!-- Quick Actions -->
+
+    <div class="panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h3>
+            دسترسی سریع
+          </h3>
+
+          <span>
+            بخش‌های اصلی سیستم
+          </span>
+        </div>
+
+      </div>
+
+
+      <div class="quick-actions">
+
+        <button
+          class="quick-btn"
+          type="button"
+        >
+          <div class="quick-icon">👤</div>
+
+          <strong>
+            بیمار جدید
+          </strong>
+
+          <small>
+            ثبت بیمار
+          </small>
+        </button>
+
+
+        <button
+          class="quick-btn"
+          type="button"
+        >
+          <div class="quick-icon">📋</div>
+
+          <strong>
+            درخواست جدید
+          </strong>
+
+          <small>
+            ثبت درخواست آزمایش
+          </small>
+        </button>
+
+
+        <button
+          class="quick-btn"
+          type="button"
+        >
+          <div class="quick-icon">🧪</div>
+
+          <strong>
+            آزمایش‌ها
+          </strong>
+
+          <small>
+            مدیریت تست‌ها
+          </small>
+        </button>
+
+
+        <button
+          class="quick-btn"
+          type="button"
+        >
+          <div class="quick-icon">📊</div>
+
+          <strong>
+            گزارش‌ها
+          </strong>
+
+          <small>
+            گزارش مدیریتی
+          </small>
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- Roadmap -->
+
+    <div class="panel">
+
+      <div class="panel-header">
+
+        <div>
+          <h3>
+            وضعیت توسعه سیستم
+          </h3>
+
+          <span>
+            ALPHA LAB
+          </span>
+        </div>
+
+      </div>
+
+
+      <div class="roadmap">
+
+        <div class="roadmap-item done">
+
+          <div class="roadmap-dot"></div>
+
+          <div class="roadmap-text">
+
+            <strong>
+              Authentication
+            </strong>
+
+            <small>
+              ورود امن با Supabase
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+          <div class="roadmap-dot"></div>
+
+          <div class="roadmap-text">
+
+            <strong>
+              Multi-Tenant
+            </strong>
+
+            <small>
+              جداسازی اطلاعات آزمایشگاه‌ها
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+          <div class="roadmap-dot"></div>
+
+          <div class="roadmap-text">
+
+            <strong>
+              License
+            </strong>
+
+            <small>
+              اشتراک ماهانه و سالانه
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="roadmap-item">
+
+          <div class="roadmap-dot"></div>
+
+          <div class="roadmap-text">
+
+            <strong>
+              Laboratory Modules
+            </strong>
+
+            <small>
+              بیماران، تست‌ها، نتایج و مالی
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <div class="notice">
+
+    <strong>
+      نکته امنیتی:
+    </strong>
+
+    این داشبورد فعلاً فقط نشست کاربری Supabase را بررسی می‌کند.
+    در مرحله بعد، قبل از نمایش اطلاعات واقعی، شناسه آزمایشگاه،
+    نقش کاربر، وضعیت License و تاریخ انقضای اشتراک بررسی خواهد شد.
+    هیچ اطلاعاتی بین آزمایشگاه‌های مختلف نباید قابل مشاهده باشد.
+
+  </div>
+
+</main>
+```
+
+  </div>
+
+  <script>
+    "use strict";
+
+    /*
+      ============================================================
+      ALPHA LAB
+      SUPABASE CONFIGURATION
+      ============================================================
+    */
+
+    const SUPABASE_URL =
+      "https://iskadzhvfadtonbbxjoj.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_46725iYaI--CYc2SJJzA7Q_Lf0qsh_x";
+
+
+    /*
+      ============================================================
+      SUPABASE CLIENT
+      ============================================================
+    */
+
+    const {
+      createClient
+    } = window.supabase;
+
+    const supabaseClient =
+      createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /*
+      ============================================================
+      DOM
+      ============================================================
+    */
+
+    const loadingScreen =
+      document.getElementById("loadingScreen");
+
+    const userEmail =
+      document.getElementById("userEmail");
+
+    const welcomeTitle =
+      document.getElementById("welcomeTitle");
+
+    const avatar =
+      document.getElementById("avatar");
+
+    const logoutButton =
+      document.getElementById("logoutButton");
+
+    const mobileMenu =
+      document.getElementById("mobileMenu");
+
+    const sidebar =
+      document.getElementById("sidebar");
+
+
+    /*
+      ============================================================
+      AUTHENTICATION
+      ============================================================
+    */
+
+    async function initializeDashboard() {
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.getSession();
+
+
+        if (error) {
+
+          console.error(
+            "Session Error:",
+            error
+          );
+
+          redirectToLogin();
+
+          return;
+        }
+
+
+        if (
+          !data ||
+          !data.session ||
+          !data.session.user
+        ) {
+
+          redirectToLogin();
+
+          return;
+        }
+
+
+        const user =
+          data.session.user;
+
+
+        /*
+          ----------------------------------------
+          User Information
+          ----------------------------------------
+        */
+
+        const email =
+          user.email || "کاربر ALPHA LAB";
+
+
+        userEmail.textContent =
+          email;
+
+
+        const firstLetter =
+          email
+            .charAt(0)
+            .toUpperCase();
+
+
+        avatar.textContent =
+          firstLetter;
+
+
+        welcomeTitle.textContent =
+          "خوش آمدید 👋";
+
+
+        /*
+          ----------------------------------------
+          Dashboard Ready
+          ----------------------------------------
+        */
+
+        loadingScreen.classList.add("hide");
+
+
+        console.log(
+          "ALPHA LAB Dashboard initialized:",
+          user.id
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Dashboard Initialization Error:",
+          error
+        );
+
+        redirectToLogin();
+
+      }
+
+    }
+
+
+    /*
+      ============================================================
+      REDIRECT LOGIN
+      ============================================================
+    */
+
+    function redirectToLogin() {
+
+      window.location.href =
+        "index.html";
+
+    }
+
+
+    /*
+      ============================================================
+      LOGOUT
+      ============================================================
+    */
+
+    logoutButton.addEventListener(
+      "click",
+      async function () {
+
+        logoutButton.disabled =
+          true;
+
+        logoutButton.textContent =
+          "در حال خروج...";
+
+
+        try {
+
+          const {
+            error
+          } =
+            await supabaseClient.auth.signOut();
+
+
+          if (error) {
+
+            console.error(
+              "Logout Error:",
+              error
+            );
+
+            logoutButton.disabled =
+              false;
+
+            logoutButton.textContent =
+              "خروج از حساب";
+
+            return;
+          }
+
+
+          window.location.href =
+            "index.html";
+
+
+        } catch (error) {
+
+          console.error(
+            "Unexpected Logout Error:",
+            error
+          );
+
+          logoutButton.disabled =
+            false;
+
+          logoutButton.textContent =
+            "خروج از حساب";
+        }
+
+      }
+    );
+
+
+    /*
+      ============================================================
+      AUTH STATE
+      ============================================================
+    */
+
+    supabaseClient.auth.onAuthStateChange(
+      function (
+        event,
+        session
+      ) {
+
+        console.log(
+          "ALPHA LAB Auth State:",
+          event
+        );
+
+
+        if (
+          event === "SIGNED_OUT"
+        ) {
+
+          window.location.href =
+            "index.html";
+        }
+
+      }
+    );
+
+
+    /*
+      ============================================================
+      MOBILE MENU
+      ============================================================
+    */
+
+    mobileMenu.addEventListener(
+      "click",
+      function () {
+
+        sidebar.classList.toggle(
+          "open"
+        );
+
+      }
+    );
+
+
+    /*
+      ============================================================
+      CLOSE MOBILE SIDEBAR
+      ============================================================
+    */
+
+    document
+      .querySelectorAll(".nav-item")
+      .forEach(
+        function (item) {
+
+          item.addEventListener(
+            "click",
+            function () {
+
+              document
+                .querySelectorAll(".nav-item")
+                .forEach(
+                  function (nav) {
+
+                    nav.classList.remove(
+                      "active"
+                    );
+
+                  }
+                );
+
+
+              item.classList.add(
+                "active"
+              );
+
+
+              if (
+                window.innerWidth <= 800
+              ) {
+
+                sidebar.classList.remove(
+                  "open"
+                );
+
+              }
+
+            }
+          );
+
+        }
+      );
+
+
+    /*
+      ============================================================
+      QUICK ACTIONS
+      ============================================================
+    */
+
+    document
+      .querySelectorAll(".quick-btn")
+      .forEach(
+        function (button) {
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              console.log(
+                "Quick action clicked:",
+                button.innerText.trim()
+              );
+
+            }
+          );
+
+        }
+      );
+
+
+    /*
+      ============================================================
+      INITIALIZATION
+      ============================================================
+    */
+
+    initializeDashboard();
+
+  </script>
+
+</body>
+</html>

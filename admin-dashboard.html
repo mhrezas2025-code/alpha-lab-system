@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -508,10 +507,12 @@
 <body>
 
 <header class="topbar">
+
     <div class="brand">
+
         <img
             class="brand-logo"
-            src="لوگو.jfif"
+            src="https://mhrezas2025-code.github.io/alpha-laboratory/%D9%84%D9%88%DA%AF%D9%88.jfif"
             alt="ALPHA LAB"
             onerror="this.style.display='none'"
         >
@@ -520,93 +521,195 @@
             <div class="brand-title">ALPHA LAB</div>
             <div class="brand-subtitle">پنل مدیریت مرکزی</div>
         </div>
+
     </div>
 
     <div class="user-area">
-        <span id="userEmail">در حال بررسی...</span>
-        <button class="logout-btn" id="logoutBtn">خروج از حساب</button>
+
+        <span id="userEmail">
+            در حال بررسی...
+        </span>
+
+        <button
+            class="logout-btn"
+            id="logoutBtn"
+        >
+            خروج از حساب
+        </button>
+
     </div>
+
 </header>
+
 
 <div class="layout">
 
     <aside class="sidebar">
 
-        <div class="sidebar-title">مدیریت مرکزی</div>
+        <div class="sidebar-title">
+            مدیریت مرکزی
+        </div>
 
-        <div class="menu-item active" data-section="dashboard">
+        <div
+            class="menu-item active"
+            data-section="dashboard"
+        >
             🏠 داشبورد
         </div>
 
-        <div class="menu-item" data-section="laboratories">
+        <div
+            class="menu-item"
+            data-section="laboratories"
+        >
             🏥 آزمایشگاه‌ها
         </div>
 
-        <div class="menu-item" data-section="subscriptions">
+        <div
+            class="menu-item"
+            data-section="subscriptions"
+        >
             📋 اشتراک‌ها
         </div>
 
-        <div class="menu-item" data-section="requests">
+        <div
+            class="menu-item"
+            data-section="requests"
+        >
             🧪 درخواست‌ها
         </div>
 
-        <div class="menu-item" data-section="financial">
+        <div
+            class="menu-item"
+            data-section="financial"
+        >
             💰 مالی
         </div>
 
-        <div class="menu-item" data-section="users">
+        <div
+            class="menu-item"
+            data-section="users"
+        >
             👥 کاربران
         </div>
 
-        <div class="sidebar-title">سیستم</div>
+        <div class="sidebar-title">
+            سیستم
+        </div>
 
-        <div class="menu-item" data-section="settings">
+        <div
+            class="menu-item"
+            data-section="settings"
+        >
             ⚙️ تنظیمات
         </div>
 
     </aside>
 
+
     <main class="main">
 
-        <div id="globalAlert" class="alert"></div>
+        <div
+            id="globalAlert"
+            class="alert"
+        ></div>
+
+
+        <!-- DASHBOARD -->
 
         <section id="dashboardSection">
 
             <div class="page-header">
+
                 <div>
-                    <h1>داشبورد مرکزی</h1>
-                    <p>مدیریت متمرکز آزمایشگاه‌های عضو ALPHA LAB</p>
+
+                    <h1>
+                        داشبورد مرکزی
+                    </h1>
+
+                    <p>
+                        مدیریت متمرکز آزمایشگاه‌های عضو ALPHA LAB
+                    </p>
+
                 </div>
+
             </div>
+
 
             <div class="cards">
 
                 <div class="card">
-                    <div class="card-label">تعداد آزمایشگاه‌ها</div>
-                    <div class="card-value" id="totalLabs">0</div>
+
+                    <div class="card-label">
+                        تعداد آزمایشگاه‌ها
+                    </div>
+
+                    <div
+                        class="card-value"
+                        id="totalLabs"
+                    >
+                        0
+                    </div>
+
                 </div>
 
-                <div class="card">
-                    <div class="card-label">اشتراک‌های فعال</div>
-                    <div class="card-value" id="activeSubscriptions">0</div>
-                </div>
 
                 <div class="card">
-                    <div class="card-label">در انتظار فعال‌سازی</div>
-                    <div class="card-value" id="pendingSubscriptions">0</div>
+
+                    <div class="card-label">
+                        اشتراک‌های فعال
+                    </div>
+
+                    <div
+                        class="card-value"
+                        id="activeSubscriptions"
+                    >
+                        0
+                    </div>
+
                 </div>
 
+
                 <div class="card">
-                    <div class="card-label">اشتراک‌های منقضی</div>
-                    <div class="card-value" id="expiredSubscriptions">0</div>
+
+                    <div class="card-label">
+                        در انتظار فعال‌سازی
+                    </div>
+
+                    <div
+                        class="card-value"
+                        id="pendingSubscriptions"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-label">
+                        اشتراک‌های منقضی
+                    </div>
+
+                    <div
+                        class="card-value"
+                        id="expiredSubscriptions"
+                    >
+                        0
+                    </div>
+
                 </div>
 
             </div>
 
+
             <div class="panel">
 
                 <div class="panel-header">
-                    <h2>آزمایشگاه‌های ثبت‌شده</h2>
+
+                    <h2>
+                        آزمایشگاه‌های ثبت‌شده
+                    </h2>
 
                     <button
                         class="btn btn-primary"
@@ -614,7 +717,9 @@
                     >
                         🔄 بروزرسانی
                     </button>
+
                 </div>
+
 
                 <div class="panel-body">
 
@@ -623,22 +728,49 @@
                         <table>
 
                             <thead>
+
                                 <tr>
-                                    <th>نام آزمایشگاه</th>
-                                    <th>کد</th>
-                                    <th>شهر</th>
-                                    <th>وضعیت</th>
-                                    <th>اشتراک</th>
-                                    <th>عملیات</th>
+
+                                    <th>
+                                        نام آزمایشگاه
+                                    </th>
+
+                                    <th>
+                                        کد
+                                    </th>
+
+                                    <th>
+                                        شهر
+                                    </th>
+
+                                    <th>
+                                        وضعیت
+                                    </th>
+
+                                    <th>
+                                        اشتراک
+                                    </th>
+
+                                    <th>
+                                        عملیات
+                                    </th>
+
                                 </tr>
+
                             </thead>
+
 
                             <tbody id="labsTableBody">
 
                                 <tr>
-                                    <td colspan="6" class="loading">
+
+                                    <td
+                                        colspan="6"
+                                        class="loading"
+                                    >
                                         در حال بارگذاری...
                                     </td>
+
                                 </tr>
 
                             </tbody>
@@ -653,16 +785,33 @@
 
         </section>
 
-        <section id="laboratoriesSection" style="display:none">
+
+        <!-- LABORATORIES -->
+
+        <section
+            id="laboratoriesSection"
+            style="display:none"
+        >
 
             <div class="page-header">
+
                 <div>
-                    <h1>آزمایشگاه‌ها</h1>
-                    <p>مدیریت آزمایشگاه‌های عضو سیستم</p>
+
+                    <h1>
+                        آزمایشگاه‌ها
+                    </h1>
+
+                    <p>
+                        مدیریت آزمایشگاه‌های عضو سیستم
+                    </p>
+
                 </div>
+
             </div>
 
+
             <div class="panel">
+
                 <div class="panel-body">
 
                     <div class="table-wrapper">
@@ -670,23 +819,55 @@
                         <table>
 
                             <thead>
+
                                 <tr>
-                                    <th>نام</th>
-                                    <th>کد آزمایشگاه</th>
-                                    <th>تلفن</th>
-                                    <th>ایمیل</th>
-                                    <th>استان</th>
-                                    <th>شهر</th>
-                                    <th>وضعیت</th>
+
+                                    <th>
+                                        نام
+                                    </th>
+
+                                    <th>
+                                        کد آزمایشگاه
+                                    </th>
+
+                                    <th>
+                                        تلفن
+                                    </th>
+
+                                    <th>
+                                        ایمیل
+                                    </th>
+
+                                    <th>
+                                        استان
+                                    </th>
+
+                                    <th>
+                                        شهر
+                                    </th>
+
+                                    <th>
+                                        وضعیت
+                                    </th>
+
                                 </tr>
+
                             </thead>
 
+
                             <tbody id="allLabsTableBody">
+
                                 <tr>
-                                    <td colspan="7" class="loading">
+
+                                    <td
+                                        colspan="7"
+                                        class="loading"
+                                    >
                                         در حال بارگذاری...
                                     </td>
+
                                 </tr>
+
                             </tbody>
 
                         </table>
@@ -694,30 +875,53 @@
                     </div>
 
                 </div>
+
             </div>
 
         </section>
 
-        <section id="subscriptionsSection" style="display:none">
+
+        <!-- SUBSCRIPTIONS -->
+
+        <section
+            id="subscriptionsSection"
+            style="display:none"
+        >
 
             <div class="page-header">
+
                 <div>
-                    <h1>اشتراک‌ها</h1>
-                    <p>مدیریت اشتراک ماهانه و سالانه آزمایشگاه‌ها</p>
+
+                    <h1>
+                        اشتراک‌ها
+                    </h1>
+
+                    <p>
+                        مدیریت اشتراک ماهانه و سالانه آزمایشگاه‌ها
+                    </p>
+
                 </div>
+
             </div>
+
 
             <div class="panel">
 
                 <div class="panel-header">
-                    <h2>اشتراک‌های ثبت‌شده</h2>
+
+                    <h2>
+                        اشتراک‌های ثبت‌شده
+                    </h2>
+
                     <button
                         class="btn btn-primary"
                         id="refreshSubscriptionsBtn"
                     >
                         🔄 بروزرسانی
                     </button>
+
                 </div>
+
 
                 <div class="panel-body">
 
@@ -726,22 +930,51 @@
                         <table>
 
                             <thead>
+
                                 <tr>
-                                    <th>آزمایشگاه</th>
-                                    <th>پلن</th>
-                                    <th>وضعیت</th>
-                                    <th>شروع</th>
-                                    <th>پایان</th>
-                                    <th>فعال‌شده</th>
+
+                                    <th>
+                                        آزمایشگاه
+                                    </th>
+
+                                    <th>
+                                        پلن
+                                    </th>
+
+                                    <th>
+                                        وضعیت
+                                    </th>
+
+                                    <th>
+                                        شروع
+                                    </th>
+
+                                    <th>
+                                        پایان
+                                    </th>
+
+                                    <th>
+                                        فعال‌شده
+                                    </th>
+
                                 </tr>
+
                             </thead>
 
+
                             <tbody id="subscriptionsTableBody">
+
                                 <tr>
-                                    <td colspan="6" class="loading">
+
+                                    <td
+                                        colspan="6"
+                                        class="loading"
+                                    >
                                         در حال بارگذاری...
                                     </td>
+
                                 </tr>
+
                             </tbody>
 
                         </table>
@@ -754,65 +987,146 @@
 
         </section>
 
-        <section id="requestsSection" style="display:none">
+
+        <!-- REQUESTS -->
+
+        <section
+            id="requestsSection"
+            style="display:none"
+        >
+
             <div class="page-header">
+
                 <div>
-                    <h1>درخواست‌ها</h1>
-                    <p>این بخش در مرحله بعد تکمیل خواهد شد.</p>
+
+                    <h1>
+                        درخواست‌ها
+                    </h1>
+
+                    <p>
+                        این بخش در مرحله بعد تکمیل خواهد شد.
+                    </p>
+
                 </div>
+
             </div>
 
+
             <div class="panel">
+
                 <div class="empty">
                     مدیریت درخواست‌ها در مرحله بعد به پنل اضافه می‌شود.
                 </div>
+
             </div>
+
         </section>
 
-        <section id="financialSection" style="display:none">
+
+        <!-- FINANCIAL -->
+
+        <section
+            id="financialSection"
+            style="display:none"
+        >
+
             <div class="page-header">
+
                 <div>
-                    <h1>مدیریت مالی</h1>
-                    <p>این بخش در مرحله بعد تکمیل خواهد شد.</p>
+
+                    <h1>
+                        مدیریت مالی
+                    </h1>
+
+                    <p>
+                        این بخش در مرحله بعد تکمیل خواهد شد.
+                    </p>
+
                 </div>
+
             </div>
 
+
             <div class="panel">
+
                 <div class="empty">
                     بخش مالی در مرحله بعد تکمیل خواهد شد.
                 </div>
+
             </div>
+
         </section>
 
-        <section id="usersSection" style="display:none">
+
+        <!-- USERS -->
+
+        <section
+            id="usersSection"
+            style="display:none"
+        >
+
             <div class="page-header">
+
                 <div>
-                    <h1>کاربران</h1>
-                    <p>این بخش در مرحله بعد تکمیل خواهد شد.</p>
+
+                    <h1>
+                        کاربران
+                    </h1>
+
+                    <p>
+                        این بخش در مرحله بعد تکمیل خواهد شد.
+                    </p>
+
                 </div>
+
             </div>
 
+
             <div class="panel">
+
                 <div class="empty">
                     مدیریت کاربران در مرحله بعد تکمیل خواهد شد.
                 </div>
+
             </div>
+
         </section>
 
-        <section id="settingsSection" style="display:none">
+
+        <!-- SETTINGS -->
+
+        <section
+            id="settingsSection"
+            style="display:none"
+        >
+
             <div class="page-header">
+
                 <div>
-                    <h1>تنظیمات</h1>
-                    <p>تنظیمات سیستم در مراحل بعدی اضافه خواهد شد.</p>
+
+                    <h1>
+                        تنظیمات
+                    </h1>
+
+                    <p>
+                        تنظیمات سیستم در مراحل بعدی اضافه خواهد شد.
+                    </p>
+
                 </div>
+
             </div>
 
+
             <div class="panel">
+
                 <div class="empty">
                     تنظیمات مرکزی ALPHA LAB
                 </div>
+
             </div>
+
         </section>
+
 
         <div class="footer">
             ALPHA LAB © 2026 — Central Management System
@@ -822,9 +1136,13 @@
 
 </div>
 
-<!-- Subscription Modal -->
 
-<div class="modal-backdrop" id="subscriptionModal">
+<!-- SUBSCRIPTION MODAL -->
+
+<div
+    class="modal-backdrop"
+    id="subscriptionModal"
+>
 
     <div class="modal">
 
@@ -843,9 +1161,14 @@
 
         </div>
 
+
         <div class="modal-body">
 
-            <div id="modalAlert" class="alert"></div>
+            <div
+                id="modalAlert"
+                class="alert"
+            ></div>
+
 
             <div class="form-group">
 
@@ -860,6 +1183,7 @@
                 >
 
             </div>
+
 
             <div class="form-group">
 
@@ -884,6 +1208,7 @@
 
             </div>
 
+
             <div class="form-group">
 
                 <label>
@@ -899,6 +1224,7 @@
 
             </div>
 
+
             <div
                 id="activationResult"
                 class="activation-box"
@@ -909,10 +1235,12 @@
                     کد فعال‌سازی ایجاد شد
                 </strong>
 
+
                 <div
                     class="activation-code"
                     id="activationCode"
                 ></div>
+
 
                 <button
                     class="btn btn-success"
@@ -922,7 +1250,11 @@
                     📋 کپی کد
                 </button>
 
-                <div class="warning-box" style="margin-top:12px">
+
+                <div
+                    class="warning-box"
+                    style="margin-top:12px"
+                >
                     این کد فقط اکنون نمایش داده می‌شود.
                     کد خام در دیتابیس ذخیره نشده است.
                     آن را برای آزمایشگاه ارسال و در جای امن نگهداری کنید.
@@ -932,6 +1264,7 @@
 
         </div>
 
+
         <div class="modal-footer">
 
             <button
@@ -940,6 +1273,7 @@
             >
                 بستن
             </button>
+
 
             <button
                 class="btn btn-primary"
@@ -954,23 +1288,24 @@
 
 </div>
 
+
 <script>
 
 /* =========================================================
    SUPABASE CONFIGURATION
    ========================================================= */
 
-```javascript
-const SUPABASE_URL = "https://iskadzhvfadtonbbxjoj.supabase.co";
+const SUPABASE_URL =
+    "https://iskadzhvfadtonbbxjoj.supabase.co";
 
 const SUPABASE_ANON_KEY =
     "sb_publishable_46725iYaI--CYc2SJJzA7Q_Lf0qsh_x";
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
-```
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
 
 
 /* =========================================================
@@ -978,8 +1313,11 @@ const supabaseClient = window.supabase.createClient(
    ========================================================= */
 
 let currentUser = null;
+
 let currentLaboratories = [];
+
 let currentSubscriptions = [];
+
 let selectedLaboratory = null;
 
 
@@ -987,9 +1325,14 @@ let selectedLaboratory = null;
    DOM
    ========================================================= */
 
-const userEmail = document.getElementById("userEmail");
-const logoutBtn = document.getElementById("logoutBtn");
-const refreshBtn = document.getElementById("refreshBtn");
+const userEmail =
+    document.getElementById("userEmail");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const refreshBtn =
+    document.getElementById("refreshBtn");
 
 const labsTableBody =
     document.getElementById("labsTableBody");
@@ -1020,50 +1363,69 @@ const copyCodeBtn =
    HELPERS
    ========================================================= */
 
-function showAlert(message, type = "error") {
+function showAlert(
+    message,
+    type = "error"
+) {
 
-    const alert = document.getElementById("globalAlert");
+    const alert =
+        document.getElementById("globalAlert");
 
     alert.textContent = message;
 
     alert.className =
         "alert show " +
-        (type === "success"
-            ? "alert-success"
-            : "alert-error");
+        (
+            type === "success"
+                ? "alert-success"
+                : "alert-error"
+        );
 
     setTimeout(() => {
+
         alert.classList.remove("show");
+
     }, 5000);
 }
 
 
-function showModalAlert(message, type = "error") {
+function showModalAlert(
+    message,
+    type = "error"
+) {
 
-    const alert = document.getElementById("modalAlert");
+    const alert =
+        document.getElementById("modalAlert");
 
     alert.textContent = message;
 
     alert.className =
         "alert show " +
-        (type === "success"
-            ? "alert-success"
-            : "alert-error");
+        (
+            type === "success"
+                ? "alert-success"
+                : "alert-error"
+        );
 }
 
 
 function clearModalAlert() {
 
-    const alert = document.getElementById("modalAlert");
+    const alert =
+        document.getElementById("modalAlert");
 
     alert.className = "alert";
+
     alert.textContent = "";
 }
 
 
 function escapeHtml(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
         return "";
     }
 
@@ -1095,6 +1457,7 @@ function formatDate(value) {
     } catch {
 
         return value;
+
     }
 }
 
@@ -1102,25 +1465,51 @@ function formatDate(value) {
 function statusLabel(status) {
 
     const labels = {
-        pending_activation: "در انتظار فعال‌سازی",
-        active: "فعال",
-        expired: "منقضی",
-        suspended: "معلق",
-        cancelled: "لغوشده"
+
+        pending_activation:
+            "در انتظار فعال‌سازی",
+
+        active:
+            "فعال",
+
+        expired:
+            "منقضی",
+
+        suspended:
+            "معلق",
+
+        cancelled:
+            "لغوشده"
+
     };
 
-    return labels[status] || status || "—";
+    return (
+        labels[status] ||
+        status ||
+        "—"
+    );
 }
 
 
 function statusClass(status) {
 
     return {
-        pending_activation: "status-pending",
-        active: "status-active",
-        expired: "status-expired",
-        suspended: "status-suspended",
-        cancelled: "status-cancelled"
+
+        pending_activation:
+            "status-pending",
+
+        active:
+            "status-active",
+
+        expired:
+            "status-expired",
+
+        suspended:
+            "status-suspended",
+
+        cancelled:
+            "status-cancelled"
+
     }[status] || "status-pending";
 }
 
@@ -1151,28 +1540,46 @@ async function checkAuthentication() {
     } = await supabaseClient.auth.getSession();
 
     if (error) {
-        console.error(error);
-        showAlert("خطا در بررسی نشست کاربر.");
-        return;
+
+        console.error(
+            "getSession error:",
+            error
+        );
+
+        showAlert(
+            "خطا در بررسی نشست کاربر: " +
+            error.message
+        );
+
+        return false;
     }
 
     const session = data.session;
 
     if (!session) {
 
-        window.location.href = "admin-login.html";
+        window.location.href =
+            "admin-login.html";
 
-        return;
+        return false;
     }
 
     currentUser = session.user;
 
     userEmail.textContent =
-        currentUser.email || "Super Admin";
+        currentUser.email ||
+        "Super Admin";
 
-    await verifySuperAdmin();
+    const isAdmin =
+        await verifySuperAdmin();
+
+    if (!isAdmin) {
+        return false;
+    }
 
     await loadDashboard();
+
+    return true;
 }
 
 
@@ -1187,23 +1594,34 @@ async function verifySuperAdmin() {
         error
     } = await supabaseClient
         .from("profiles")
-        .select("id, role, laboratory_id")
-        .eq("id", currentUser.id)
+        .select(
+            "id, role, laboratory_id"
+        )
+        .eq(
+            "id",
+            currentUser.id
+        )
         .maybeSingle();
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "verifySuperAdmin error:",
+            error
+        );
 
         showAlert(
             "خطا در بررسی نقش کاربر: " +
             error.message
         );
 
-        return;
+        return false;
     }
 
-    if (!data || data.role !== "super_admin") {
+    if (
+        !data ||
+        data.role !== "super_admin"
+    ) {
 
         showAlert(
             "این حساب دسترسی Super Admin ندارد."
@@ -1212,16 +1630,21 @@ async function verifySuperAdmin() {
         await supabaseClient.auth.signOut();
 
         setTimeout(() => {
-            window.location.href = "admin-login.html";
+
+            window.location.href =
+                "admin-login.html";
+
         }, 1500);
 
-        return;
+        return false;
     }
 
     console.log(
         "Super Admin verified:",
         currentUser.id
     );
+
+    return true;
 }
 
 
@@ -1281,23 +1704,46 @@ async function loadLaboratories() {
             is_active,
             created_at
         `)
-        .order("created_at", {
-            ascending: false
-        });
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "loadLaboratories error:",
+            error
+        );
 
         showAlert(
             "خطا در دریافت آزمایشگاه‌ها: " +
             error.message
         );
 
+        labsTableBody.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    خطا در دریافت اطلاعات آزمایشگاه‌ها.
+                </td>
+            </tr>
+        `;
+
+        allLabsTableBody.innerHTML = `
+            <tr>
+                <td colspan="7" class="empty">
+                    خطا در دریافت اطلاعات آزمایشگاه‌ها.
+                </td>
+            </tr>
+        `;
+
         return;
     }
 
-    currentLaboratories = data || [];
+    currentLaboratories =
+        data || [];
 
     renderLaboratories();
 }
@@ -1309,7 +1755,9 @@ async function loadLaboratories() {
 
 function renderLaboratories() {
 
-    if (!currentLaboratories.length) {
+    if (
+        !currentLaboratories.length
+    ) {
 
         labsTableBody.innerHTML = `
             <tr>
@@ -1330,144 +1778,154 @@ function renderLaboratories() {
         return;
     }
 
+
     labsTableBody.innerHTML =
-        currentLaboratories.map(lab => {
+        currentLaboratories
+            .map(lab => {
 
-            const subscription =
-                currentSubscriptions.find(
-                    sub =>
-                        sub.laboratory_id === lab.id &&
-                        (
-                            sub.status === "active" ||
-                            sub.status === "pending_activation"
-                        )
-                );
+                const subscription =
+                    currentSubscriptions.find(
+                        sub =>
+                            sub.laboratory_id === lab.id &&
+                            (
+                                sub.status === "active" ||
+                                sub.status === "pending_activation"
+                            )
+                    );
 
-            let subscriptionText = "بدون اشتراک";
+                let subscriptionText =
+                    "بدون اشتراک";
 
-            if (subscription) {
+                if (subscription) {
 
-                subscriptionText = `
-                    ${planLabel(subscription.plan)}
-                    <br>
-                    <span class="status-badge ${statusClass(subscription.status)}">
-                        ${statusLabel(subscription.status)}
-                    </span>
-                `;
-            }
-
-            const canCreate =
-                !subscription;
-
-            return `
-                <tr>
-
-                    <td>
-                        <strong>
-                            ${escapeHtml(lab.name)}
-                        </strong>
-                    </td>
-
-                    <td dir="ltr">
-                        ${escapeHtml(lab.lab_code)}
-                    </td>
-
-                    <td>
-                        ${escapeHtml(lab.city || "—")}
-                    </td>
-
-                    <td>
-                        <span class="status-badge ${
-                            lab.is_active
-                                ? "status-active"
-                                : "status-cancelled"
-                        }">
-                            ${
-                                lab.is_active
-                                    ? "فعال"
-                                    : "غیرفعال"
-                            }
+                    subscriptionText = `
+                        ${planLabel(subscription.plan)}
+                        <br>
+                        <span class="status-badge ${statusClass(subscription.status)}">
+                            ${statusLabel(subscription.status)}
                         </span>
-                    </td>
+                    `;
+                }
 
-                    <td>
-                        ${subscriptionText}
-                    </td>
+                const canCreate =
+                    !subscription;
 
-                    <td>
+                return `
+                    <tr>
 
-                        <div class="actions">
+                        <td>
+                            <strong>
+                                ${escapeHtml(lab.name)}
+                            </strong>
+                        </td>
 
-                            <button
-                                class="btn btn-primary"
-                                onclick="openSubscriptionModal('${lab.id}')"
-                                ${canCreate ? "" : "disabled"}
-                            >
-                                🔑 صدور اشتراک
-                            </button>
+                        <td dir="ltr">
+                            ${escapeHtml(lab.lab_code)}
+                        </td>
 
-                        </div>
+                        <td>
+                            ${escapeHtml(lab.city || "—")}
+                        </td>
 
-                    </td>
+                        <td>
 
-                </tr>
-            `;
+                            <span class="status-badge ${
+                                lab.is_active
+                                    ? "status-active"
+                                    : "status-cancelled"
+                            }">
 
-        }).join("");
+                                ${
+                                    lab.is_active
+                                        ? "فعال"
+                                        : "غیرفعال"
+                                }
+
+                            </span>
+
+                        </td>
+
+                        <td>
+                            ${subscriptionText}
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="btn btn-primary"
+                                    onclick="openSubscriptionModal('${lab.id}')"
+                                    ${canCreate ? "" : "disabled"}
+                                >
+                                    🔑 صدور اشتراک
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                `;
+
+            })
+            .join("");
 
 
     allLabsTableBody.innerHTML =
-        currentLaboratories.map(lab => {
+        currentLaboratories
+            .map(lab => {
 
-            return `
-                <tr>
+                return `
+                    <tr>
 
-                    <td>
-                        ${escapeHtml(lab.name)}
-                    </td>
+                        <td>
+                            ${escapeHtml(lab.name)}
+                        </td>
 
-                    <td dir="ltr">
-                        ${escapeHtml(lab.lab_code)}
-                    </td>
+                        <td dir="ltr">
+                            ${escapeHtml(lab.lab_code)}
+                        </td>
 
-                    <td dir="ltr">
-                        ${escapeHtml(lab.phone || "—")}
-                    </td>
+                        <td dir="ltr">
+                            ${escapeHtml(lab.phone || "—")}
+                        </td>
 
-                    <td dir="ltr">
-                        ${escapeHtml(lab.email || "—")}
-                    </td>
+                        <td dir="ltr">
+                            ${escapeHtml(lab.email || "—")}
+                        </td>
 
-                    <td>
-                        ${escapeHtml(lab.province || "—")}
-                    </td>
+                        <td>
+                            ${escapeHtml(lab.province || "—")}
+                        </td>
 
-                    <td>
-                        ${escapeHtml(lab.city || "—")}
-                    </td>
+                        <td>
+                            ${escapeHtml(lab.city || "—")}
+                        </td>
 
-                    <td>
+                        <td>
 
-                        <span class="status-badge ${
-                            lab.is_active
-                                ? "status-active"
-                                : "status-cancelled"
-                        }">
-
-                            ${
+                            <span class="status-badge ${
                                 lab.is_active
-                                    ? "فعال"
-                                    : "غیرفعال"
-                            }
+                                    ? "status-active"
+                                    : "status-cancelled"
+                            }">
 
-                        </span>
+                                ${
+                                    lab.is_active
+                                        ? "فعال"
+                                        : "غیرفعال"
+                                }
 
-                    </td>
+                            </span>
 
-                </tr>
-            `;
+                        </td>
 
-        }).join("");
+                    </tr>
+                `;
+
+            })
+            .join("");
 }
 
 
@@ -1500,23 +1958,38 @@ async function loadSubscriptions() {
             activated_at,
             created_at
         `)
-        .order("created_at", {
-            ascending: false
-        });
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "loadSubscriptions error:",
+            error
+        );
 
         showAlert(
             "خطا در دریافت اشتراک‌ها: " +
             error.message
         );
 
+        subscriptionsTableBody.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    خطا در دریافت اشتراک‌ها.
+                </td>
+            </tr>
+        `;
+
         return;
     }
 
-    currentSubscriptions = data || [];
+    currentSubscriptions =
+        data || [];
 
     renderSubscriptions();
 }
@@ -1528,7 +2001,9 @@ async function loadSubscriptions() {
 
 function renderSubscriptions() {
 
-    if (!currentSubscriptions.length) {
+    if (
+        !currentSubscriptions.length
+    ) {
 
         subscriptionsTableBody.innerHTML = `
             <tr>
@@ -1541,62 +2016,73 @@ function renderSubscriptions() {
         return;
     }
 
+
     subscriptionsTableBody.innerHTML =
-        currentSubscriptions.map(sub => {
+        currentSubscriptions
+            .map(sub => {
 
-            const lab =
-                currentLaboratories.find(
-                    item => item.id === sub.laboratory_id
-                );
+                const lab =
+                    currentLaboratories.find(
+                        item =>
+                            item.id ===
+                            sub.laboratory_id
+                    );
 
-            return `
-                <tr>
+                return `
+                    <tr>
 
-                    <td>
-                        ${
-                            escapeHtml(
-                                lab?.name ||
-                                sub.laboratory_id
-                            )
-                        }
+                        <td>
 
-                        <br>
-
-                        <small dir="ltr">
                             ${
                                 escapeHtml(
-                                    lab?.lab_code || ""
+                                    lab?.name ||
+                                    sub.laboratory_id
                                 )
                             }
-                        </small>
-                    </td>
 
-                    <td>
-                        ${planLabel(sub.plan)}
-                    </td>
+                            <br>
 
-                    <td>
-                        <span class="status-badge ${statusClass(sub.status)}">
-                            ${statusLabel(sub.status)}
-                        </span>
-                    </td>
+                            <small dir="ltr">
+                                ${
+                                    escapeHtml(
+                                        lab?.lab_code || ""
+                                    )
+                                }
+                            </small>
 
-                    <td>
-                        ${formatDate(sub.starts_at)}
-                    </td>
+                        </td>
 
-                    <td>
-                        ${formatDate(sub.expires_at)}
-                    </td>
+                        <td>
+                            ${planLabel(sub.plan)}
+                        </td>
 
-                    <td>
-                        ${formatDate(sub.activated_at)}
-                    </td>
+                        <td>
 
-                </tr>
-            `;
+                            <span class="status-badge ${statusClass(sub.status)}">
 
-        }).join("");
+                                ${statusLabel(sub.status)}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+                            ${formatDate(sub.starts_at)}
+                        </td>
+
+                        <td>
+                            ${formatDate(sub.expires_at)}
+                        </td>
+
+                        <td>
+                            ${formatDate(sub.activated_at)}
+                        </td>
+
+                    </tr>
+                `;
+
+            })
+            .join("");
 }
 
 
@@ -1606,26 +2092,37 @@ function renderSubscriptions() {
 
 function updateStatistics() {
 
-    document.getElementById("totalLabs")
-        .textContent =
+    document.getElementById(
+        "totalLabs"
+    ).textContent =
         currentLaboratories.length;
 
-    document.getElementById("activeSubscriptions")
-        .textContent =
+
+    document.getElementById(
+        "activeSubscriptions"
+    ).textContent =
         currentSubscriptions.filter(
-            x => x.status === "active"
+            x =>
+                x.status === "active"
         ).length;
 
-    document.getElementById("pendingSubscriptions")
-        .textContent =
+
+    document.getElementById(
+        "pendingSubscriptions"
+    ).textContent =
         currentSubscriptions.filter(
-            x => x.status === "pending_activation"
+            x =>
+                x.status ===
+                "pending_activation"
         ).length;
 
-    document.getElementById("expiredSubscriptions")
-        .textContent =
+
+    document.getElementById(
+        "expiredSubscriptions"
+    ).textContent =
         currentSubscriptions.filter(
-            x => x.status === "expired"
+            x =>
+                x.status === "expired"
         ).length;
 }
 
@@ -1639,23 +2136,32 @@ window.openSubscriptionModal =
 
         const lab =
             currentLaboratories.find(
-                item => item.id === laboratoryId
+                item =>
+                    item.id ===
+                    laboratoryId
             );
 
         if (!lab) {
-            showAlert("آزمایشگاه پیدا نشد.");
+
+            showAlert(
+                "آزمایشگاه پیدا نشد."
+            );
+
             return;
         }
+
 
         const existing =
             currentSubscriptions.find(
                 sub =>
-                    sub.laboratory_id === laboratoryId &&
+                    sub.laboratory_id ===
+                        laboratoryId &&
                     (
                         sub.status === "active" ||
                         sub.status === "pending_activation"
                     )
             );
+
 
         if (existing) {
 
@@ -1666,30 +2172,55 @@ window.openSubscriptionModal =
             return;
         }
 
-        selectedLaboratory = lab;
 
-        document.getElementById("modalLabName")
-            .value =
+        selectedLaboratory =
+            lab;
+
+
+        document.getElementById(
+            "modalLabName"
+        ).value =
             `${lab.name} — ${lab.lab_code}`;
 
-        document.getElementById("subscriptionPlan")
-            .value = "yearly";
 
-        document.getElementById("subscriptionNotes")
-            .value = "";
+        document.getElementById(
+            "subscriptionPlan"
+        ).value =
+            "yearly";
 
-        document.getElementById("activationResult")
-            .style.display = "none";
 
-        document.getElementById("activationCode")
-            .textContent = "";
+        document.getElementById(
+            "subscriptionNotes"
+        ).value =
+            "";
 
-        createSubscriptionBtn.disabled = false;
-        createSubscriptionBtn.style.display = "inline-block";
+
+        document.getElementById(
+            "activationResult"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "activationCode"
+        ).textContent =
+            "";
+
+
+        createSubscriptionBtn.disabled =
+            false;
+
+
+        createSubscriptionBtn.style.display =
+            "inline-block";
+
 
         clearModalAlert();
 
-        subscriptionModal.classList.add("show");
+
+        subscriptionModal.classList.add(
+            "show"
+        );
     };
 
 
@@ -1699,9 +2230,12 @@ window.openSubscriptionModal =
 
 function closeSubscriptionModal() {
 
-    subscriptionModal.classList.remove("show");
+    subscriptionModal.classList.remove(
+        "show"
+    );
 
-    selectedLaboratory = null;
+    selectedLaboratory =
+        null;
 }
 
 
@@ -1709,6 +2243,7 @@ closeModalBtn.addEventListener(
     "click",
     closeSubscriptionModal
 );
+
 
 cancelModalBtn.addEventListener(
     "click",
@@ -1733,79 +2268,104 @@ createSubscriptionBtn.addEventListener(
             return;
         }
 
+
         const plan =
             document.getElementById(
                 "subscriptionPlan"
             ).value;
 
+
         const notes =
             document.getElementById(
                 "subscriptionNotes"
-            ).value.trim() || null;
+            ).value.trim() ||
+            null;
 
-        createSubscriptionBtn.disabled = true;
+
+        createSubscriptionBtn.disabled =
+            true;
+
 
         createSubscriptionBtn.textContent =
             "در حال صدور...";
 
+
         clearModalAlert();
+
 
         try {
 
             const {
                 data,
                 error
-            } = await supabaseClient.rpc(
-                "create_laboratory_subscription",
-                {
-                    p_laboratory_id:
-                        selectedLaboratory.id,
+            } =
+                await supabaseClient.rpc(
+                    "create_laboratory_subscription",
+                    {
+                        p_laboratory_id:
+                            selectedLaboratory.id,
 
-                    p_plan:
-                        plan,
+                        p_plan:
+                            plan,
 
-                    p_starts_at:
-                        new Date().toISOString(),
+                        p_starts_at:
+                            new Date().toISOString(),
 
-                    p_notes:
-                        notes
-                }
-            );
+                        p_notes:
+                            notes
+                    }
+                );
+
 
             if (error) {
 
-                console.error(error);
+                console.error(
+                    "create subscription error:",
+                    error
+                );
 
                 throw new Error(
                     error.message
                 );
             }
 
-            if (!data || !data.length) {
+
+            if (
+                !data ||
+                !data.length
+            ) {
 
                 throw new Error(
                     "تابع صدور اشتراک نتیجه‌ای برنگرداند."
                 );
             }
 
-            const result = data[0];
+
+            const result =
+                data[0];
+
 
             document.getElementById(
                 "activationCode"
             ).textContent =
                 result.activation_code;
 
+
             document.getElementById(
                 "activationResult"
-            ).style.display = "block";
+            ).style.display =
+                "block";
+
 
             createSubscriptionBtn.style.display =
                 "none";
+
 
             showModalAlert(
                 "اشتراک با موفقیت ایجاد شد.",
                 "success"
             );
+
 
             await loadSubscriptions();
 
@@ -1815,14 +2375,18 @@ createSubscriptionBtn.addEventListener(
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Subscription error:",
+                error
+            );
 
             showModalAlert(
                 "خطا در ایجاد اشتراک: " +
                 error.message
             );
 
-            createSubscriptionBtn.disabled = false;
+            createSubscriptionBtn.disabled =
+                false;
 
         } finally {
 
@@ -1847,16 +2411,22 @@ copyCodeBtn.addEventListener(
                 "activationCode"
             ).textContent.trim();
 
+
         if (!code) {
             return;
         }
 
+
         try {
 
-            await navigator.clipboard.writeText(code);
+            await navigator.clipboard.writeText(
+                code
+            );
+
 
             copyCodeBtn.textContent =
                 "✅ کد کپی شد";
+
 
             setTimeout(() => {
 
@@ -1864,6 +2434,7 @@ copyCodeBtn.addEventListener(
                     "📋 کپی کد";
 
             }, 2000);
+
 
         } catch {
 
@@ -1877,14 +2448,15 @@ copyCodeBtn.addEventListener(
 
 
 /* =========================================================
-   REFRESH
+   REFRESH DASHBOARD
    ========================================================= */
 
 refreshBtn.addEventListener(
     "click",
     async () => {
 
-        refreshBtn.disabled = true;
+        refreshBtn.disabled =
+            true;
 
         try {
 
@@ -1895,13 +2467,27 @@ refreshBtn.addEventListener(
                 "success"
             );
 
+        } catch (error) {
+
+            console.error(error);
+
+            showAlert(
+                "خطا در بروزرسانی اطلاعات."
+            );
+
         } finally {
 
-            refreshBtn.disabled = false;
+            refreshBtn.disabled =
+                false;
         }
+
     }
 );
 
+
+/* =========================================================
+   REFRESH SUBSCRIPTIONS
+   ========================================================= */
 
 document.getElementById(
     "refreshSubscriptionsBtn"
@@ -1909,14 +2495,41 @@ document.getElementById(
     "click",
     async () => {
 
-        await loadSubscriptions();
+        const button =
+            document.getElementById(
+                "refreshSubscriptionsBtn"
+            );
 
-        updateStatistics();
+        button.disabled =
+            true;
 
-        showAlert(
-            "اشتراک‌ها بروزرسانی شدند.",
-            "success"
-        );
+        try {
+
+            await loadSubscriptions();
+
+            updateStatistics();
+
+            renderLaboratories();
+
+            showAlert(
+                "اشتراک‌ها بروزرسانی شدند.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            showAlert(
+                "خطا در بروزرسانی اشتراک‌ها."
+            );
+
+        } finally {
+
+            button.disabled =
+                false;
+        }
+
     }
 );
 
@@ -1929,10 +2542,20 @@ logoutBtn.addEventListener(
     "click",
     async () => {
 
-        await supabaseClient.auth.signOut();
+        logoutBtn.disabled =
+            true;
 
-        window.location.href =
-            "admin-login.html";
+        try {
+
+            await supabaseClient.auth.signOut();
+
+        } finally {
+
+            window.location.href =
+                "admin-login.html";
+
+        }
+
     }
 );
 
@@ -1950,34 +2573,47 @@ document
             () => {
 
                 document
-                    .querySelectorAll(".menu-item")
-                    .forEach(
-                        x =>
-                            x.classList.remove(
-                                "active"
-                            )
+                    .querySelectorAll(
+                        ".menu-item"
+                    )
+                    .forEach(x =>
+                        x.classList.remove(
+                            "active"
+                        )
                     );
 
-                item.classList.add("active");
+
+                item.classList.add(
+                    "active"
+                );
+
 
                 const section =
                     item.dataset.section;
 
+
                 document
-                    .querySelectorAll("main section")
-                    .forEach(
-                        x =>
-                            x.style.display = "none"
+                    .querySelectorAll(
+                        "main section"
+                    )
+                    .forEach(x =>
+                        x.style.display =
+                            "none"
                     );
+
 
                 const target =
                     document.getElementById(
-                        section + "Section"
+                        section +
+                        "Section"
                     );
+
 
                 if (target) {
 
-                    target.style.display = "block";
+                    target.style.display =
+                        "block";
+
                 }
 
             }
@@ -1999,6 +2635,7 @@ supabaseClient.auth.onAuthStateChange(
             session?.user?.id || null
         );
 
+
         if (
             event === "SIGNED_OUT" &&
             !window.location.pathname.endsWith(
@@ -2008,7 +2645,9 @@ supabaseClient.auth.onAuthStateChange(
 
             window.location.href =
                 "admin-login.html";
+
         }
+
     }
 );
 
@@ -2034,4 +2673,3 @@ document.addEventListener(
 
 </body>
 </html>
-```

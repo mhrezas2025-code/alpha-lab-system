@@ -21,10 +21,7 @@
 
     body {
       min-height: 100vh;
-      font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
+      font-family: Tahoma, Arial, sans-serif;
       background:
         radial-gradient(circle at 15% 20%, rgba(59,130,246,.18), transparent 30%),
         radial-gradient(circle at 85% 80%, rgba(16,185,129,.14), transparent 30%),
@@ -466,6 +463,7 @@
   </div>
 
   <div class="hero-content">
+
     <h1>
       مدیریت هوشمند<br>
       <span>آزمایشگاه شما</span>
@@ -515,6 +513,7 @@
   <div class="login-box">
 
     <div class="mobile-brand">
+
       <div class="logo">α</div>
 
       <div>
@@ -523,27 +522,41 @@
           Laboratory Management System
         </div>
       </div>
+
     </div>
 
-    <header class="login-header">
-      <div class="eyebrow">WELCOME BACK</div>
 
-      <h2>ورود به سیستم</h2>
+    <header class="login-header">
+
+      <div class="eyebrow">
+        WELCOME BACK
+      </div>
+
+      <h2>
+        ورود به سیستم
+      </h2>
 
       <p>
         برای ورود به پنل مدیریت آزمایشگاه،
         اطلاعات حساب کاربری خود را وارد کنید.
       </p>
+
     </header>
 
 
     <form id="loginForm" autocomplete="on">
 
       <div class="field">
-        <label for="email">ایمیل</label>
+
+        <label for="email">
+          ایمیل
+        </label>
 
         <div class="input-wrap">
-          <span class="input-icon">✉</span>
+
+          <span class="input-icon">
+            ✉
+          </span>
 
           <input
             id="email"
@@ -554,15 +567,23 @@
             placeholder="example@laboratory.com"
             required
           >
+
         </div>
+
       </div>
 
 
       <div class="field">
-        <label for="password">رمز عبور</label>
+
+        <label for="password">
+          رمز عبور
+        </label>
 
         <div class="input-wrap">
-          <span class="input-icon">🔒</span>
+
+          <span class="input-icon">
+            🔒
+          </span>
 
           <input
             id="password"
@@ -581,19 +602,25 @@
           >
             نمایش
           </button>
+
         </div>
+
       </div>
 
 
       <div class="options">
 
         <label class="remember">
+
           <input
             type="checkbox"
             id="remember"
           >
+
           مرا به خاطر بسپار
+
         </label>
+
 
         <button
           type="button"
@@ -625,14 +652,19 @@
 
 
     <div class="security-note">
-      <span class="security-icon">✓</span>
+
+      <span class="security-icon">
+        ✓
+      </span>
 
       <span>
         ارتباط حساب کاربری با Supabase Authentication انجام می‌شود.
         دسترسی به اطلاعات آزمایشگاه‌ها در مراحل بعدی با
         Row Level Security و ساختار Multi-Tenant کنترل خواهد شد.
       </span>
+
     </div>
+
 
     <div class="copyright">
       ALPHA LAB • Secure Laboratory Management System
@@ -760,6 +792,13 @@
         passwordToggle.textContent =
           isPassword ? "مخفی" : "نمایش";
 
+        passwordToggle.setAttribute(
+          "aria-label",
+          isPassword
+            ? "مخفی کردن رمز عبور"
+            : "نمایش رمز عبور"
+        );
+
       }
     );
 
@@ -771,7 +810,9 @@
     */
 
     const savedEmail =
-      localStorage.getItem("alpha_lab_login_email");
+      localStorage.getItem(
+        "alpha_lab_login_email"
+      );
 
     if (savedEmail) {
 
@@ -853,12 +894,13 @@
 
             if (
               error.message &&
-              error.message.toLowerCase().includes("email not confirmed")
+              error.message
+                .toLowerCase()
+                .includes("email not confirmed")
             ) {
 
               message =
                 "ایمیل حساب کاربری هنوز تأیید نشده است.";
-
             }
 
             showStatus(message);
@@ -888,15 +930,14 @@
 
 
           /*
-            در این مرحله فعلاً به dashboard.html
+            فعلاً پس از ورود به dashboard.html
             منتقل می‌شویم.
 
-            در مراحل بعدی:
+            بررسی‌های Multi-Tenant در مراحل بعدی:
             1. laboratory_id
             2. role
             3. subscription
             4. license
-            بررسی خواهند شد.
           */
 
           setTimeout(
@@ -1036,11 +1077,8 @@
         ) {
 
           /*
-            فعلاً اگر نشست معتبر وجود داشته باشد
-            کاربر مستقیماً وارد dashboard می‌شود.
-
-            سیستم License در مرحله بعد قبل از این
-            انتقال اضافه خواهد شد.
+            اگر نشست معتبر وجود داشته باشد،
+            کاربر مستقیماً به dashboard منتقل می‌شود.
           */
 
           window.location.href =

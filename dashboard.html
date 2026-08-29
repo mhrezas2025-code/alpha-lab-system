@@ -2477,53 +2477,72 @@ try {
     error
   );
 
-}
-      /*
-        تست‌ها
-      */
+}/*
+  ============================================================
+  تست‌ها
+  ============================================================
+*/
 
-      try {
+try {
 
-        const testsResult =
-          await supabaseClient
-            .from("lab_tests")
-            .select(
-              "id",
-              {
-                count: "exact",
-                head: true
-              }
-            )
-            .eq(
-              "laboratory_id",
-              currentLaboratory.id
-            );
-
-
-        if (
-          !testsResult.error
-        ) {
-
-          document
-            .getElementById(
-              "testsCount"
-            )
-            .textContent =
-              testsResult.count ??
-              0;
-
+  const testsResult =
+    await supabaseClient
+      .from("lab_tests")
+      .select(
+        "id",
+        {
+          count: "exact",
+          head: true
         }
+      )
+      .eq(
+        "laboratory_id",
+        currentLaboratory.id
+      );
 
 
-      } catch (error) {
+  if (!testsResult.error) {
 
-        console.warn(
-          "Tests count unavailable:",
-          error
-        );
+    const testsCount =
+      testsResult.count ?? 0;
 
-      }
 
+    const testsCountElement =
+      document.getElementById(
+        "testsCount"
+      );
+
+
+    if (testsCountElement) {
+
+      testsCountElement.textContent =
+        testsCount;
+
+    }
+
+
+    console.log(
+      "TESTS COUNT:",
+      testsCount
+    );
+
+  } else {
+
+    console.error(
+      "TESTS COUNT ERROR:",
+      testsResult.error
+    );
+
+  }
+
+} catch (error) {
+
+  console.error(
+    "TESTS COUNT EXCEPTION:",
+    error
+  );
+
+}
 
       /*
         تراکنش‌های مالی

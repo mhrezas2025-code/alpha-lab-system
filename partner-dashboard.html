@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ALPHA LAB | پنل آزمایشگاه همکار</title>
+
+  <meta
+    name="description"
+    content="ALPHA LAB - پنل آزمایشگاه همکار"
+  >
+
+  <meta name="theme-color" content="#020617">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #020617;
+      --panel: #0f172a;
+      --panel2: #111827;
+      --border: rgba(148, 163, 184, .14);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --muted2: #64748b;
+      --blue: #2563eb;
+      --cyan: #38bdf8;
+      --green: #22c55e;
+      --orange: #f59e0b;
+      --red: #ef4444;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Tahoma, Arial, sans-serif;
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(37, 99, 235, .13),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 90% 90%,
+          rgba(14, 165, 233, .08),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #020617,
+          #0f172a 45%,
+          #111827
+        );
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          rgba(255,255,255,.018) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.018) 1px,
+          transparent 1px
+        );
+      background-size: 40px 40px;
+      z-index: 0;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .header {
+      height: 72px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(2, 6, 23, .88);
+      backdrop-filter: blur(20px);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 30px;
+
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 43px;
+      height: 43px;
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #0ea5e9
+        );
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 21px;
+      font-weight: 900;
+
+      box-shadow:
+        0 10px 25px rgba(37,99,235,.25);
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 16px;
+      letter-spacing: .7px;
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted2);
+      font-size: 9px;
+      margin-top: 3px;
+    }
+
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-info {
+      text-align: left;
+    }
+
+    .user-info strong {
+      display: block;
+      font-size: 10px;
+      color: #e2e8f0;
+    }
+
+    .user-info small {
+      display: block;
+      font-size: 8px;
+      color: var(--muted2);
+      margin-top: 3px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+
+      background:
+        linear-gradient(
+          135deg,
+          #1d4ed8,
+          #0891b2
+        );
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    /* =========================================================
+       MAIN
+       ========================================================= */
+
+    .main {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 35px 25px 60px;
+    }
+
+    .page-title {
+      margin-bottom: 24px;
+    }
+
+    .page-title h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .page-title p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    /* =========================================================
+       LAB CARD
+       ========================================================= */
+
+    .lab-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+
+      background:
+        radial-gradient(
+          circle at 10% 20%,
+          rgba(37,99,235,.12),
+          transparent 30%
+        ),
+        rgba(15,23,42,.68);
+
+      padding: 23px;
+      margin-bottom: 20px;
+    }
+
+    .lab-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .lab-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lab-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+
+      background: rgba(56,189,248,.08);
+      border: 1px solid rgba(56,189,248,.15);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 23px;
+    }
+
+    .lab-title h2 {
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .lab-title p {
+      color: var(--muted2);
+      font-size: 9px;
+    }
+
+    .lab-code-badge {
+      direction: ltr;
+      font-family: Consolas, monospace;
+
+      padding: 9px 13px;
+
+      border-radius: 9px;
+
+      background: rgba(37,99,235,.09);
+      border: 1px solid rgba(59,130,246,.18);
+
+      color: #93c5fd;
+
+      font-size: 10px;
+    }
+
+    .lab-info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .info-item {
+      padding: 14px;
+      border-radius: 11px;
+
+      background: rgba(255,255,255,.018);
+      border: 1px solid rgba(148,163,184,.08);
+    }
+
+    .info-item small {
+      display: block;
+      color: var(--muted2);
+      font-size: 8px;
+      margin-bottom: 7px;
+    }
+
+    .info-item strong {
+      display: block;
+      color: #cbd5e1;
+      font-size: 10px;
+      word-break: break-word;
+    }
+
+    /* =========================================================
+       SUBSCRIPTION
+       ========================================================= */
+
+    .subscription {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+
+      background: rgba(15,23,42,.62);
+
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .section-header {
+      min-height: 65px;
+      padding: 15px 20px;
+
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 10px;
+    }
+
+    .section-header h3 {
+      font-size: 14px;
+    }
+
+    .section-header span {
+      color: var(--muted2);
+      font-size: 9px;
+    }
+
+    .subscription-body {
+      padding: 20px;
+    }
+
+    .subscription-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .current-subscription,
+    .activation-box {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      background: rgba(255,255,255,.018);
+    }
+
+    .current-subscription h4,
+    .activation-box h4 {
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+
+    .subscription-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 10px 0;
+
+      border-bottom: 1px solid rgba(148,163,184,.07);
+
+      font-size: 10px;
+    }
+
+    .subscription-row:last-child {
+      border-bottom: none;
+    }
+
+    .subscription-row span {
+      color: var(--muted2);
+    }
+
+    .subscription-row strong {
+      color: #cbd5e1;
+      text-align: left;
+    }
+
+    .status-active {
+      color: #86efac !important;
+    }
+
+    .status-pending {
+      color: #fbbf24 !important;
+    }
+
+    .status-expired {
+      color: #fca5a5 !important;
+    }
+
+    .activation-description {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.9;
+      margin-bottom: 14px;
+    }
+
+    .activation-input {
+      width: 100%;
+      height: 48px;
+
+      direction: ltr;
+      text-align: center;
+
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+
+      border-radius: 10px;
+
+      border: 1px solid rgba(148,163,184,.16);
+
+      background: #0b1220;
+      color: #e2e8f0;
+
+      outline: none;
+
+      padding: 0 12px;
+
+      margin-bottom: 11px;
+    }
+
+    .activation-input:focus {
+      border-color: rgba(59,130,246,.45);
+      box-shadow:
+        0 0 0 3px rgba(37,99,235,.08);
+    }
+
+    .activation-button {
+      width: 100%;
+      height: 46px;
+
+      border-radius: 10px;
+
+      border: 1px solid rgba(59,130,246,.28);
+
+      background: rgba(37,99,235,.15);
+
+      color: #bfdbfe;
+
+      font-size: 11px;
+
+      transition: .2s ease;
+    }
+
+    .activation-button:hover {
+      background: rgba(37,99,235,.24);
+    }
+
+    .activation-button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .activation-message {
+      display: none;
+
+      margin-top: 12px;
+      padding: 11px;
+
+      border-radius: 9px;
+
+      font-size: 9px;
+      line-height: 1.8;
+    }
+
+    .activation-message.show {
+      display: block;
+    }
+
+    .activation-message.success {
+      color: #bbf7d0;
+      background: rgba(34,197,94,.06);
+      border: 1px solid rgba(34,197,94,.18);
+    }
+
+    .activation-message.error {
+      color: #fecaca;
+      background: rgba(239,68,68,.06);
+      border: 1px solid rgba(239,68,68,.18);
+    }
+
+    /* =========================================================
+       QUICK CARDS
+       ========================================================= */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 15px;
+
+      background: rgba(15,23,42,.62);
+
+      padding: 20px;
+
+      transition: .2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(59,130,246,.22);
+    }
+
+    .card-icon {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .card strong {
+      display: block;
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .card span {
+      color: var(--muted2);
+      font-size: 9px;
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       LOGOUT
+       ========================================================= */
+
+    .logout {
+      width: 100%;
+      height: 44px;
+
+      margin-top: 20px;
+
+      border-radius: 10px;
+
+      border: 1px solid rgba(239,68,68,.16);
+
+      background: rgba(239,68,68,.05);
+
+      color: #fca5a5;
+
+      font-size: 10px;
+    }
+
+    .logout:hover {
+      background: rgba(239,68,68,.10);
+    }
+
+    /* =========================================================
+       LOADING
+       ========================================================= */
+
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+
+      background: #020617;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      z-index: 100;
+    }
+
+    .loading-box {
+      text-align: center;
+    }
+
+    .loading-logo {
+      width: 65px;
+      height: 65px;
+
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #0ea5e9
+        );
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 0 auto 18px;
+
+      font-size: 30px;
+      font-weight: 900;
+
+      animation: pulse 1.5s infinite;
+    }
+
+    .loading-box p {
+      color: #64748b;
+      font-size: 10px;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(.94);
+        opacity: .7;
+      }
+
+    }
+
+    /* =========================================================
+       TOAST
+       ========================================================= */
+
+    .toast {
+      position: fixed;
+
+      left: 20px;
+      bottom: 20px;
+
+      max-width: 360px;
+
+      padding: 13px 16px;
+
+      border-radius: 11px;
+
+      background: #0f172a;
+
+      border: 1px solid var(--border);
+
+      color: #e2e8f0;
+
+      font-size: 10px;
+
+      box-shadow:
+        0 15px 40px rgba(0,0,0,.35);
+
+      transform: translateY(120px);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: .25s ease;
+
+      z-index: 200;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      border-color: rgba(34,197,94,.25);
+    }
+
+    .toast.error {
+      border-color: rgba(239,68,68,.25);
+    }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 900px) {
+
+      .lab-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .subscription-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 600px) {
+
+      .header {
+        padding: 0 15px;
+      }
+
+      .user-info {
+        display: none;
+      }
+
+      .main {
+        padding:
+          25px
+          14px
+          45px;
+      }
+
+      .page-title h1 {
+        font-size: 21px;
+      }
+
+      .lab-card {
+        padding: 17px;
+      }
+
+      .lab-card-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .lab-info-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .subscription-body {
+        padding: 13px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =======================================================
+       LOADING
+       ======================================================= -->
+
+  <div
+    class="loading-screen"
+    id="loadingScreen"
+  >
+
+    <div class="loading-box">
+
+      <div class="loading-logo">
+        α
+      </div>
+
+      <p id="loadingText">
+        در حال بررسی نشست کاربری...
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="app">
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="header">
+
+      <div class="brand">
+
+        <div class="logo">
+          α
+        </div>
+
+        <div>
+          <strong>
+            ALPHA LAB
+          </strong>
+
+          <small>
+            Partner Laboratory Portal
+          </small>
+        </div>
+
+      </div>
+
+
+      <div class="header-user">
+
+        <div class="user-info">
+
+          <strong id="userEmail">
+            —
+          </strong>
+
+          <small>
+            آزمایشگاه همکار
+          </small>
+
+        </div>
+
+        <div
+          class="avatar"
+          id="avatar"
+        >
+          A
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main">
+
+      <div class="page-title">
+
+        <h1>
+          پنل آزمایشگاه همکار
+        </h1>
+
+        <p>
+          مدیریت اشتراک و دسترسی به سامانه ALPHA LAB
+        </p>
+
+      </div>
+
+
+      <!-- ===================================================
+           LABORATORY
+           =================================================== -->
+
+      <section class="lab-card">
+
+        <div class="lab-card-header">
+
+          <div class="lab-title">
+
+            <div class="lab-icon">
+              🧪
+            </div>
+
+            <div>
+
+              <h2 id="labName">
+                در حال بارگذاری...
+              </h2>
+
+              <p>
+                اطلاعات آزمایشگاه
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div
+            class="lab-code-badge"
+            id="labCode"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="lab-info-grid">
+
+          <div class="info-item">
+
+            <small>
+              نام آزمایشگاه
+            </small>
+
+            <strong id="labNameInfo">
+              —
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <small>
+              کد آزمایشگاه
+            </small>
+
+            <strong id="labCodeInfo">
+              —
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <small>
+              وضعیت آزمایشگاه
+            </small>
+
+            <strong id="labActive">
+              —
+            </strong>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <small>
+              کاربر
+            </small>
+
+            <strong id="profileName">
+              —
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           SUBSCRIPTION
+           =================================================== -->
+
+      <section class="subscription">
+
+        <div class="section-header">
+
+          <div>
+
+            <h3>
+              اشتراک آزمایشگاه
+            </h3>
+
+            <span>
+              License Management
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="subscription-body">
+
+          <div class="subscription-grid">
+
+
+            <!-- CURRENT SUBSCRIPTION -->
+
+            <div class="current-subscription">
+
+              <h4>
+                وضعیت اشتراک
+              </h4>
+
+
+              <div class="subscription-row">
+
+                <span>
+                  نوع اشتراک
+                </span>
+
+                <strong id="currentPlan">
+                  —
+                </strong>
+
+              </div>
+
+
+              <div class="subscription-row">
+
+                <span>
+                  وضعیت
+                </span>
+
+                <strong id="currentStatus">
+                  —
+                </strong>
+
+              </div>
+
+
+              <div class="subscription-row">
+
+                <span>
+                  تاریخ شروع
+                </span>
+
+                <strong id="currentStart">
+                  —
+                </strong>
+
+              </div>
+
+
+              <div class="subscription-row">
+
+                <span>
+                  تاریخ انقضا
+                </span>
+
+                <strong id="currentExpire">
+                  —
+                </strong>
+
+              </div>
+
+
+              <div class="subscription-row">
+
+                <span>
+                  روزهای باقی‌مانده
+                </span>
+
+                <strong id="daysRemaining">
+                  —
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <!-- ACTIVATION -->
+
+            <div class="activation-box">
+
+              <h4>
+                فعال‌سازی اشتراک
+              </h4>
+
+
+              <p class="activation-description">
+
+                اگر از مدیر سیستم کد فعال‌سازی دریافت کرده‌اید،
+                کد را دقیقاً در کادر زیر وارد کنید.
+                پس از تأیید، اشتراک آزمایشگاه فعال خواهد شد.
+
+              </p>
+
+
+              <input
+                id="activationCodeInput"
+                class="activation-input"
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="ALP-XXXXXXXXXXXX"
+                maxlength="40"
+              >
+
+
+              <button
+                id="activateButton"
+                class="activation-button"
+                type="button"
+              >
+                فعال‌سازی اشتراک
+              </button>
+
+
+              <div
+                id="activationMessage"
+                class="activation-message"
+              ></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           QUICK CARDS
+           =================================================== -->
+
+      <section class="cards">
+
+        <div class="card">
+
+          <div class="card-icon">
+            📋
+          </div>
+
+          <strong>
+            درخواست آزمایش
+          </strong>
+
+          <span>
+            ثبت و ارسال درخواست‌های آزمایش
+          </span>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-icon">
+            🧾
+          </div>
+
+          <strong>
+            نتایج آزمایش
+          </strong>
+
+          <span>
+            مشاهده نتایج آماده شده
+          </span>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-icon">
+            👤
+          </div>
+
+          <strong>
+            حساب آزمایشگاه
+          </strong>
+
+          <span>
+            مدیریت اطلاعات حساب و دسترسی
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <button
+        id="logoutButton"
+        class="logout"
+        type="button"
+      >
+        خروج از حساب
+      </button>
+
+    </main>
+
+  </div>
+
+
+  <!-- =======================================================
+       TOAST
+       ======================================================= -->
+
+  <div
+    id="toast"
+    class="toast"
+  ></div>
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+       ======================================================= -->
+
+  <script>
+
+    "use strict";
+
+
+    /*
+    ============================================================
+    SUPABASE CONFIGURATION
+    ============================================================
+    */
+
+    const SUPABASE_URL =
+      "https://iskadzhvfadtonbbxjoj.supabase.co";
+
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_46725iYaI--CYc2SJJzA7Q_Lf0qsh_x";
+
+
+    /*
+    ============================================================
+    SUPABASE CLIENT
+    ============================================================
+    */
+
+    const {
+      createClient
+    } = window.supabase;
+
+
+    const supabaseClient =
+      createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /*
+    ============================================================
+       DOM
+    ============================================================
+    */
+
+    const loadingScreen =
+      document.getElementById(
+        "loadingScreen"
+      );
+
+
+    const loadingText =
+      document.getElementById(
+        "loadingText"
+      );
+
+
+    const userEmail =
+      document.getElementById(
+        "userEmail"
+      );
+
+
+    const avatar =
+      document.getElementById(
+        "avatar"
+      );
+
+
+    const labName =
+      document.getElementById(
+        "labName"
+      );
+
+
+    const labCode =
+      document.getElementById(
+        "labCode"
+      );
+
+
+    const labNameInfo =
+      document.getElementById(
+        "labNameInfo"
+      );
+
+
+    const labCodeInfo =
+      document.getElementById(
+        "labCodeInfo"
+      );
+
+
+    const labActive =
+      document.getElementById(
+        "labActive"
+      );
+
+
+    const profileName =
+      document.getElementById(
+        "profileName"
+      );
+
+
+    const currentPlan =
+      document.getElementById(
+        "currentPlan"
+      );
+
+
+    const currentStatus =
+      document.getElementById(
+        "currentStatus"
+      );
+
+
+    const currentStart =
+      document.getElementById(
+        "currentStart"
+      );
+
+
+    const currentExpire =
+      document.getElementById(
+        "currentExpire"
+      );
+
+
+    const daysRemaining =
+      document.getElementById(
+        "daysRemaining"
+      );
+
+
+    const activationCodeInput =
+      document.getElementById(
+        "activationCodeInput"
+      );
+
+
+    const activateButton =
+      document.getElementById(
+        "activateButton"
+      );
+
+
+    const activationMessage =
+      document.getElementById(
+        "activationMessage"
+      );
+
+
+    const logoutButton =
+      document.getElementById(
+        "logoutButton"
+      );
+
+
+    const toast =
+      document.getElementById(
+        "toast"
+      );
+
+
+    /*
+    ============================================================
+       GLOBAL STATE
+    ============================================================
+    */
+
+    let currentUser = null;
+
+    let currentProfile = null;
+
+    let currentLaboratory = null;
+
+    let currentSubscription = null;
+
+
+    /*
+    ============================================================
+       TOAST
+    ============================================================
+    */
+
+    let toastTimer = null;
+
+
+    function showToast(
+      message,
+      type = "success"
+    ) {
+
+      toast.textContent =
+        message;
+
+
+      toast.className =
+        "toast show " + type;
+
+
+      clearTimeout(
+        toastTimer
+      );
+
+
+      toastTimer =
+        setTimeout(
+          function () {
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          3500
+        );
+
+    }
+
+
+    /*
+    ============================================================
+       FORMAT DATE
+    ============================================================
+    */
+
+    function formatDate(
+      value
+    ) {
+
+      if (!value) {
+
+        return "—";
+
+      }
+
+
+      try {
+
+        return new Intl.DateTimeFormat(
+          "fa-IR",
+          {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+          }
+        ).format(
+          new Date(value)
+        );
+
+      } catch (error) {
+
+        return value;
+
+      }
+
+    }
+
+
+    /*
+    ============================================================
+       GET REMAINING DAYS
+    ============================================================
+    */
+
+    function getRemainingDays(
+      expiresAt
+    ) {
+
+      if (!expiresAt) {
+
+        return "—";
+
+      }
+
+
+      const diff =
+        new Date(
+          expiresAt
+        ).getTime() -
+        Date.now();
+
+
+      if (diff <= 0) {
+
+        return "منقضی";
+
+      }
+
+
+      return (
+        Math.ceil(
+          diff /
+          (
+            1000 *
+            60 *
+            60 *
+            24
+          )
+        ) +
+        " روز"
+      );
+
+    }
+
+
+    /*
+    ============================================================
+       INITIALIZE
+    ============================================================
+    */
+
+    async function initializeDashboard() {
+
+      try {
+
+        loadingText.textContent =
+          "در حال بررسی نشست کاربری...";
+
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .auth
+            .getSession();
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        if (
+          !data ||
+          !data.session ||
+          !data.session.user
+        ) {
+
+          window.location.href =
+            "partner-login.html";
+
+          return;
+
+        }
+
+
+        currentUser =
+          data.session.user;
+
+
+        userEmail.textContent =
+          currentUser.email ||
+          "کاربر آزمایشگاه";
+
+
+        avatar.textContent =
+          (
+            currentUser.email ||
+            "A"
+          )
+            .charAt(0)
+            .toUpperCase();
+
+
+        loadingText.textContent =
+          "در حال دریافت پروفایل...";
+
+
+        await loadProfile();
+
+
+        loadingText.textContent =
+          "در حال دریافت آزمایشگاه...";
+
+
+        await loadLaboratory();
+
+
+        loadingText.textContent =
+          "در حال بررسی اشتراک...";
+
+
+        await loadSubscription();
+
+
+        loadingText.textContent =
+          "داشبورد آماده است";
+
+
+        loadingScreen.style.display =
+          "none";
+
+
+        console.log(
+          "ALPHA LAB Partner Dashboard initialized",
+          {
+            user_id:
+              currentUser.id,
+
+            laboratory_id:
+              currentLaboratory.id
+          }
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Dashboard Initialization Error:",
+          error
+        );
+
+
+        console.error(
+          "Full Error:",
+          error
+        );
+
+
+        loadingText.textContent =
+          "خطا در بارگذاری داشبورد";
+
+
+        showToast(
+          error.message ||
+          "خطا در بارگذاری داشبورد.",
+          "error"
+        );
+
+
+        setTimeout(
+          function () {
+
+            window.location.href =
+              "partner-login.html";
+
+          },
+          2500
+        );
+
+      }
+
+    }
+
+
+    /*
+    ============================================================
+       LOAD PROFILE
+    ============================================================
+    */
+
+    async function loadProfile() {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select(
+            "id,laboratory_id,full_name,phone,email,role,is_active"
+          )
+          .eq(
+            "id",
+            currentUser.id
+          )
+          .maybeSingle();
+
+
+      if (error) {
+
+        console.error(
+          "Profile Error:",
+          error
+        );
+
+        throw new Error(
+          "خطا در دریافت پروفایل کاربر."
+        );
+
+      }
+
+
+      if (!data) {
+
+        throw new Error(
+          "پروفایل کاربر پیدا نشد."
+        );
+
+      }
+
+
+      if (
+        data.is_active !== true
+      ) {
+
+        throw new Error(
+          "حساب کاربری غیرفعال است."
+        );
+
+      }
+
+
+      currentProfile =
+        data;
+
+
+      profileName.textContent =
+        data.full_name ||
+        data.email ||
+        currentUser.email ||
+        "کاربر";
+
+
+    }
+
+
+    /*
+    ============================================================
+       LOAD LABORATORY
+    ============================================================
+    */
+
+    async function loadLaboratory() {
+
+      if (
+        !currentProfile ||
+        !currentProfile.laboratory_id
+      ) {
+
+        throw new Error(
+          "این حساب به هیچ آزمایشگاهی متصل نیست."
+        );
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("laboratories")
+          .select(
+            "id,name,lab_code,is_active"
+          )
+          .eq(
+            "id",
+            currentProfile.laboratory_id
+          )
+          .maybeSingle();
+
+
+      if (error) {
+
+        console.error(
+          "Laboratory Error:",
+          error
+        );
+
+        throw new Error(
+          "خطا در دریافت اطلاعات آزمایشگاه."
+        );
+
+      }
+
+
+      if (!data) {
+
+        throw new Error(
+          "آزمایشگاه این حساب پیدا نشد."
+        );
+
+      }
+
+
+      if (
+        data.is_active !== true
+      ) {
+
+        throw new Error(
+          "آزمایشگاه غیرفعال است."
+        );
+
+      }
+
+
+      currentLaboratory =
+        data;
+
+
+      labName.textContent =
+        data.name;
+
+
+      labCode.textContent =
+        data.lab_code;
+
+
+      labNameInfo.textContent =
+        data.name;
+
+
+      labCodeInfo.textContent =
+        data.lab_code;
+
+
+      labActive.textContent =
+        "فعال";
+
+
+    }
+
+
+    /*
+    ============================================================
+       LOAD SUBSCRIPTION
+    ============================================================
+    */
+
+    async function loadSubscription() {
+
+      if (!currentLaboratory) {
+
+        return;
+
+      }
+
+
+      console.log(
+        "PARTNER SUBSCRIPTION TEST",
+        {
+          user_id:
+            currentUser?.id ||
+            null,
+
+          laboratory_id:
+            currentLaboratory.id,
+
+          lab_code:
+            currentLaboratory.lab_code
+        }
+      );
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.rpc(
+            "get_laboratory_subscription",
+            {
+              p_laboratory_id:
+                currentLaboratory.id
+            }
+          );
+
+
+        if (error) {
+
+          console.error(
+            "Subscription RPC Error:",
+            error
+          );
+
+          currentSubscription =
+            null;
+
+          renderSubscription();
+
+          return;
+
+        }
+
+
+        console.log(
+          "PARTNER SUBSCRIPTION RPC RESULT:",
+          data
+        );
+
+
+        currentSubscription =
+          Array.isArray(data) &&
+          data.length
+            ? data[0]
+            : null;
+
+
+        renderSubscription();
+
+
+      } catch (error) {
+
+        console.error(
+          "LOAD SUBSCRIPTION ERROR:",
+          error
+        );
+
+
+        currentSubscription =
+          null;
+
+
+        renderSubscription();
+
+      }
+
+    }
+
+
+    /*
+    ============================================================
+       RENDER SUBSCRIPTION
+    ============================================================
+    */
+
+    function renderSubscription() {
+
+      if (!currentSubscription) {
+
+        currentPlan.textContent =
+          "بدون اشتراک";
+
+        currentStatus.textContent =
+          "بدون اشتراک";
+
+        currentStart.textContent =
+          "—";
+
+        currentExpire.textContent =
+          "—";
+
+        daysRemaining.textContent =
+          "—";
+
+
+        currentStatus.className =
+          "";
+
+
+        activateButton.disabled =
+          false;
+
+
+        activateButton.textContent =
+          "فعال‌سازی اشتراک";
+
+
+        return;
+
+      }
+
+
+      const sub =
+        currentSubscription;
+
+
+      const planText =
+        sub.plan === "yearly"
+          ? "سالانه"
+          : sub.plan === "monthly"
+            ? "ماهانه"
+            : sub.plan ||
+              "—";
+
+
+      let statusText =
+        sub.status ||
+        "—";
+
+
+      currentStatus.className =
+        "";
+
+
+      if (
+        sub.status ===
+        "pending_activation"
+      ) {
+
+        statusText =
+          "در انتظار فعال‌سازی";
+
+        currentStatus.className =
+          "status-pending";
+
+
+      } else if (
+        sub.status ===
+        "active"
+      ) {
+
+        statusText =
+          "فعال";
+
+        currentStatus.className =
+          "status-active";
+
+
+      } else if (
+        sub.status ===
+        "expired"
+      ) {
+
+        statusText =
+          "منقضی";
+
+        currentStatus.className =
+          "status-expired";
+
+
+      } else if (
+        sub.status ===
+        "suspended"
+      ) {
+
+        statusText =
+          "معلق";
+
+        currentStatus.className =
+          "status-expired";
+
+      }
+
+
+      currentPlan.textContent =
+        planText;
+
+
+      currentStatus.textContent =
+        statusText;
+
+
+      currentStart.textContent =
+        formatDate(
+          sub.starts_at
+        );
+
+
+      currentExpire.textContent =
+        formatDate(
+          sub.expires_at
+        );
+
+
+      daysRemaining.textContent =
+        sub.status === "active"
+          ? getRemainingDays(
+              sub.expires_at
+            )
+          : "—";
+
+
+      /*
+      ============================================================
+      فعال‌سازی فقط وقتی مجاز است که اشتراک pending باشد.
+      ============================================================
+      */
+
+      if (
+        sub.status ===
+        "pending_activation"
+      ) {
+
+        activateButton.disabled =
+          false;
+
+        activateButton.textContent =
+          "فعال‌سازی اشتراک";
+
+        activationCodeInput.disabled =
+          false;
+
+
+      } else if (
+        sub.status ===
+        "active"
+      ) {
+
+        activateButton.disabled =
+          true;
+
+        activationCodeInput.disabled =
+          true;
+
+        activateButton.textContent =
+          "اشتراک فعال است";
+
+
+      } else {
+
+        activateButton.disabled =
+          false;
+
+        activationCodeInput.disabled =
+          false;
+
+        activateButton.textContent =
+          "فعال‌سازی اشتراک";
+
+      }
+
+    }
+
+
+    /*
+    ============================================================
+       ACTIVATE SUBSCRIPTION
+    ============================================================
+    */
+
+    async function activateSubscription() {
+
+      if (!currentUser) {
+
+        showToast(
+          "کاربر وارد سیستم نشده است.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (!currentLaboratory) {
+
+        showToast(
+          "آزمایشگاه مشخص نیست.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      const code =
+        activationCodeInput.value
+          .trim()
+          .toUpperCase();
+
+
+      if (!code) {
+
+        showActivationMessage(
+          "لطفاً کد فعال‌سازی را وارد کنید.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (
+        !code.startsWith("ALP-")
+      ) {
+
+        showActivationMessage(
+          "فرمت کد فعال‌سازی صحیح نیست.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      activateButton.disabled =
+        true;
+
+
+      activateButton.textContent =
+        "در حال فعال‌سازی...";
+
+
+      hideActivationMessage();
+
+
+      try {
+
+        console.log(
+          "ACTIVATION TEST",
+          {
+            user_id:
+              currentUser.id,
+
+            laboratory_id:
+              currentLaboratory.id,
+
+            code_length:
+              code.length
+          }
+        );
+
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.rpc(
+            "activate_laboratory_subscription",
+            {
+              p_laboratory_id:
+                currentLaboratory.id,
+
+              p_activation_code:
+                code
+            }
+          );
+
+
+        if (error) {
+
+          console.error(
+            "Activation RPC Error:",
+            error
+          );
+
+          throw new Error(
+            error.message ||
+            "فعال‌سازی اشتراک ناموفق بود."
+          );
+
+        }
+
+
+        console.log(
+          "ACTIVATION RPC RESULT:",
+          data
+        );
+
+
+        if (
+          !data ||
+          !Array.isArray(data) ||
+          !data.length
+        ) {
+
+          throw new Error(
+            "فعال‌سازی انجام شد اما نتیجه دریافت نشد."
+          );
+
+        }
+
+
+        const result =
+          data[0];
+
+
+        showActivationMessage(
+          "اشتراک با موفقیت فعال شد.",
+          "success"
+        );
+
+
+        showToast(
+          "اشتراک با موفقیت فعال شد.",
+          "success"
+        );
+
+
+        activationCodeInput.value =
+          "";
+
+
+        await loadSubscription();
+
+
+        console.log(
+          "Subscription activated:",
+          result
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "ACTIVATION ERROR:",
+          error
+        );
+
+
+        showActivationMessage(
+          error.message ||
+          "کد فعال‌سازی نامعتبر است.",
+          "error"
+        );
+
+
+        activateButton.disabled =
+          false;
+
+
+        activateButton.textContent =
+          "فعال‌سازی اشتراک";
+
+      }
+
+    }
+
+
+    /*
+    ============================================================
+       ACTIVATION MESSAGE
+    ============================================================
+    */
+
+    function showActivationMessage(
+      message,
+      type
+    ) {
+
+      activationMessage.textContent =
+        message;
+
+
+      activationMessage.className =
+        "activation-message show " +
+        type;
+
+    }
+
+
+    function hideActivationMessage() {
+
+      activationMessage.className =
+        "activation-message";
+
+      activationMessage.textContent =
+        "";
+
+    }
+
+
+    /*
+    ============================================================
+       LOGOUT
+    ============================================================
+    */
+
+    logoutButton.addEventListener(
+      "click",
+      async function () {
+
+        logoutButton.disabled =
+          true;
+
+
+        logoutButton.textContent =
+          "در حال خروج...";
+
+
+        try {
+
+          const {
+            error
+          } =
+            await supabaseClient
+              .auth
+              .signOut();
+
+
+          if (error) {
+
+            throw error;
+
+          }
+
+
+          window.location.href =
+            "partner-login.html";
+
+
+        } catch (error) {
+
+          console.error(
+            "Logout Error:",
+            error
+          );
+
+
+          logoutButton.disabled =
+            false;
+
+
+          logoutButton.textContent =
+            "خروج از حساب";
+
+
+          showToast(
+            "خطا در خروج از حساب.",
+            "error"
+          );
+
+        }
+
+      }
+    );
+
+
+    /*
+    ============================================================
+       AUTH STATE
+    ============================================================
+    */
+
+    supabaseClient.auth.onAuthStateChange(
+      function (
+        event,
+        session
+      ) {
+
+        console.log(
+          "ALPHA LAB Partner Auth State:",
+          event
+        );
+
+
+        if (
+          event ===
+          "SIGNED_OUT"
+        ) {
+
+          window.location.href =
+            "partner-login.html";
+
+        }
+
+      }
+    );
+
+
+    /*
+    ============================================================
+       ACTIVATE BUTTON
+    ============================================================
+    */
+
+    activateButton.addEventListener(
+      "click",
+      activateSubscription
+    );
+
+
+    /*
+    ============================================================
+       ENTER KEY
+    ============================================================
+    */
+
+    activationCodeInput.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (
+          event.key === "Enter"
+        ) {
+
+          activateSubscription();
+
+        }
+
+      }
+    );
+
+
+    /*
+    ============================================================
+       INITIALIZATION
+    ============================================================
+    */
+
+    initializeDashboard();
+
+  </script>
+
+</body>
+</html>

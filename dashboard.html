@@ -2346,267 +2346,289 @@ async function loadSubscription() {
       }
 
     }
+/*
+============================================================
+STATISTICS
+============================================================
+*/
+
+async function loadStatistics() {
+
+  if (!currentLaboratory) {
+    return;
+  }
 
 
-    /*
+  /*
     ============================================================
-    STATISTICS
+    بیماران
     ============================================================
-    */
+  */
 
-    async function loadStatistics() {
+  try {
 
-      if (!currentLaboratory) {
-        return;
-      }
-
-
-      /*
-        فعلاً آمار را با Count واقعی
-        از جداول موجود می‌خوانیم.
-
-        اگر RLS اجازه ندهد،
-        مقدار — باقی می‌ماند و
-        ساختار سیستم خراب نمی‌شود.
-      */
-
-
-      try {
-
-        const patientsResult =
-          await supabaseClient
-            .from("patients")
-            .select(
-              "id",
-              {
-                count: "exact",
-                head: true
-              }
-            )
-            .eq(
-              "laboratory_id",
-              currentLaboratory.id
-            );
-
-
-        if (
-          !patientsResult.error
-        ) {
-
-          document
-            .getElementById(
-              "patientsCount"
-            )
-            .textContent =
-              patientsResult.count ??
-              0;
-
-        }
-
-
-      } catch (error) {
-
-        console.warn(
-          "Patients count unavailable:",
-          error
+    const patientsResult =
+      await supabaseClient
+        .from("patients")
+        .select(
+          "id",
+          {
+            count: "exact",
+            head: true
+          }
+        )
+        .eq(
+          "laboratory_id",
+          currentLaboratory.id
         );
 
+
+    if (!patientsResult.error) {
+
+      const patientsCount =
+        patientsResult.count ?? 0;
+
+
+      const patientsCountElement =
+        document.getElementById(
+          "patientsCount"
+        );
+
+
+      if (patientsCountElement) {
+
+        patientsCountElement.textContent =
+          patientsCount;
+
       }
-/*
-  ============================================================
-  درخواست‌ها
-  ============================================================
-*/
 
-try {
 
-  const requestsResult =
-    await supabaseClient
-      .from("requests")
-      .select(
-        "id",
-        {
-          count: "exact",
-          head: true
-        }
-      )
-      .eq(
-        "laboratory_id",
-        currentLaboratory.id
+      console.log(
+        "PATIENTS COUNT:",
+        patientsCount
       );
 
+    } else {
 
-  if (!requestsResult.error) {
-
-    const requestsCount =
-      requestsResult.count ?? 0;
-
-
-    const requestsCountElement =
-      document.getElementById(
-        "requestsCount"
+      console.error(
+        "PATIENTS COUNT ERROR:",
+        patientsResult.error
       );
-
-
-    if (requestsCountElement) {
-
-      requestsCountElement.textContent =
-        requestsCount;
 
     }
 
-
-    console.log(
-      "REQUESTS COUNT:",
-      requestsCount
-    );
-
-  } else {
+  } catch (error) {
 
     console.error(
-      "REQUESTS COUNT ERROR:",
-      requestsResult.error
+      "PATIENTS COUNT EXCEPTION:",
+      error
     );
 
   }
 
-} catch (error) {
 
-  console.error(
-    "REQUESTS COUNT EXCEPTION:",
-    error
-  );
+  /*
+    ============================================================
+    درخواست‌ها
+    ============================================================
+  */
 
-}/*
-  ============================================================
-  تست‌ها
-  ============================================================
-*/
+  try {
 
-try {
+    const requestsResult =
+      await supabaseClient
+        .from("requests")
+        .select(
+          "id",
+          {
+            count: "exact",
+            head: true
+          }
+        )
+        .eq(
+          "laboratory_id",
+          currentLaboratory.id
+        );
 
-  const testsResult =
-    await supabaseClient
-      .from("lab_tests")
-      .select(
-        "id",
-        {
-          count: "exact",
-          head: true
-        }
-      )
-      .eq(
-        "laboratory_id",
-        currentLaboratory.id
+
+    if (!requestsResult.error) {
+
+      const requestsCount =
+        requestsResult.count ?? 0;
+
+
+      const requestsCountElement =
+        document.getElementById(
+          "requestsCount"
+        );
+
+
+      if (requestsCountElement) {
+
+        requestsCountElement.textContent =
+          requestsCount;
+
+      }
+
+
+      console.log(
+        "REQUESTS COUNT:",
+        requestsCount
       );
 
+    } else {
 
-  if (!testsResult.error) {
-
-    const testsCount =
-      testsResult.count ?? 0;
-
-
-    const testsCountElement =
-      document.getElementById(
-        "testsCount"
+      console.error(
+        "REQUESTS COUNT ERROR:",
+        requestsResult.error
       );
-
-
-    if (testsCountElement) {
-
-      testsCountElement.textContent =
-        testsCount;
 
     }
 
-
-    console.log(
-      "TESTS COUNT:",
-      testsCount
-    );
-
-  } else {
+  } catch (error) {
 
     console.error(
-      "TESTS COUNT ERROR:",
-      testsResult.error
+      "REQUESTS COUNT EXCEPTION:",
+      error
     );
 
   }
 
-} catch (error) {
 
-  console.error(
-    "TESTS COUNT EXCEPTION:",
-    error
-  );
+  /*
+    ============================================================
+    تست‌ها
+    ============================================================
+  */
 
-}
-/*
-  ============================================================
-  تراکنش‌های مالی
-  ============================================================
-*/
+  try {
 
-try {
+    const testsResult =
+      await supabaseClient
+        .from("lab_tests")
+        .select(
+          "id",
+          {
+            count: "exact",
+            head: true
+          }
+        )
+        .eq(
+          "laboratory_id",
+          currentLaboratory.id
+        );
 
-  const financeResult =
-    await supabaseClient
-      .from("financial_transactions")
-      .select(
-        "id",
-        {
-          count: "exact",
-          head: true
-        }
-      )
-      .eq(
-        "laboratory_id",
-        currentLaboratory.id
+
+    if (!testsResult.error) {
+
+      const testsCount =
+        testsResult.count ?? 0;
+
+
+      const testsCountElement =
+        document.getElementById(
+          "testsCount"
+        );
+
+
+      if (testsCountElement) {
+
+        testsCountElement.textContent =
+          testsCount;
+
+      }
+
+
+      console.log(
+        "TESTS COUNT:",
+        testsCount
       );
 
+    } else {
 
-  if (!financeResult.error) {
-
-    const financeCount =
-      financeResult.count ?? 0;
-
-
-    const financeCountElement =
-      document.getElementById(
-        "financeCount"
+      console.error(
+        "TESTS COUNT ERROR:",
+        testsResult.error
       );
-
-
-    if (financeCountElement) {
-
-      financeCountElement.textContent =
-        financeCount;
 
     }
 
-
-    console.log(
-      "FINANCE COUNT:",
-      financeCount
-    );
-
-  } else {
+  } catch (error) {
 
     console.error(
-      "FINANCE COUNT ERROR:",
-      financeResult.error
+      "TESTS COUNT EXCEPTION:",
+      error
     );
 
   }
 
-} catch (error) {
 
-  console.error(
-    "FINANCE COUNT EXCEPTION:",
-    error
-  );
+  /*
+    ============================================================
+    تراکنش‌های مالی
+    ============================================================
+  */
+
+  try {
+
+    const financeResult =
+      await supabaseClient
+        .from("financial_transactions")
+        .select(
+          "id",
+          {
+            count: "exact",
+            head: true
+          }
+        )
+        .eq(
+          "laboratory_id",
+          currentLaboratory.id
+        );
+
+
+    if (!financeResult.error) {
+
+      const financeCount =
+        financeResult.count ?? 0;
+
+
+      const financeCountElement =
+        document.getElementById(
+          "financeCount"
+        );
+
+
+      if (financeCountElement) {
+
+        financeCountElement.textContent =
+          financeCount;
+
+      }
+
+
+      console.log(
+        "FINANCE COUNT:",
+        financeCount
+      );
+
+    } else {
+
+      console.error(
+        "FINANCE COUNT ERROR:",
+        financeResult.error
+      );
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "FINANCE COUNT EXCEPTION:",
+      error
+    );
+
+  }
 
 }
 

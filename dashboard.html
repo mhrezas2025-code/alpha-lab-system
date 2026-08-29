@@ -2412,59 +2412,70 @@ async function loadSubscription() {
         );
 
       }
-
 /*
+  ============================================================
   درخواست‌ها
+  ============================================================
 */
 
 try {
 
-    const requestsResult =
-        await supabaseClient
-            .from("requests")
-            .select(
-                "id",
-                {
-                    count: "exact",
-                    head: true
-                }
-            );
-
-
-    if (!requestsResult.error) {
-
-        const requestsCount =
-            requestsResult.count ?? 0;
-
-
-        const requestsCountElement =
-            document.getElementById(
-                "requestsCount"
-            );
-
-
-        if (requestsCountElement) {
-
-            requestsCountElement.textContent =
-                requestsCount;
-
+  const requestsResult =
+    await supabaseClient
+      .from("requests")
+      .select(
+        "id",
+        {
+          count: "exact",
+          head: true
         }
+      )
+      .eq(
+        "laboratory_id",
+        currentLaboratory.id
+      );
 
-    } else {
 
-        console.error(
-            "REQUESTS COUNT ERROR:",
-            requestsResult.error
-        );
+  if (!requestsResult.error) {
+
+    const requestsCount =
+      requestsResult.count ?? 0;
+
+
+    const requestsCountElement =
+      document.getElementById(
+        "requestsCount"
+      );
+
+
+    if (requestsCountElement) {
+
+      requestsCountElement.textContent =
+        requestsCount;
 
     }
 
-} catch (error) {
+
+    console.log(
+      "REQUESTS COUNT:",
+      requestsCount
+    );
+
+  } else {
 
     console.error(
-        "REQUESTS COUNT EXCEPTION:",
-        error
+      "REQUESTS COUNT ERROR:",
+      requestsResult.error
     );
+
+  }
+
+} catch (error) {
+
+  console.error(
+    "REQUESTS COUNT EXCEPTION:",
+    error
+  );
 
 }
       /*

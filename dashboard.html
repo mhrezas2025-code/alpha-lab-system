@@ -2413,50 +2413,60 @@ async function loadSubscription() {
 
       }
 
+/*
+  درخواست‌ها
+*/
 
-      /*
-        درخواست‌ها
-      */
+try {
 
-      try {
-
-        const requestsResult =
-          await supabaseClient
-            .from("lab_requests")
+    const requestsResult =
+        await supabaseClient
+            .from("requests")
             .select(
-              "id",
-              {
-                count: "exact",
-                head: true
-              }
+                "id",
+                {
+                    count: "exact",
+                    head: true
+                }
             );
 
 
-        if (
-          !requestsResult.error
-        ) {
+    if (!requestsResult.error) {
 
-          document
-            .getElementById(
-              "requestsCount"
-            )
-            .textContent =
-              requestsResult.count ??
-              0;
+        const requestsCount =
+            requestsResult.count ?? 0;
+
+
+        const requestsCountElement =
+            document.getElementById(
+                "requestsCount"
+            );
+
+
+        if (requestsCountElement) {
+
+            requestsCountElement.textContent =
+                requestsCount;
 
         }
 
+    } else {
 
-      } catch (error) {
-
-        console.warn(
-          "Requests count unavailable:",
-          error
+        console.error(
+            "REQUESTS COUNT ERROR:",
+            requestsResult.error
         );
 
-      }
+    }
 
+} catch (error) {
 
+    console.error(
+        "REQUESTS COUNT EXCEPTION:",
+        error
+    );
+
+}
       /*
         تست‌ها
       */

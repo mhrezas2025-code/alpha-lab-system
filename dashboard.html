@@ -2543,55 +2543,72 @@ try {
   );
 
 }
+/*
+  ============================================================
+  تراکنش‌های مالی
+  ============================================================
+*/
 
-      /*
-        تراکنش‌های مالی
-      */
+try {
 
-      try {
-
-        const financeResult =
-          await supabaseClient
-            .from("financial_transactions")
-            .select(
-              "id",
-              {
-                count: "exact",
-                head: true
-              }
-            )
-            .eq(
-              "laboratory_id",
-              currentLaboratory.id
-            );
-
-
-        if (
-          !financeResult.error
-        ) {
-
-          document
-            .getElementById(
-              "financeCount"
-            )
-            .textContent =
-              financeResult.count ??
-              0;
-
+  const financeResult =
+    await supabaseClient
+      .from("financial_transactions")
+      .select(
+        "id",
+        {
+          count: "exact",
+          head: true
         }
+      )
+      .eq(
+        "laboratory_id",
+        currentLaboratory.id
+      );
 
 
-      } catch (error) {
+  if (!financeResult.error) {
 
-        console.warn(
-          "Finance count unavailable:",
-          error
-        );
+    const financeCount =
+      financeResult.count ?? 0;
 
-      }
+
+    const financeCountElement =
+      document.getElementById(
+        "financeCount"
+      );
+
+
+    if (financeCountElement) {
+
+      financeCountElement.textContent =
+        financeCount;
 
     }
 
+
+    console.log(
+      "FINANCE COUNT:",
+      financeCount
+    );
+
+  } else {
+
+    console.error(
+      "FINANCE COUNT ERROR:",
+      financeResult.error
+    );
+
+  }
+
+} catch (error) {
+
+  console.error(
+    "FINANCE COUNT EXCEPTION:",
+    error
+  );
+
+}
 
     /*
     ============================================================

@@ -11,7 +11,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -21,6 +20,13 @@
             font-family: Tahoma, Arial, sans-serif;
             background: #f4f7fb;
             color: #1f2937;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
         }
 
         .topbar {
@@ -65,6 +71,17 @@
             font-size: 13px;
         }
 
+        .user-email-box {
+            text-align: right;
+        }
+
+        .user-role {
+            display: block;
+            color: #93c5fd;
+            margin-top: 3px;
+            font-size: 11px;
+        }
+
         .logout-btn {
             border: 0;
             background: #ef4444;
@@ -72,7 +89,6 @@
             padding: 9px 15px;
             border-radius: 8px;
             cursor: pointer;
-            font-family: inherit;
         }
 
         .logout-btn:hover {
@@ -86,6 +102,7 @@
 
         .sidebar {
             width: 245px;
+            flex-shrink: 0;
             background: #111827;
             color: white;
             padding: 20px 12px;
@@ -108,6 +125,7 @@
             color: #d1d5db;
             cursor: pointer;
             transition: .2s;
+            user-select: none;
         }
 
         .menu-item:hover,
@@ -211,6 +229,7 @@
             text-align: right;
             border-bottom: 1px solid #eef2f7;
             font-size: 13px;
+            vertical-align: middle;
         }
 
         th {
@@ -228,9 +247,9 @@
             padding: 9px 14px;
             border-radius: 8px;
             cursor: pointer;
-            font-family: inherit;
             font-size: 12px;
             font-weight: 600;
+            transition: .2s;
         }
 
         .btn-primary {
@@ -247,14 +266,26 @@
             color: #334155;
         }
 
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
         .btn-success {
             background: #16a34a;
             color: white;
         }
 
+        .btn-success:hover {
+            background: #15803d;
+        }
+
         .btn-danger {
             background: #dc2626;
             color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
         }
 
         .btn:disabled {
@@ -268,15 +299,10 @@
             flex-wrap: wrap;
         }
 
-        .empty {
-            text-align: center;
-            padding: 35px;
-            color: #64748b;
-        }
-
+        .empty,
         .loading {
             text-align: center;
-            padding: 30px;
+            padding: 35px;
             color: #64748b;
         }
 
@@ -304,12 +330,19 @@
             border: 1px solid #bbf7d0;
         }
 
+        .alert-warning {
+            background: #fff7ed;
+            color: #9a3412;
+            border: 1px solid #fed7aa;
+        }
+
         .status-badge {
             display: inline-block;
             padding: 6px 10px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
+            white-space: nowrap;
         }
 
         .status-active {
@@ -360,9 +393,10 @@
         .modal {
             width: 100%;
             max-width: 560px;
+            max-height: 90vh;
+            overflow-y: auto;
             background: white;
             border-radius: 16px;
-            overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,.25);
         }
 
@@ -408,13 +442,13 @@
             padding: 11px 12px;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
-            font-family: inherit;
             font-size: 14px;
             outline: none;
         }
 
         .form-control:focus {
             border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,.1);
         }
 
         .modal-footer {
@@ -445,6 +479,7 @@
             padding: 15px;
             border-radius: 9px;
             margin: 12px 0;
+            user-select: all;
         }
 
         .warning-box {
@@ -467,6 +502,32 @@
             font-size: 13px;
         }
 
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .info-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 13px;
+        }
+
+        .info-item .label {
+            display: block;
+            color: #64748b;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .info-item .value {
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 13px;
+        }
+
         .footer {
             text-align: center;
             padding: 25px;
@@ -474,8 +535,43 @@
             font-size: 12px;
         }
 
-        @media (max-width: 1000px) {
+        .connection-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            padding: 7px 10px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: #64748b;
+        }
 
+        .connection-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #94a3b8;
+        }
+
+        .connection-status.online {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .connection-status.online .connection-dot {
+            background: #16a34a;
+        }
+
+        .connection-status.offline {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .connection-status.offline .connection-dot {
+            background: #dc2626;
+        }
+
+        @media (max-width: 1000px) {
             .cards {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -486,7 +582,6 @@
         }
 
         @media (max-width: 700px) {
-
             .layout {
                 display: block;
             }
@@ -521,15 +616,19 @@
             .user-area {
                 display: none;
             }
+
+            .page-header {
+                display: block;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
         }
-
     </style>
-
 </head>
 
-
 <body>
-
 
 <header class="topbar">
 
@@ -543,25 +642,25 @@
         >
 
         <div>
-
-            <div class="brand-title">
-                ALPHA LAB
-            </div>
-
-            <div class="brand-subtitle">
-                پنل مدیریت مرکزی
-            </div>
-
+            <div class="brand-title">ALPHA LAB</div>
+            <div class="brand-subtitle">پنل مدیریت مرکزی</div>
         </div>
 
     </div>
 
-
     <div class="user-area">
 
-        <span id="userEmail">
-            در حال بررسی...
-        </span>
+        <div class="user-email-box">
+
+            <span id="userEmail">
+                در حال بررسی...
+            </span>
+
+            <span class="user-role">
+                مدیر ارشد سیستم — Super Admin
+            </span>
+
+        </div>
 
         <button
             class="logout-btn"
@@ -577,13 +676,11 @@
 
 <div class="layout">
 
-
 <aside class="sidebar">
 
     <div class="sidebar-title">
         مدیریت مرکزی
     </div>
-
 
     <div
         class="menu-item active"
@@ -592,14 +689,12 @@
         🏠 داشبورد
     </div>
 
-
     <div
         class="menu-item"
         data-section="laboratories"
     >
         🏥 آزمایشگاه‌ها
     </div>
-
 
     <div
         class="menu-item"
@@ -608,14 +703,12 @@
         📋 اشتراک‌ها
     </div>
 
-
     <div
         class="menu-item"
         data-section="requests"
     >
         🧪 درخواست‌ها
     </div>
-
 
     <div
         class="menu-item"
@@ -624,7 +717,6 @@
         💰 مالی
     </div>
 
-
     <div
         class="menu-item"
         data-section="users"
@@ -632,11 +724,9 @@
         👥 کاربران
     </div>
 
-
     <div class="sidebar-title">
         سیستم
     </div>
-
 
     <div
         class="menu-item"
@@ -648,9 +738,7 @@
 </aside>
 
 
-
 <main class="main">
-
 
 <div
     id="globalAlert"
@@ -658,13 +746,11 @@
 ></div>
 
 
-
 <!-- =====================================================
      DASHBOARD
 ===================================================== -->
 
 <section id="dashboardSection">
-
 
 <div class="page-header">
 
@@ -680,164 +766,146 @@
 
     </div>
 
-</div>
+    <div class="connection-status" id="connectionStatus">
 
+        <span class="connection-dot"></span>
+
+        <span id="connectionText">
+            در حال اتصال...
+        </span>
+
+    </div>
+
+</div>
 
 
 <div class="cards">
 
+    <div class="card">
 
-<div class="card">
+        <div class="card-label">
+            تعداد آزمایشگاه‌ها
+        </div>
 
-    <div class="card-label">
-        تعداد آزمایشگاه‌ها
+        <div
+            class="card-value"
+            id="totalLabs"
+        >
+            0
+        </div>
+
     </div>
 
-    <div
-        class="card-value"
-        id="totalLabs"
-    >
-        0
+
+    <div class="card">
+
+        <div class="card-label">
+            اشتراک‌های فعال
+        </div>
+
+        <div
+            class="card-value"
+            id="activeSubscriptions"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-label">
+            در انتظار فعال‌سازی
+        </div>
+
+        <div
+            class="card-value"
+            id="pendingSubscriptions"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-label">
+            اشتراک‌های منقضی
+        </div>
+
+        <div
+            class="card-value"
+            id="expiredSubscriptions"
+        >
+            0
+        </div>
+
     </div>
 
 </div>
-
-
-<div class="card">
-
-    <div class="card-label">
-        اشتراک‌های فعال
-    </div>
-
-    <div
-        class="card-value"
-        id="activeSubscriptions"
-    >
-        0
-    </div>
-
-</div>
-
-
-<div class="card">
-
-    <div class="card-label">
-        در انتظار فعال‌سازی
-    </div>
-
-    <div
-        class="card-value"
-        id="pendingSubscriptions"
-    >
-        0
-    </div>
-
-</div>
-
-
-<div class="card">
-
-    <div class="card-label">
-        اشتراک‌های منقضی
-    </div>
-
-    <div
-        class="card-value"
-        id="expiredSubscriptions"
-    >
-        0
-    </div>
-
-</div>
-
-
-</div>
-
 
 
 <div class="panel">
 
-<div class="panel-header">
+    <div class="panel-header">
 
-    <h2>
-        آزمایشگاه‌های ثبت‌شده
-    </h2>
+        <h2>
+            آزمایشگاه‌های ثبت‌شده
+        </h2>
 
-    <button
-        class="btn btn-primary"
-        id="refreshBtn"
-    >
-        🔄 بروزرسانی
-    </button>
+        <button
+            class="btn btn-primary"
+            id="refreshBtn"
+        >
+            🔄 بروزرسانی
+        </button>
 
-</div>
-
-
-<div class="panel-body">
-
-<div class="table-wrapper">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>
-    نام آزمایشگاه
-</th>
-
-<th>
-    کد
-</th>
-
-<th>
-    شهر
-</th>
-
-<th>
-    وضعیت
-</th>
-
-<th>
-    اشتراک
-</th>
-
-<th>
-    عملیات
-</th>
-
-</tr>
-
-</thead>
+    </div>
 
 
-<tbody id="labsTableBody">
+    <div class="panel-body">
 
-<tr>
+        <div class="table-wrapper">
 
-<td
-    colspan="6"
-    class="loading"
->
-    در حال بارگذاری...
-</td>
+            <table>
 
-</tr>
+                <thead>
 
-</tbody>
+                    <tr>
+                        <th>نام آزمایشگاه</th>
+                        <th>کد</th>
+                        <th>شهر</th>
+                        <th>وضعیت</th>
+                        <th>اشتراک</th>
+                        <th>عملیات</th>
+                    </tr>
 
-</table>
+                </thead>
+
+                <tbody id="labsTableBody">
+
+                    <tr>
+                        <td
+                            colspan="6"
+                            class="loading"
+                        >
+                            در حال بارگذاری...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </div>
-
-</div>
-
-</div>
-
 
 </section>
-
 
 
 <!-- =====================================================
@@ -851,71 +919,81 @@
 
 <div class="page-header">
 
-<div>
+    <div>
 
-<h1>
-    آزمایشگاه‌ها
-</h1>
+        <h1>
+            آزمایشگاه‌ها
+        </h1>
 
-<p>
-    تمام آزمایشگاه‌های ثبت‌شده در ALPHA LAB
-</p>
+        <p>
+            تمام آزمایشگاه‌های ثبت‌شده در ALPHA LAB
+        </p>
 
-</div>
+    </div>
 
 </div>
 
 
 <div class="panel">
 
-<div class="panel-body">
+    <div class="panel-header">
 
-<div class="table-wrapper">
+        <h2>
+            فهرست آزمایشگاه‌ها
+        </h2>
 
-<table>
+        <button
+            class="btn btn-primary"
+            id="refreshLabsBtn"
+        >
+            🔄 بروزرسانی
+        </button>
 
-<thead>
-
-<tr>
-
-<th>نام</th>
-<th>کد آزمایشگاه</th>
-<th>تلفن</th>
-<th>ایمیل</th>
-<th>استان</th>
-<th>شهر</th>
-<th>وضعیت</th>
-
-</tr>
-
-</thead>
+    </div>
 
 
-<tbody id="allLabsTableBody">
+    <div class="panel-body">
 
-<tr>
+        <div class="table-wrapper">
 
-<td
-    colspan="7"
-    class="loading"
->
-    در حال بارگذاری...
-</td>
+            <table>
 
-</tr>
+                <thead>
 
-</tbody>
+                    <tr>
+                        <th>نام</th>
+                        <th>کد آزمایشگاه</th>
+                        <th>تلفن</th>
+                        <th>ایمیل</th>
+                        <th>استان</th>
+                        <th>شهر</th>
+                        <th>وضعیت</th>
+                    </tr>
 
-</table>
+                </thead>
 
-</div>
+                <tbody id="allLabsTableBody">
 
-</div>
+                    <tr>
+                        <td
+                            colspan="7"
+                            class="loading"
+                        >
+                            در حال بارگذاری...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -929,87 +1007,80 @@
 
 <div class="page-header">
 
-<div>
+    <div>
 
-<h1>
-    مدیریت اشتراک‌ها
-</h1>
+        <h1>
+            مدیریت اشتراک‌ها
+        </h1>
 
-<p>
-    صدور و مشاهده اشتراک آزمایشگاه‌ها
-</p>
+        <p>
+            صدور و مشاهده اشتراک آزمایشگاه‌ها
+        </p>
 
-</div>
+    </div>
 
 </div>
 
 
 <div class="panel">
 
-<div class="panel-header">
+    <div class="panel-header">
 
-<h2>
-    اشتراک‌های ثبت‌شده
-</h2>
+        <h2>
+            اشتراک‌های ثبت‌شده
+        </h2>
 
+        <button
+            class="btn btn-primary"
+            id="refreshSubscriptionsBtn"
+        >
+            🔄 بروزرسانی
+        </button>
 
-<button
-    class="btn btn-primary"
-    id="refreshSubscriptionsBtn"
->
-    🔄 بروزرسانی
-</button>
-
-</div>
-
-
-<div class="panel-body">
-
-<div class="table-wrapper">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>آزمایشگاه</th>
-<th>پلن</th>
-<th>وضعیت</th>
-<th>شروع</th>
-<th>انقضا</th>
-<th>فعال‌شده</th>
-
-</tr>
-
-</thead>
+    </div>
 
 
-<tbody id="subscriptionsTableBody">
+    <div class="panel-body">
 
-<tr>
+        <div class="table-wrapper">
 
-<td
-    colspan="6"
-    class="loading"
->
-    در حال بارگذاری...
-</td>
+            <table>
 
-</tr>
+                <thead>
 
-</tbody>
+                    <tr>
+                        <th>آزمایشگاه</th>
+                        <th>پلن</th>
+                        <th>وضعیت</th>
+                        <th>شروع</th>
+                        <th>انقضا</th>
+                        <th>فعال‌شده</th>
+                    </tr>
 
-</table>
+                </thead>
 
-</div>
+                <tbody id="subscriptionsTableBody">
 
-</div>
+                    <tr>
+                        <td
+                            colspan="6"
+                            class="loading"
+                        >
+                            در حال بارگذاری...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -1023,31 +1094,30 @@
 
 <div class="page-header">
 
-<div>
+    <div>
 
-<h1>
-    درخواست‌ها
-</h1>
+        <h1>
+            درخواست‌ها
+        </h1>
 
-<p>
-    مدیریت درخواست‌های آزمایش
-</p>
+        <p>
+            مدیریت درخواست‌های آزمایش
+        </p>
 
-</div>
+    </div>
 
 </div>
 
 
 <div class="panel">
 
-<div class="empty">
-    این بخش در مرحله بعد تکمیل می‌شود.
-</div>
+    <div class="empty">
+        این بخش در مرحله بعد تکمیل می‌شود.
+    </div>
 
 </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -1061,31 +1131,30 @@
 
 <div class="page-header">
 
-<div>
+    <div>
 
-<h1>
-    امور مالی
-</h1>
+        <h1>
+            امور مالی
+        </h1>
 
-<p>
-    مدیریت تراکنش‌ها و وضعیت مالی آزمایشگاه‌ها
-</p>
+        <p>
+            مدیریت تراکنش‌ها و وضعیت مالی آزمایشگاه‌ها
+        </p>
 
-</div>
+    </div>
 
 </div>
 
 
 <div class="panel">
 
-<div class="empty">
-    این بخش در مرحله بعد تکمیل می‌شود.
-</div>
+    <div class="empty">
+        این بخش در مرحله بعد تکمیل می‌شود.
+    </div>
 
 </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -1099,69 +1168,63 @@
 
 <div class="page-header">
 
-<div>
+    <div>
 
-<h1>
-    کاربران
-</h1>
+        <h1>
+            کاربران
+        </h1>
 
-<p>
-    کاربران متصل به آزمایشگاه‌ها
-</p>
+        <p>
+            کاربران متصل به آزمایشگاه‌ها
+        </p>
 
-</div>
+    </div>
 
 </div>
 
 
 <div class="panel">
 
-<div class="panel-body">
+    <div class="panel-body">
 
-<div class="table-wrapper">
+        <div class="table-wrapper">
 
-<table>
+            <table>
 
-<thead>
+                <thead>
 
-<tr>
+                    <tr>
+                        <th>نام</th>
+                        <th>ایمیل</th>
+                        <th>نقش</th>
+                        <th>آزمایشگاه</th>
+                        <th>وضعیت</th>
+                    </tr>
 
-<th>نام</th>
-<th>ایمیل</th>
-<th>نقش</th>
-<th>آزمایشگاه</th>
-<th>وضعیت</th>
+                </thead>
 
-</tr>
+                <tbody id="usersTableBody">
 
-</thead>
+                    <tr>
+                        <td
+                            colspan="5"
+                            class="loading"
+                        >
+                            در حال بارگذاری...
+                        </td>
+                    </tr>
 
+                </tbody>
 
-<tbody id="usersTableBody">
+            </table>
 
-<tr>
+        </div>
 
-<td
-    colspan="5"
-    class="loading"
->
-    در حال بارگذاری...
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -1175,80 +1238,143 @@
 
 <div class="page-header">
 
-<div>
+    <div>
 
-<h1>
-    تنظیمات سیستم
-</h1>
+        <h1>
+            تنظیمات سیستم
+        </h1>
 
-<p>
-    وضعیت امنیتی و معماری ALPHA LAB
-</p>
+        <p>
+            وضعیت امنیتی و معماری ALPHA LAB
+        </p>
 
-</div>
+    </div>
 
 </div>
 
 
 <div class="panel">
 
-<div class="panel-body">
+    <div class="panel-header">
 
-<div class="security-box">
+        <h2>
+            وضعیت معماری سیستم
+        </h2>
 
-<strong>
-    🔐 وضعیت امنیتی
-</strong>
+    </div>
 
-<br>
 
-کاربر فعلی با نقش
-<strong>
-Super Admin
-</strong>
-وارد سیستم شده است.
+    <div class="panel-body">
 
-<br>
+        <div class="security-box">
 
-حساب Super Admin مستقل از
-<strong>
-laboratory_id
-</strong>
-است.
+            <strong>
+                🔐 وضعیت امنیتی
+            </strong>
 
-<br>
+            <br><br>
 
-اطلاعات هر آزمایشگاه بر اساس
-<strong>
-laboratory_id
-</strong>
-از یکدیگر جدا می‌شوند.
+            کاربر فعلی با نقش
+            <strong>Super Admin</strong>
+            وارد سیستم شده است.
 
-<br>
+            <br>
 
-دسترسی آزمایشگاه‌ها باید بر اساس وضعیت اشتراک کنترل شود.
+            حساب Super Admin مستقل از
+            <strong>laboratory_id</strong>
+            است.
 
-</div>
+            <br>
 
-</div>
+            اطلاعات هر آزمایشگاه بر اساس
+            <strong>laboratory_id</strong>
+            از یکدیگر جدا می‌شوند.
+
+            <br>
+
+            دسترسی آزمایشگاه‌ها باید بر اساس وضعیت اشتراک کنترل شود.
+
+        </div>
+
+
+        <br>
+
+
+        <div class="info-grid">
+
+            <div class="info-item">
+
+                <span class="label">
+                    کاربر
+                </span>
+
+                <span
+                    class="value"
+                    id="settingsUserEmail"
+                >
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span class="label">
+                    نقش
+                </span>
+
+                <span class="value">
+                    Super Admin
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span class="label">
+                    Laboratory ID
+                </span>
+
+                <span class="value">
+                    مستقل / NULL
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span class="label">
+                    وضعیت حساب
+                </span>
+
+                <span
+                    class="value"
+                    id="settingsAccountStatus"
+                >
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 </section>
 
 
-
 <div class="footer">
-
     ALPHA LAB © 2026 — Central Management System
-
 </div>
-
 
 </main>
 
 </div>
-
 
 
 <!-- =====================================================
@@ -1262,171 +1388,165 @@ laboratory_id
 
 <div class="modal">
 
+    <div class="modal-header">
 
-<div class="modal-header">
+        <h3>
+            ایجاد اشتراک آزمایشگاه
+        </h3>
 
-<h3>
-    ایجاد اشتراک آزمایشگاه
-</h3>
+        <button
+            class="close-btn"
+            id="closeModalBtn"
+            type="button"
+        >
+            ×
+        </button>
 
-
-<button
-    class="close-btn"
-    id="closeModalBtn"
->
-    ×
-</button>
-
-</div>
-
+    </div>
 
 
-<div class="modal-body">
+    <div class="modal-body">
+
+        <div
+            id="modalAlert"
+            class="alert"
+        ></div>
 
 
-<div
-    id="modalAlert"
-    class="alert"
-></div>
+        <div class="form-group">
+
+            <label>
+                آزمایشگاه
+            </label>
+
+            <input
+                id="modalLabName"
+                class="form-control"
+                readonly
+            >
+
+        </div>
 
 
-<div class="form-group">
+        <div class="form-group">
 
-<label>
-    آزمایشگاه
-</label>
+            <label>
+                نوع اشتراک
+            </label>
 
+            <select
+                id="subscriptionPlan"
+                class="form-control"
+            >
 
-<input
-    id="modalLabName"
-    class="form-control"
-    readonly
->
+                <option value="yearly">
+                    سالانه
+                </option>
 
-</div>
+                <option value="monthly">
+                    ماهانه
+                </option>
 
+            </select>
 
-
-<div class="form-group">
-
-<label>
-    نوع اشتراک
-</label>
-
-
-<select
-    id="subscriptionPlan"
-    class="form-control"
->
-
-<option value="yearly">
-    سالانه
-</option>
-
-<option value="monthly">
-    ماهانه
-</option>
-
-</select>
-
-</div>
+        </div>
 
 
+        <div class="form-group">
 
-<div class="form-group">
+            <label>
+                توضیحات
+            </label>
 
-<label>
-    توضیحات
-</label>
+            <textarea
+                id="subscriptionNotes"
+                class="form-control"
+                rows="3"
+                placeholder="اختیاری"
+            ></textarea>
 
-
-<textarea
-    id="subscriptionNotes"
-    class="form-control"
-    rows="3"
-    placeholder="اختیاری"
-></textarea>
-
-</div>
+        </div>
 
 
+        <div
+            id="activationResult"
+            class="activation-box"
+            style="display:none"
+        >
 
-<div
-    id="activationResult"
-    class="activation-box"
-    style="display:none"
->
-
-<strong>
-    🔑 کد فعال‌سازی ایجاد شد
-</strong>
-
-
-<div
-    class="activation-code"
-    id="activationCode"
-></div>
+            <strong>
+                🔑 کد فعال‌سازی ایجاد شد
+            </strong>
 
 
-<button
-    class="btn btn-success"
-    id="copyCodeBtn"
-    style="width:100%"
->
-    📋 کپی کد
-</button>
+            <div
+                class="activation-code"
+                id="activationCode"
+            ></div>
 
 
-<div
-    class="warning-box"
-    style="margin-top:12px"
->
-
-این کد فقط همین بار نمایش داده می‌شود.
-
-کد خام در دیتابیس ذخیره نمی‌شود.
-
-کد را در اختیار مدیر آزمایشگاه قرار دهید.
-
-</div>
-
-</div>
+            <button
+                class="btn btn-success"
+                id="copyCodeBtn"
+                type="button"
+                style="width:100%"
+            >
+                📋 کپی کد
+            </button>
 
 
-</div>
+            <div
+                class="warning-box"
+                style="margin-top:12px"
+            >
+
+                این کد فقط همین بار نمایش داده می‌شود.
+
+                <br>
+
+                کد خام در دیتابیس ذخیره نمی‌شود.
+
+                <br>
+
+                کد را در اختیار مدیر آزمایشگاه قرار دهید.
+
+            </div>
+
+        </div>
+
+    </div>
 
 
+    <div class="modal-footer">
 
-<div class="modal-footer">
+        <button
+            class="btn btn-secondary"
+            id="cancelModalBtn"
+            type="button"
+        >
+            بستن
+        </button>
 
-<button
-    class="btn btn-secondary"
-    id="cancelModalBtn"
->
-    بستن
-</button>
 
+        <button
+            class="btn btn-primary"
+            id="createSubscriptionBtn"
+            type="button"
+        >
+            🔑 صدور کد فعال‌سازی
+        </button>
 
-<button
-    class="btn btn-primary"
-    id="createSubscriptionBtn"
->
-    🔑 صدور کد فعال‌سازی
-</button>
-
-</div>
-
+    </div>
 
 </div>
 
 </div>
-
 
 
 <script>
 
 /* =========================================================
-   SUPABASE
+   SUPABASE CONFIGURATION
 ========================================================= */
 
 const SUPABASE_URL =
@@ -1447,20 +1567,20 @@ const supabaseClient =
 ========================================================= */
 
 let currentUser = null;
-
 let currentProfile = null;
 
 let currentLaboratories = [];
-
 let currentSubscriptions = [];
-
 let currentUsers = [];
 
 let selectedLaboratory = null;
 
+let dashboardLoading = false;
+let redirecting = false;
+
 
 /* =========================================================
-   DOM
+   DOM REFERENCES
 ========================================================= */
 
 const userEmail =
@@ -1471,6 +1591,12 @@ const logoutBtn =
 
 const refreshBtn =
     document.getElementById("refreshBtn");
+
+const refreshLabsBtn =
+    document.getElementById("refreshLabsBtn");
+
+const refreshSubscriptionsBtn =
+    document.getElementById("refreshSubscriptionsBtn");
 
 const labsTableBody =
     document.getElementById("labsTableBody");
@@ -1499,6 +1625,12 @@ const createSubscriptionBtn =
 const copyCodeBtn =
     document.getElementById("copyCodeBtn");
 
+const connectionStatus =
+    document.getElementById("connectionStatus");
+
+const connectionText =
+    document.getElementById("connectionText");
+
 
 /* =========================================================
    HELPERS
@@ -1511,19 +1643,29 @@ function showAlert(message, type = "error") {
 
     alert.textContent = message;
 
+    let className = "alert-error";
+
+    if (type === "success") {
+        className = "alert-success";
+    }
+
+    if (type === "warning") {
+        className = "alert-warning";
+    }
+
     alert.className =
-        "alert show " +
-        (
-            type === "success"
-                ? "alert-success"
-                : "alert-error"
-        );
+        "alert show " + className;
 
-    setTimeout(() => {
+    window.clearTimeout(
+        showAlert.timer
+    );
 
-        alert.classList.remove("show");
+    showAlert.timer =
+        window.setTimeout(() => {
 
-    }, 5000);
+            alert.classList.remove("show");
+
+        }, 5000);
 }
 
 
@@ -1534,13 +1676,18 @@ function showModalAlert(message, type = "error") {
 
     alert.textContent = message;
 
+    let className = "alert-error";
+
+    if (type === "success") {
+        className = "alert-success";
+    }
+
+    if (type === "warning") {
+        className = "alert-warning";
+    }
+
     alert.className =
-        "alert show " +
-        (
-            type === "success"
-                ? "alert-success"
-                : "alert-error"
-        );
+        "alert show " + className;
 }
 
 
@@ -1581,33 +1728,38 @@ function formatDate(value) {
 
     try {
 
+        const date =
+            new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+            return "—";
+        }
+
         return new Intl.DateTimeFormat(
             "fa-AF",
             {
                 dateStyle: "medium",
                 timeStyle: "short"
             }
-        ).format(new Date(value));
+        ).format(date);
 
     } catch {
 
-        return value;
-
+        return "—";
     }
 }
 
 
 function planLabel(plan) {
 
-    if (plan === "monthly") {
-        return "ماهانه";
-    }
+    const labels = {
+        monthly: "ماهانه",
+        yearly: "سالانه"
+    };
 
-    if (plan === "yearly") {
-        return "سالانه";
-    }
-
-    return plan || "—";
+    return labels[plan] ||
+        plan ||
+        "—";
 }
 
 
@@ -1668,70 +1820,155 @@ function statusClass(status) {
 }
 
 
+function updateConnectionStatus(
+    state,
+    text
+) {
+
+    connectionStatus.className =
+        "connection-status " +
+        state;
+
+    connectionText.textContent =
+        text;
+}
+
+
+function normalizeRpcResult(data) {
+
+    if (Array.isArray(data)) {
+        return data[0] || null;
+    }
+
+    return data || null;
+}
+
+
 /* =========================================================
    AUTHENTICATION
 ========================================================= */
 
 async function checkAuthentication() {
 
-    const {
-        data,
-        error
-    } =
-        await supabaseClient.auth.getSession();
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getSession();
 
 
-    if (error) {
+        if (error) {
+
+            console.error(
+                "getSession error:",
+                error
+            );
+
+            updateConnectionStatus(
+                "offline",
+                "خطا در اتصال"
+            );
+
+            showAlert(
+                "خطا در بررسی نشست کاربر: " +
+                error.message
+            );
+
+            return false;
+        }
+
+
+        const session =
+            data?.session;
+
+
+        if (!session) {
+
+            redirectToLogin();
+
+            return false;
+        }
+
+
+        currentUser =
+            session.user;
+
+
+        userEmail.textContent =
+            currentUser.email ||
+            "Super Admin";
+
+
+        const settingsEmail =
+            document.getElementById(
+                "settingsUserEmail"
+            );
+
+        if (settingsEmail) {
+            settingsEmail.textContent =
+                currentUser.email ||
+                "—";
+        }
+
+
+        const isAdmin =
+            await verifySuperAdmin();
+
+
+        if (!isAdmin) {
+            return false;
+        }
+
+
+        updateConnectionStatus(
+            "online",
+            "سیستم آنلاین"
+        );
+
+
+        await loadDashboard();
+
+
+        return true;
+
+    } catch (error) {
 
         console.error(
-            "getSession error:",
+            "Authentication error:",
             error
         );
 
+        updateConnectionStatus(
+            "offline",
+            "خطا"
+        );
+
         showAlert(
-            "خطا در بررسی نشست کاربر: " +
-            error.message
+            "خطا در راه‌اندازی پنل: " +
+            (error.message || error)
         );
 
         return false;
     }
+}
 
 
-    const session =
-        data.session;
+/* =========================================================
+   REDIRECT TO LOGIN
+========================================================= */
 
+function redirectToLogin() {
 
-    if (!session) {
-
-        window.location.href =
-            "admin-login.html";
-
-        return false;
+    if (redirecting) {
+        return;
     }
 
+    redirecting = true;
 
-    currentUser =
-        session.user;
-
-
-    userEmail.textContent =
-        currentUser.email ||
-        "Super Admin";
-
-
-    const isAdmin =
-        await verifySuperAdmin();
-
-
-    if (!isAdmin) {
-        return false;
-    }
-
-
-    await loadDashboard();
-
-
-    return true;
+    window.location.href =
+        "admin-login.html";
 }
 
 
@@ -1740,6 +1977,16 @@ async function checkAuthentication() {
 ========================================================= */
 
 async function verifySuperAdmin() {
+
+    if (!currentUser?.id) {
+
+        showAlert(
+            "شناسه کاربر فعلی پیدا نشد."
+        );
+
+        return false;
+    }
+
 
     const {
         data,
@@ -1765,7 +2012,7 @@ async function verifySuperAdmin() {
     if (error) {
 
         console.error(
-            "verifySuperAdmin:",
+            "verifySuperAdmin error:",
             error
         );
 
@@ -1781,7 +2028,14 @@ async function verifySuperAdmin() {
     if (!data) {
 
         showAlert(
-            "پروفایل کاربر در جدول profiles پیدا نشد."
+            "پروفایل این کاربر در جدول profiles پیدا نشد."
+        );
+
+        await supabaseClient.auth.signOut();
+
+        setTimeout(
+            redirectToLogin,
+            1200
         );
 
         return false;
@@ -1796,18 +2050,18 @@ async function verifySuperAdmin() {
 
         await supabaseClient.auth.signOut();
 
-        setTimeout(() => {
-
-            window.location.href =
-                "admin-login.html";
-
-        }, 1500);
+        setTimeout(
+            redirectToLogin,
+            1200
+        );
 
         return false;
     }
 
 
-    if (data.is_active === false) {
+    if (
+        data.is_active === false
+    ) {
 
         showAlert(
             "حساب Super Admin غیرفعال است."
@@ -1815,12 +2069,28 @@ async function verifySuperAdmin() {
 
         await supabaseClient.auth.signOut();
 
+        setTimeout(
+            redirectToLogin,
+            1200
+        );
+
         return false;
     }
 
 
     currentProfile =
         data;
+
+
+    const settingsStatus =
+        document.getElementById(
+            "settingsAccountStatus"
+        );
+
+    if (settingsStatus) {
+        settingsStatus.textContent =
+            "فعال";
+    }
 
 
     console.log(
@@ -1839,19 +2109,44 @@ async function verifySuperAdmin() {
 
 async function loadDashboard() {
 
-    await loadLaboratories();
+    if (dashboardLoading) {
+        return;
+    }
 
-    await loadSubscriptions();
+    dashboardLoading = true;
 
-    await loadUsers();
+    try {
 
-    updateStatistics();
+        await loadLaboratories();
 
-    renderLaboratories();
+        await loadSubscriptions();
 
-    renderSubscriptions();
+        await loadUsers();
 
-    renderUsers();
+        updateStatistics();
+
+        renderLaboratories();
+
+        renderSubscriptions();
+
+        renderUsers();
+
+    } catch (error) {
+
+        console.error(
+            "loadDashboard error:",
+            error
+        );
+
+        showAlert(
+            "خطا در بارگذاری داشبورد: " +
+            (error.message || error)
+        );
+
+    } finally {
+
+        dashboardLoading = false;
+    }
 }
 
 
@@ -1914,10 +2209,7 @@ async function loadLaboratories() {
             error
         );
 
-        showAlert(
-            "خطا در دریافت آزمایشگاه‌ها: " +
-            error.message
-        );
+        currentLaboratories = [];
 
         labsTableBody.innerHTML = `
             <tr>
@@ -1935,7 +2227,10 @@ async function loadLaboratories() {
             </tr>
         `;
 
-        return;
+        throw new Error(
+            "خطا در دریافت آزمایشگاه‌ها: " +
+            error.message
+        );
     }
 
 
@@ -2001,10 +2296,7 @@ async function loadSubscriptions() {
             error
         );
 
-        showAlert(
-            "خطا در دریافت اشتراک‌ها: " +
-            error.message
-        );
+        currentSubscriptions = [];
 
         subscriptionsTableBody.innerHTML = `
             <tr>
@@ -2014,9 +2306,10 @@ async function loadSubscriptions() {
             </tr>
         `;
 
-        currentSubscriptions = [];
-
-        return;
+        throw new Error(
+            "خطا در دریافت اشتراک‌ها: " +
+            error.message
+        );
     }
 
 
@@ -2059,13 +2352,7 @@ async function loadUsers() {
                 email,
                 role,
                 is_active
-            `)
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
+            `);
 
 
     if (error) {
@@ -2075,6 +2362,8 @@ async function loadUsers() {
             error
         );
 
+        currentUsers = [];
+
         usersTableBody.innerHTML = `
             <tr>
                 <td colspan="5" class="empty">
@@ -2083,14 +2372,63 @@ async function loadUsers() {
             </tr>
         `;
 
-        currentUsers = [];
-
         return;
     }
 
 
     currentUsers =
         data || [];
+
+
+    console.log(
+        "USERS:",
+        currentUsers
+    );
+}
+
+
+/* =========================================================
+   GET CURRENT SUBSCRIPTION
+========================================================= */
+
+function getCurrentSubscription(
+    laboratoryId
+) {
+
+    const subscriptions =
+        currentSubscriptions
+            .filter(
+                sub =>
+                    sub.laboratory_id ===
+                    laboratoryId
+            )
+            .sort(
+                (a, b) =>
+                    new Date(
+                        b.created_at || 0
+                    ) -
+                    new Date(
+                        a.created_at || 0
+                    )
+            );
+
+
+    /*
+       اشتراک معتبر:
+       active
+       pending_activation
+       suspended
+
+       expired و cancelled
+       مانع صدور اشتراک جدید نیستند.
+    */
+
+    return subscriptions.find(
+        sub =>
+            sub.status === "active" ||
+            sub.status === "pending_activation" ||
+            sub.status === "suspended"
+    ) || null;
 }
 
 
@@ -2133,16 +2471,32 @@ function renderLaboratories() {
 
 
                 let subscriptionText =
-                    "بدون اشتراک";
+                    `
+                        <span class="status-badge status-none">
+                            بدون اشتراک
+                        </span>
+                    `;
 
 
                 if (subscription) {
 
                     subscriptionText = `
-                        ${planLabel(subscription.plan)}
+                        ${escapeHtml(
+                            planLabel(
+                                subscription.plan
+                            )
+                        )}
+
                         <br>
-                        <span class="status-badge ${statusClass(subscription.status)}">
-                            ${statusLabel(subscription.status)}
+
+                        <span class="status-badge ${statusClass(
+                            subscription.status
+                        )}">
+                            ${escapeHtml(
+                                statusLabel(
+                                    subscription.status
+                                )
+                            )}
                         </span>
                     `;
                 }
@@ -2157,16 +2511,26 @@ function renderLaboratories() {
 
                         <td>
                             <strong>
-                                ${escapeHtml(lab.name)}
+                                ${escapeHtml(
+                                    lab.name ||
+                                    lab.legal_name ||
+                                    "بدون نام"
+                                )}
                             </strong>
                         </td>
 
                         <td dir="ltr">
-                            ${escapeHtml(lab.lab_code)}
+                            ${escapeHtml(
+                                lab.lab_code ||
+                                "—"
+                            )}
                         </td>
 
                         <td>
-                            ${escapeHtml(lab.city || "—")}
+                            ${escapeHtml(
+                                lab.city ||
+                                "—"
+                            )}
                         </td>
 
                         <td>
@@ -2197,8 +2561,15 @@ function renderLaboratories() {
 
                                 <button
                                     class="btn btn-primary"
-                                    onclick="openSubscriptionModal('${lab.id}')"
+                                    onclick="openSubscriptionModal('${escapeHtml(
+                                        lab.id
+                                    )}')"
                                     ${canCreate ? "" : "disabled"}
+                                    title="${
+                                        canCreate
+                                            ? "صدور اشتراک"
+                                            : "این آزمایشگاه دارای اشتراک معتبر است"
+                                    }"
                                 >
                                     🔑 صدور اشتراک
                                 </button>
@@ -2222,27 +2593,48 @@ function renderLaboratories() {
                     <tr>
 
                         <td>
-                            ${escapeHtml(lab.name)}
+                            <strong>
+                                ${escapeHtml(
+                                    lab.name ||
+                                    lab.legal_name ||
+                                    "—"
+                                )}
+                            </strong>
                         </td>
 
                         <td dir="ltr">
-                            ${escapeHtml(lab.lab_code)}
+                            ${escapeHtml(
+                                lab.lab_code ||
+                                "—"
+                            )}
                         </td>
 
                         <td dir="ltr">
-                            ${escapeHtml(lab.phone || "—")}
+                            ${escapeHtml(
+                                lab.phone ||
+                                "—"
+                            )}
                         </td>
 
                         <td dir="ltr">
-                            ${escapeHtml(lab.email || "—")}
+                            ${escapeHtml(
+                                lab.email ||
+                                "—"
+                            )}
                         </td>
 
                         <td>
-                            ${escapeHtml(lab.province || "—")}
+                            ${escapeHtml(
+                                lab.province ||
+                                "—"
+                            )}
                         </td>
 
                         <td>
-                            ${escapeHtml(lab.city || "—")}
+                            ${escapeHtml(
+                                lab.city ||
+                                "—"
+                            )}
                         </td>
 
                         <td>
@@ -2268,23 +2660,6 @@ function renderLaboratories() {
 
             })
             .join("");
-}
-
-
-/* =========================================================
-   GET CURRENT SUBSCRIPTION
-========================================================= */
-
-function getCurrentSubscription(laboratoryId) {
-
-    return currentSubscriptions.find(
-        sub =>
-            sub.laboratory_id === laboratoryId &&
-            (
-                sub.status === "active" ||
-                sub.status === "pending_activation"
-            )
-    ) || null;
 }
 
 
@@ -2329,6 +2704,7 @@ function renderSubscriptions() {
                                 ${
                                     escapeHtml(
                                         lab?.name ||
+                                        lab?.legal_name ||
                                         "آزمایشگاه"
                                     )
                                 }
@@ -2339,7 +2715,8 @@ function renderSubscriptions() {
                             <small dir="ltr">
                                 ${
                                     escapeHtml(
-                                        lab?.lab_code || ""
+                                        lab?.lab_code ||
+                                        ""
                                     )
                                 }
                             </small>
@@ -2347,29 +2724,45 @@ function renderSubscriptions() {
                         </td>
 
                         <td>
-                            ${planLabel(sub.plan)}
+                            ${escapeHtml(
+                                planLabel(
+                                    sub.plan
+                                )
+                            )}
                         </td>
 
                         <td>
 
-                            <span class="status-badge ${statusClass(sub.status)}">
+                            <span class="status-badge ${statusClass(
+                                sub.status
+                            )}">
 
-                                ${statusLabel(sub.status)}
+                                ${escapeHtml(
+                                    statusLabel(
+                                        sub.status
+                                    )
+                                )}
 
                             </span>
 
                         </td>
 
                         <td>
-                            ${formatDate(sub.starts_at)}
+                            ${formatDate(
+                                sub.starts_at
+                            )}
                         </td>
 
                         <td>
-                            ${formatDate(sub.expires_at)}
+                            ${formatDate(
+                                sub.expires_at
+                            )}
                         </td>
 
                         <td>
-                            ${formatDate(sub.activated_at)}
+                            ${formatDate(
+                                sub.activated_at
+                            )}
                         </td>
 
                     </tr>
@@ -2460,9 +2853,11 @@ function renderUsers() {
 
                         <td>
                             ${
-                                roleLabels[user.role] ||
-                                user.role ||
-                                "—"
+                                escapeHtml(
+                                    roleLabels[user.role] ||
+                                    user.role ||
+                                    "—"
+                                )
                             }
                         </td>
 
@@ -2554,8 +2949,8 @@ window.openSubscriptionModal =
         const lab =
             currentLaboratories.find(
                 item =>
-                    item.id ===
-                    laboratoryId
+                    String(item.id) ===
+                    String(laboratoryId)
             );
 
 
@@ -2571,14 +2966,17 @@ window.openSubscriptionModal =
 
         const existing =
             getCurrentSubscription(
-                laboratoryId
+                lab.id
             );
 
 
         if (existing) {
 
             showAlert(
-                "این آزمایشگاه دارای اشتراک فعال یا در انتظار فعال‌سازی است."
+                "این آزمایشگاه دارای اشتراک معتبر است: " +
+                statusLabel(
+                    existing.status
+                )
             );
 
             return;
@@ -2592,7 +2990,9 @@ window.openSubscriptionModal =
         document.getElementById(
             "modalLabName"
         ).value =
-            `${lab.name} — ${lab.lab_code}`;
+            `${lab.name || lab.legal_name || "آزمایشگاه"} — ${
+                lab.lab_code || "—"
+            }`;
 
 
         document.getElementById(
@@ -2627,6 +3027,10 @@ window.openSubscriptionModal =
             "inline-block";
 
 
+        createSubscriptionBtn.textContent =
+            "🔑 صدور کد فعال‌سازی";
+
+
         clearModalAlert();
 
 
@@ -2648,6 +3052,8 @@ function closeSubscriptionModal() {
 
     selectedLaboratory =
         null;
+
+    clearModalAlert();
 }
 
 
@@ -2660,6 +3066,40 @@ closeModalBtn.addEventListener(
 cancelModalBtn.addEventListener(
     "click",
     closeSubscriptionModal
+);
+
+
+subscriptionModal.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            subscriptionModal
+        ) {
+
+            closeSubscriptionModal();
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            subscriptionModal.classList.contains(
+                "show"
+            )
+        ) {
+
+            closeSubscriptionModal();
+        }
+
+    }
 );
 
 
@@ -2681,6 +3121,95 @@ createSubscriptionBtn.addEventListener(
         }
 
 
+        /*
+           بررسی دوباره قبل از INSERT/RPC.
+           این بررسی مهم است تا در صورت باز بودن
+           همزمان چند پنجره، اشتراک تکراری صادر نشود.
+        */
+
+        try {
+
+            const {
+                data: existingRows,
+                error: existingError
+            } =
+                await supabaseClient
+                    .from("laboratory_subscriptions")
+                    .select(`
+                        id,
+                        laboratory_id,
+                        plan,
+                        status,
+                        starts_at,
+                        expires_at
+                    `)
+                    .eq(
+                        "laboratory_id",
+                        selectedLaboratory.id
+                    )
+                    .in(
+                        "status",
+                        [
+                            "active",
+                            "pending_activation",
+                            "suspended"
+                        ]
+                    )
+                    .limit(1);
+
+
+            if (existingError) {
+
+                console.error(
+                    "Existing subscription check:",
+                    existingError
+                );
+
+                showModalAlert(
+                    "خطا در بررسی اشتراک قبلی: " +
+                    existingError.message
+                );
+
+                return;
+            }
+
+
+            if (
+                existingRows &&
+                existingRows.length > 0
+            ) {
+
+                await loadSubscriptions();
+
+                renderSubscriptions();
+
+                renderLaboratories();
+
+                updateStatistics();
+
+                showModalAlert(
+                    "این آزمایشگاه هم‌اکنون دارای اشتراک معتبر است."
+                );
+
+                return;
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Pre-create subscription check:",
+                error
+            );
+
+            showModalAlert(
+                "خطا در بررسی اشتراک قبلی."
+            );
+
+            return;
+        }
+
+
         const plan =
             document.getElementById(
                 "subscriptionPlan"
@@ -2692,6 +3221,20 @@ createSubscriptionBtn.addEventListener(
                 "subscriptionNotes"
             ).value.trim() ||
             null;
+
+
+        if (
+            !["monthly", "yearly"].includes(
+                plan
+            )
+        ) {
+
+            showModalAlert(
+                "نوع اشتراک نامعتبر است."
+            );
+
+            return;
+        }
 
 
         createSubscriptionBtn.disabled =
@@ -2706,6 +3249,12 @@ createSubscriptionBtn.addEventListener(
 
 
         try {
+
+            /*
+               صدور اشتراک از طریق RPC امن سمت دیتابیس.
+               این تابع باید در Supabase موجود باشد:
+               create_laboratory_subscription
+            */
 
             const {
                 data,
@@ -2742,7 +3291,16 @@ createSubscriptionBtn.addEventListener(
             }
 
 
-            if (!data) {
+            const result =
+                normalizeRpcResult(data);
+
+
+            if (!result) {
+
+                console.error(
+                    "EMPTY RPC RESULT:",
+                    data
+                );
 
                 throw new Error(
                     "تابع صدور اشتراک نتیجه‌ای برنگرداند."
@@ -2750,24 +3308,19 @@ createSubscriptionBtn.addEventListener(
             }
 
 
-            let result;
+            /*
+               انتظار داریم RPC حداقل activation_code
+               را برای نمایش یک‌باره برگرداند.
+            */
+
+            const activationCode =
+                result.activation_code ||
+                result.activationCode ||
+                result.code ||
+                null;
 
 
-            if (Array.isArray(data)) {
-
-                result = data[0];
-
-            } else {
-
-                result = data;
-
-            }
-
-
-            if (
-                !result ||
-                !result.activation_code
-            ) {
+            if (!activationCode) {
 
                 console.error(
                     "Unexpected RPC result:",
@@ -2783,7 +3336,7 @@ createSubscriptionBtn.addEventListener(
             document.getElementById(
                 "activationCode"
             ).textContent =
-                result.activation_code;
+                activationCode;
 
 
             document.getElementById(
@@ -2802,14 +3355,24 @@ createSubscriptionBtn.addEventListener(
             );
 
 
-            await loadSubscriptions();
+            /*
+               تازه‌سازی کامل اطلاعات
+               تا وضعیت جدید بلافاصله در داشبورد دیده شود.
+            */
 
+            await loadSubscriptions();
 
             renderSubscriptions();
 
             renderLaboratories();
 
             updateStatistics();
+
+
+            showAlert(
+                "اشتراک آزمایشگاه با موفقیت صادر شد.",
+                "success"
+            );
 
 
         } catch (error) {
@@ -2822,17 +3385,28 @@ createSubscriptionBtn.addEventListener(
 
             showModalAlert(
                 "خطا در ایجاد اشتراک: " +
-                error.message
+                (
+                    error.message ||
+                    "خطای ناشناخته"
+                )
             );
 
 
             createSubscriptionBtn.disabled =
                 false;
 
+
         } finally {
 
-            createSubscriptionBtn.textContent =
-                "🔑 صدور کد فعال‌سازی";
+            if (
+                createSubscriptionBtn.style.display !==
+                "none"
+            ) {
+
+                createSubscriptionBtn.textContent =
+                    "🔑 صدور کد فعال‌سازی";
+            }
+
         }
 
     }
@@ -2860,9 +3434,37 @@ copyCodeBtn.addEventListener(
 
         try {
 
-            await navigator.clipboard.writeText(
-                code
-            );
+            if (
+                navigator.clipboard &&
+                navigator.clipboard.writeText
+            ) {
+
+                await navigator.clipboard.writeText(
+                    code
+                );
+
+            } else {
+
+                const temporary =
+                    document.createElement(
+                        "textarea"
+                    );
+
+                temporary.value =
+                    code;
+
+                document.body.appendChild(
+                    temporary
+                );
+
+                temporary.select();
+
+                document.execCommand(
+                    "copy"
+                );
+
+                temporary.remove();
+            }
 
 
             copyCodeBtn.textContent =
@@ -2877,10 +3479,16 @@ copyCodeBtn.addEventListener(
             }, 2000);
 
 
-        } catch {
+        } catch (error) {
+
+            console.error(
+                "Copy error:",
+                error
+            );
 
             showModalAlert(
-                "کپی خودکار انجام نشد. کد را دستی کپی کنید."
+                "کپی خودکار انجام نشد. کد را دستی کپی کنید.",
+                "warning"
             );
         }
 
@@ -2896,8 +3504,17 @@ refreshBtn.addEventListener(
     "click",
     async () => {
 
+        if (dashboardLoading) {
+            return;
+        }
+
+
         refreshBtn.disabled =
             true;
+
+
+        refreshBtn.textContent =
+            "⏳ در حال بروزرسانی...";
 
 
         try {
@@ -2927,6 +3544,64 @@ refreshBtn.addEventListener(
 
             refreshBtn.disabled =
                 false;
+
+            refreshBtn.textContent =
+                "🔄 بروزرسانی";
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REFRESH LABORATORIES
+========================================================= */
+
+refreshLabsBtn.addEventListener(
+    "click",
+    async () => {
+
+        refreshLabsBtn.disabled =
+            true;
+
+
+        refreshLabsBtn.textContent =
+            "⏳ در حال بارگذاری...";
+
+
+        try {
+
+            await loadLaboratories();
+
+            renderLaboratories();
+
+            updateStatistics();
+
+
+            showAlert(
+                "فهرست آزمایشگاه‌ها بروزرسانی شد.",
+                "success"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+            showAlert(
+                "خطا در بروزرسانی آزمایشگاه‌ها."
+            );
+
+
+        } finally {
+
+            refreshLabsBtn.disabled =
+                false;
+
+            refreshLabsBtn.textContent =
+                "🔄 بروزرسانی";
         }
 
     }
@@ -2937,20 +3612,16 @@ refreshBtn.addEventListener(
    REFRESH SUBSCRIPTIONS
 ========================================================= */
 
-document.getElementById(
-    "refreshSubscriptionsBtn"
-).addEventListener(
+refreshSubscriptionsBtn.addEventListener(
     "click",
     async () => {
 
-        const button =
-            document.getElementById(
-                "refreshSubscriptionsBtn"
-            );
-
-
-        button.disabled =
+        refreshSubscriptionsBtn.disabled =
             true;
+
+
+        refreshSubscriptionsBtn.textContent =
+            "⏳ در حال بارگذاری...";
 
 
         try {
@@ -2984,8 +3655,11 @@ document.getElementById(
 
         } finally {
 
-            button.disabled =
+            refreshSubscriptionsBtn.disabled =
                 false;
+
+            refreshSubscriptionsBtn.textContent =
+                "🔄 بروزرسانی";
         }
 
     }
@@ -3000,18 +3674,39 @@ logoutBtn.addEventListener(
     "click",
     async () => {
 
+        if (logoutBtn.disabled) {
+            return;
+        }
+
+
         logoutBtn.disabled =
             true;
 
 
+        logoutBtn.textContent =
+            "در حال خروج...";
+
+
         try {
 
-            await supabaseClient.auth.signOut();
+            const {
+                error
+            } =
+                await supabaseClient.auth.signOut();
+
+
+            if (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+            }
+
 
         } finally {
 
-            window.location.href =
-                "admin-login.html";
+            redirectToLogin();
 
         }
 
@@ -3096,15 +3791,26 @@ supabaseClient.auth.onAuthStateChange(
 
 
         if (
-            event === "SIGNED_OUT" &&
-            !window.location.pathname.endsWith(
-                "admin-login.html"
-            )
+            event === "SIGNED_OUT"
         ) {
 
-            window.location.href =
-                "admin-login.html";
+            redirectToLogin();
 
+            return;
+        }
+
+
+        if (
+            event === "TOKEN_REFRESHED" &&
+            session?.user
+        ) {
+
+            currentUser =
+                session.user;
+
+            userEmail.textContent =
+                currentUser.email ||
+                "Super Admin";
         }
 
     }
@@ -3112,19 +3818,56 @@ supabaseClient.auth.onAuthStateChange(
 
 
 /* =========================================================
-   START
+   GLOBAL ERROR HANDLING
+========================================================= */
+
+window.addEventListener(
+    "error",
+    event => {
+
+        console.error(
+            "Global JS error:",
+            event.error ||
+            event.message
+        );
+
+    }
+);
+
+
+window.addEventListener(
+    "unhandledrejection",
+    event => {
+
+        console.error(
+            "Unhandled promise rejection:",
+            event.reason
+        );
+
+    }
+);
+
+
+/* =========================================================
+   START APPLICATION
 ========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
-    () => {
+    async () => {
 
         console.log(
             "ALPHA LAB Central Admin Dashboard started."
         );
 
 
-        checkAuthentication();
+        updateConnectionStatus(
+            "",
+            "در حال اتصال..."
+        );
+
+
+        await checkAuthentication();
 
     }
 );

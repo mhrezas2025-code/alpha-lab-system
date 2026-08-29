@@ -1,12 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>ALPHA LAB | پنل مدیریت مرکزی</title>
 
@@ -143,39 +141,6 @@
             font-size: 14px;
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .status-active {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .status-pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-expired {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .status-suspended {
-            background: #e0e7ff;
-            color: #3730a3;
-        }
-
-        .status-cancelled {
-            background: #e5e7eb;
-            color: #374151;
-        }
-
         .cards {
             display: grid;
             grid-template-columns: repeat(4, minmax(160px, 1fr));
@@ -287,11 +252,6 @@
             color: white;
         }
 
-        .btn-warning {
-            background: #f59e0b;
-            color: white;
-        }
-
         .btn-danger {
             background: #dc2626;
             color: white;
@@ -342,6 +302,44 @@
             background: #dcfce7;
             color: #166534;
             border: 1px solid #bbf7d0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-expired {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-suspended {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .status-cancelled {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .status-none {
+            background: #f1f5f9;
+            color: #64748b;
         }
 
         .modal-backdrop {
@@ -447,7 +445,6 @@
             padding: 15px;
             border-radius: 9px;
             margin: 12px 0;
-            word-break: break-all;
         }
 
         .warning-box {
@@ -460,15 +457,14 @@
             line-height: 1.8;
         }
 
-        .info-box {
+        .security-box {
             background: #eff6ff;
             border: 1px solid #bfdbfe;
             color: #1e40af;
-            padding: 13px;
-            border-radius: 9px;
-            font-size: 12px;
-            line-height: 1.8;
-            margin-bottom: 18px;
+            padding: 15px;
+            border-radius: 10px;
+            line-height: 2;
+            font-size: 13px;
         }
 
         .footer {
@@ -487,7 +483,6 @@
             .sidebar {
                 width: 210px;
             }
-
         }
 
         @media (max-width: 700px) {
@@ -526,7 +521,6 @@
             .user-area {
                 display: none;
             }
-
         }
 
     </style>
@@ -677,11 +671,11 @@
     <div>
 
         <h1>
-            داشبورد مرکزی
+            داشبورد مرکزی ALPHA LAB
         </h1>
 
         <p>
-            مدیریت متمرکز آزمایشگاه‌های عضو ALPHA LAB
+            مدیریت متمرکز آزمایشگاه‌های عضو سیستم
         </p>
 
     </div>
@@ -709,7 +703,6 @@
 </div>
 
 
-
 <div class="card">
 
     <div class="card-label">
@@ -726,7 +719,6 @@
 </div>
 
 
-
 <div class="card">
 
     <div class="card-label">
@@ -741,7 +733,6 @@
     </div>
 
 </div>
-
 
 
 <div class="card">
@@ -792,29 +783,29 @@
 
 <tr>
 
-    <th>
-        نام آزمایشگاه
-    </th>
+<th>
+    نام آزمایشگاه
+</th>
 
-    <th>
-        کد
-    </th>
+<th>
+    کد
+</th>
 
-    <th>
-        شهر
-    </th>
+<th>
+    شهر
+</th>
 
-    <th>
-        وضعیت
-    </th>
+<th>
+    وضعیت
+</th>
 
-    <th>
-        اشتراک
-    </th>
+<th>
+    اشتراک
+</th>
 
-    <th>
-        عملیات
-    </th>
+<th>
+    عملیات
+</th>
 
 </tr>
 
@@ -858,7 +849,6 @@
     style="display:none"
 >
 
-
 <div class="page-header">
 
 <div>
@@ -868,13 +858,12 @@
 </h1>
 
 <p>
-    مدیریت آزمایشگاه‌های عضو سیستم
+    تمام آزمایشگاه‌های ثبت‌شده در ALPHA LAB
 </p>
 
 </div>
 
 </div>
-
 
 
 <div class="panel">
@@ -925,7 +914,6 @@
 
 </div>
 
-
 </section>
 
 
@@ -939,17 +927,16 @@
     style="display:none"
 >
 
-
 <div class="page-header">
 
 <div>
 
 <h1>
-    اشتراک‌ها
+    مدیریت اشتراک‌ها
 </h1>
 
 <p>
-    مدیریت اشتراک ماهانه و سالانه آزمایشگاه‌ها
+    صدور و مشاهده اشتراک آزمایشگاه‌ها
 </p>
 
 </div>
@@ -957,9 +944,7 @@
 </div>
 
 
-
 <div class="panel">
-
 
 <div class="panel-header">
 
@@ -975,13 +960,10 @@
     🔄 بروزرسانی
 </button>
 
-
 </div>
 
 
-
 <div class="panel-body">
-
 
 <div class="table-wrapper">
 
@@ -991,29 +973,12 @@
 
 <tr>
 
-<th>
-    آزمایشگاه
-</th>
-
-<th>
-    پلن
-</th>
-
-<th>
-    وضعیت
-</th>
-
-<th>
-    شروع
-</th>
-
-<th>
-    پایان
-</th>
-
-<th>
-    فعال‌شده
-</th>
+<th>آزمایشگاه</th>
+<th>پلن</th>
+<th>وضعیت</th>
+<th>شروع</th>
+<th>انقضا</th>
+<th>فعال‌شده</th>
 
 </tr>
 
@@ -1043,7 +1008,6 @@
 
 </div>
 
-
 </section>
 
 
@@ -1057,7 +1021,6 @@
     style="display:none"
 >
 
-
 <div class="page-header">
 
 <div>
@@ -1067,7 +1030,7 @@
 </h1>
 
 <p>
-    درخواست‌های آزمایشگاه‌های عضو سیستم
+    مدیریت درخواست‌های آزمایش
 </p>
 
 </div>
@@ -1075,20 +1038,13 @@
 </div>
 
 
-
 <div class="panel">
 
-<div class="info-box">
-    ساختار اصلی درخواست‌ها در دیتابیس آماده است.
-    این بخش در مرحله بعد به مدیریت مرکزی متصل خواهد شد.
-</div>
-
 <div class="empty">
-    مدیریت درخواست‌ها در مرحله بعد تکمیل می‌شود.
+    این بخش در مرحله بعد تکمیل می‌شود.
 </div>
 
 </div>
-
 
 </section>
 
@@ -1103,13 +1059,12 @@
     style="display:none"
 >
 
-
 <div class="page-header">
 
 <div>
 
 <h1>
-    مدیریت مالی
+    امور مالی
 </h1>
 
 <p>
@@ -1124,11 +1079,10 @@
 <div class="panel">
 
 <div class="empty">
-    بخش مالی در مرحله بعد تکمیل خواهد شد.
+    این بخش در مرحله بعد تکمیل می‌شود.
 </div>
 
 </div>
-
 
 </section>
 
@@ -1143,7 +1097,6 @@
     style="display:none"
 >
 
-
 <div class="page-header">
 
 <div>
@@ -1153,7 +1106,7 @@
 </h1>
 
 <p>
-    مدیریت کاربران و دسترسی‌های سیستم
+    کاربران متصل به آزمایشگاه‌ها
 </p>
 
 </div>
@@ -1163,12 +1116,49 @@
 
 <div class="panel">
 
-<div class="empty">
-    مدیریت کاربران در مرحله بعد تکمیل خواهد شد.
-</div>
+<div class="panel-body">
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>نام</th>
+<th>ایمیل</th>
+<th>نقش</th>
+<th>آزمایشگاه</th>
+<th>وضعیت</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="usersTableBody">
+
+<tr>
+
+<td
+    colspan="5"
+    class="loading"
+>
+    در حال بارگذاری...
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 </div>
 
+</div>
+
+</div>
 
 </section>
 
@@ -1183,17 +1173,16 @@
     style="display:none"
 >
 
-
 <div class="page-header">
 
 <div>
 
 <h1>
-    تنظیمات
+    تنظیمات سیستم
 </h1>
 
 <p>
-    تنظیمات مرکزی ALPHA LAB
+    وضعیت امنیتی و معماری ALPHA LAB
 </p>
 
 </div>
@@ -1203,42 +1192,47 @@
 
 <div class="panel">
 
-<div class="info-box">
+<div class="panel-body">
+
+<div class="security-box">
 
 <strong>
-    وضعیت امنیتی:
+    🔐 وضعیت امنیتی
 </strong>
 
 <br>
 
-این حساب با نقش
-<strong>Super Admin</strong>
+کاربر فعلی با نقش
+<strong>
+Super Admin
+</strong>
 وارد سیستم شده است.
 
 <br>
 
 حساب Super Admin مستقل از
-<strong>laboratory_id</strong>
+<strong>
+laboratory_id
+</strong>
 است.
 
 <br>
 
-اطلاعات هر آزمایشگاه باید بر اساس
-<strong>laboratory_id</strong>
-جدا شود.
+اطلاعات هر آزمایشگاه بر اساس
+<strong>
+laboratory_id
+</strong>
+از یکدیگر جدا می‌شوند.
 
 <br>
 
-وضعیت License قبل از دسترسی به اطلاعات واقعی کنترل خواهد شد.
+دسترسی آزمایشگاه‌ها باید بر اساس وضعیت اشتراک کنترل شود.
 
-</div>
-
-<div class="empty">
-    تنظیمات پیشرفته سیستم در مراحل بعدی اضافه خواهد شد.
 </div>
 
 </div>
 
+</div>
 
 </section>
 
@@ -1265,7 +1259,6 @@
     class="modal-backdrop"
     id="subscriptionModal"
 >
-
 
 <div class="modal">
 
@@ -1295,7 +1288,6 @@
     id="modalAlert"
     class="alert"
 ></div>
-
 
 
 <div class="form-group">
@@ -1365,9 +1357,8 @@
     style="display:none"
 >
 
-
 <strong>
-    کد فعال‌سازی ایجاد شد
+    🔑 کد فعال‌سازی ایجاد شد
 </strong>
 
 
@@ -1391,14 +1382,13 @@
     style="margin-top:12px"
 >
 
-این کد فقط اکنون نمایش داده می‌شود.
+این کد فقط همین بار نمایش داده می‌شود.
 
-کد خام در دیتابیس ذخیره نشده است.
+کد خام در دیتابیس ذخیره نمی‌شود.
 
-آن را برای آزمایشگاه ارسال و در جای امن نگهداری کنید.
+کد را در اختیار مدیر آزمایشگاه قرار دهید.
 
 </div>
-
 
 </div>
 
@@ -1408,7 +1398,6 @@
 
 
 <div class="modal-footer">
-
 
 <button
     class="btn btn-secondary"
@@ -1425,7 +1414,6 @@
     🔑 صدور کد فعال‌سازی
 </button>
 
-
 </div>
 
 
@@ -1438,16 +1426,14 @@
 <script>
 
 /* =========================================================
-   SUPABASE CONFIGURATION
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
     "https://iskadzhvfadtonbbxjoj.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
     "sb_publishable_46725iYaI--CYc2SJJzA7Q_Lf0qsh_x";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -1457,106 +1443,73 @@ const supabaseClient =
 
 
 /* =========================================================
-   GLOBAL STATE
+   STATE
 ========================================================= */
 
 let currentUser = null;
+
+let currentProfile = null;
 
 let currentLaboratories = [];
 
 let currentSubscriptions = [];
 
+let currentUsers = [];
+
 let selectedLaboratory = null;
 
 
 /* =========================================================
-   DOM REFERENCES
+   DOM
 ========================================================= */
 
 const userEmail =
-    document.getElementById(
-        "userEmail"
-    );
-
+    document.getElementById("userEmail");
 
 const logoutBtn =
-    document.getElementById(
-        "logoutBtn"
-    );
-
+    document.getElementById("logoutBtn");
 
 const refreshBtn =
-    document.getElementById(
-        "refreshBtn"
-    );
-
+    document.getElementById("refreshBtn");
 
 const labsTableBody =
-    document.getElementById(
-        "labsTableBody"
-    );
-
+    document.getElementById("labsTableBody");
 
 const allLabsTableBody =
-    document.getElementById(
-        "allLabsTableBody"
-    );
-
+    document.getElementById("allLabsTableBody");
 
 const subscriptionsTableBody =
-    document.getElementById(
-        "subscriptionsTableBody"
-    );
+    document.getElementById("subscriptionsTableBody");
 
+const usersTableBody =
+    document.getElementById("usersTableBody");
 
 const subscriptionModal =
-    document.getElementById(
-        "subscriptionModal"
-    );
-
+    document.getElementById("subscriptionModal");
 
 const closeModalBtn =
-    document.getElementById(
-        "closeModalBtn"
-    );
-
+    document.getElementById("closeModalBtn");
 
 const cancelModalBtn =
-    document.getElementById(
-        "cancelModalBtn"
-    );
-
+    document.getElementById("cancelModalBtn");
 
 const createSubscriptionBtn =
-    document.getElementById(
-        "createSubscriptionBtn"
-    );
-
+    document.getElementById("createSubscriptionBtn");
 
 const copyCodeBtn =
-    document.getElementById(
-        "copyCodeBtn"
-    );
+    document.getElementById("copyCodeBtn");
 
 
 /* =========================================================
-   ALERT HELPERS
+   HELPERS
 ========================================================= */
 
-function showAlert(
-    message,
-    type = "error"
-) {
+function showAlert(message, type = "error") {
 
     const alert =
-        document.getElementById(
-            "globalAlert"
-        );
+        document.getElementById("globalAlert");
 
-
-    alert.textContent =
-        message;
-
+    alert.textContent = message;
 
     alert.className =
         "alert show " +
@@ -1566,34 +1519,20 @@ function showAlert(
                 : "alert-error"
         );
 
+    setTimeout(() => {
 
-    setTimeout(
-        () => {
-            alert.classList.remove(
-                "show"
-            );
-        },
-        5000
-    );
+        alert.classList.remove("show");
 
+    }, 5000);
 }
 
 
-
-function showModalAlert(
-    message,
-    type = "error"
-) {
+function showModalAlert(message, type = "error") {
 
     const alert =
-        document.getElementById(
-            "modalAlert"
-        );
+        document.getElementById("modalAlert");
 
-
-    alert.textContent =
-        message;
-
+    alert.textContent = message;
 
     alert.className =
         "alert show " +
@@ -1602,32 +1541,19 @@ function showModalAlert(
                 ? "alert-success"
                 : "alert-error"
         );
-
 }
-
 
 
 function clearModalAlert() {
 
     const alert =
-        document.getElementById(
-            "modalAlert"
-        );
+        document.getElementById("modalAlert");
 
+    alert.textContent = "";
 
-    alert.textContent =
-        "";
-
-
-    alert.className =
-        "alert";
-
+    alert.className = "alert";
 }
 
-
-/* =========================================================
-   HTML SECURITY
-========================================================= */
 
 function escapeHtml(value) {
 
@@ -1638,42 +1564,20 @@ function escapeHtml(value) {
         return "";
     }
 
-
     return String(value)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
-
-/* =========================================================
-   DATE FORMAT
-========================================================= */
 
 function formatDate(value) {
 
     if (!value) {
         return "—";
     }
-
 
     try {
 
@@ -1683,22 +1587,29 @@ function formatDate(value) {
                 dateStyle: "medium",
                 timeStyle: "short"
             }
-        ).format(
-            new Date(value)
-        );
+        ).format(new Date(value));
 
     } catch {
 
         return value;
 
     }
-
 }
 
 
-/* =========================================================
-   STATUS LABEL
-========================================================= */
+function planLabel(plan) {
+
+    if (plan === "monthly") {
+        return "ماهانه";
+    }
+
+    if (plan === "yearly") {
+        return "سالانه";
+    }
+
+    return plan || "—";
+}
+
 
 function statusLabel(status) {
 
@@ -1721,19 +1632,13 @@ function statusLabel(status) {
 
     };
 
-
     return (
         labels[status] ||
         status ||
         "—"
     );
-
 }
 
-
-/* =========================================================
-   STATUS CLASS
-========================================================= */
 
 function statusClass(status) {
 
@@ -1756,37 +1661,10 @@ function statusClass(status) {
 
     };
 
-
     return (
         classes[status] ||
-        "status-pending"
+        "status-none"
     );
-
-}
-
-
-/* =========================================================
-   PLAN LABEL
-========================================================= */
-
-function planLabel(plan) {
-
-    if (
-        plan === "monthly"
-    ) {
-        return "ماهانه";
-    }
-
-
-    if (
-        plan === "yearly"
-    ) {
-        return "سالانه";
-    }
-
-
-    return plan || "—";
-
 }
 
 
@@ -1795,11 +1673,6 @@ function planLabel(plan) {
 ========================================================= */
 
 async function checkAuthentication() {
-
-    console.log(
-        "Checking authentication..."
-    );
-
 
     const {
         data,
@@ -1815,35 +1688,25 @@ async function checkAuthentication() {
             error
         );
 
-
         showAlert(
             "خطا در بررسی نشست کاربر: " +
             error.message
         );
 
-
         return false;
-
     }
 
 
     const session =
-        data?.session;
+        data.session;
 
 
     if (!session) {
 
-        console.warn(
-            "No active session."
-        );
-
-
         window.location.href =
             "admin-login.html";
 
-
         return false;
-
     }
 
 
@@ -1854,13 +1717,6 @@ async function checkAuthentication() {
     userEmail.textContent =
         currentUser.email ||
         "Super Admin";
-
-
-    console.log(
-        "Authenticated user:",
-        currentUser.id,
-        currentUser.email
-    );
 
 
     const isAdmin =
@@ -1876,7 +1732,6 @@ async function checkAuthentication() {
 
 
     return true;
-
 }
 
 
@@ -1886,20 +1741,20 @@ async function checkAuthentication() {
 
 async function verifySuperAdmin() {
 
-    console.log(
-        "Verifying Super Admin..."
-    );
-
-
     const {
         data,
         error
     } =
         await supabaseClient
             .from("profiles")
-            .select(
-                "id, laboratory_id, full_name, email, role, is_active"
-            )
+            .select(`
+                id,
+                laboratory_id,
+                full_name,
+                email,
+                role,
+                is_active
+            `)
             .eq(
                 "id",
                 currentUser.id
@@ -1910,104 +1765,71 @@ async function verifySuperAdmin() {
     if (error) {
 
         console.error(
-            "verifySuperAdmin error:",
+            "verifySuperAdmin:",
             error
         );
-
 
         showAlert(
             "خطا در بررسی نقش کاربر: " +
             error.message
         );
 
-
         return false;
-
     }
-
-
-    console.log(
-        "Profile:",
-        data
-    );
 
 
     if (!data) {
 
         showAlert(
-            "برای این حساب پروفایل پیدا نشد."
+            "پروفایل کاربر در جدول profiles پیدا نشد."
         );
 
-
         return false;
-
     }
 
 
-    if (
-        data.role !==
-        "super_admin"
-    ) {
+    if (data.role !== "super_admin") {
 
         showAlert(
             "این حساب دسترسی Super Admin ندارد."
         );
 
-
         await supabaseClient.auth.signOut();
 
+        setTimeout(() => {
 
-        setTimeout(
-            () => {
+            window.location.href =
+                "admin-login.html";
 
-                window.location.href =
-                    "admin-login.html";
-
-            },
-            1500
-        );
-
+        }, 1500);
 
         return false;
-
     }
 
 
-    if (
-        data.is_active === false
-    ) {
+    if (data.is_active === false) {
 
         showAlert(
             "حساب Super Admin غیرفعال است."
         );
 
-
         await supabaseClient.auth.signOut();
 
-
-        setTimeout(
-            () => {
-
-                window.location.href =
-                    "admin-login.html";
-
-            },
-            1500
-        );
-
-
         return false;
-
     }
 
 
+    currentProfile =
+        data;
+
+
     console.log(
-        "Super Admin verified successfully."
+        "SUPER ADMIN VERIFIED:",
+        data
     );
 
 
     return true;
-
 }
 
 
@@ -2017,19 +1839,19 @@ async function verifySuperAdmin() {
 
 async function loadDashboard() {
 
-    console.log(
-        "Loading central dashboard..."
-    );
+    await loadLaboratories();
 
+    await loadSubscriptions();
 
-    await Promise.all([
-        loadLaboratories(),
-        loadSubscriptions()
-    ]);
-
+    await loadUsers();
 
     updateStatistics();
 
+    renderLaboratories();
+
+    renderSubscriptions();
+
+    renderUsers();
 }
 
 
@@ -2074,11 +1896,8 @@ async function loadLaboratories() {
                 province,
                 city,
                 address,
-                logo_url,
-                currency_code,
                 is_active,
-                created_at,
-                updated_at
+                created_at
             `)
             .order(
                 "created_at",
@@ -2091,37 +1910,32 @@ async function loadLaboratories() {
     if (error) {
 
         console.error(
-            "loadLaboratories error:",
+            "loadLaboratories:",
             error
         );
-
 
         showAlert(
             "خطا در دریافت آزمایشگاه‌ها: " +
             error.message
         );
 
-
         labsTableBody.innerHTML = `
             <tr>
                 <td colspan="6" class="empty">
-                    خطا در دریافت اطلاعات آزمایشگاه‌ها.
+                    خطا در دریافت آزمایشگاه‌ها.
                 </td>
             </tr>
         `;
-
 
         allLabsTableBody.innerHTML = `
             <tr>
                 <td colspan="7" class="empty">
-                    خطا در دریافت اطلاعات آزمایشگاه‌ها.
+                    خطا در دریافت آزمایشگاه‌ها.
                 </td>
             </tr>
         `;
 
-
         return;
-
     }
 
 
@@ -2130,13 +1944,9 @@ async function loadLaboratories() {
 
 
     console.log(
-        "Laboratories:",
+        "LABORATORIES:",
         currentLaboratories
     );
-
-
-    renderLaboratories();
-
 }
 
 
@@ -2160,9 +1970,7 @@ async function loadSubscriptions() {
         error
     } =
         await supabaseClient
-            .from(
-                "laboratory_subscriptions"
-            )
+            .from("laboratory_subscriptions")
             .select(`
                 id,
                 laboratory_id,
@@ -2176,7 +1984,6 @@ async function loadSubscriptions() {
                 cancelled_at,
                 created_at,
                 updated_at,
-                created_by,
                 notes
             `)
             .order(
@@ -2190,32 +1997,26 @@ async function loadSubscriptions() {
     if (error) {
 
         console.error(
-            "loadSubscriptions error:",
+            "loadSubscriptions:",
             error
         );
-
 
         showAlert(
             "خطا در دریافت اشتراک‌ها: " +
             error.message
         );
 
-
         subscriptionsTableBody.innerHTML = `
             <tr>
                 <td colspan="6" class="empty">
-                    خطا در دریافت اطلاعات اشتراک‌ها.
+                    خطا در دریافت اشتراک‌ها.
                 </td>
             </tr>
         `;
 
-
-        currentSubscriptions =
-            [];
-
+        currentSubscriptions = [];
 
         return;
-
     }
 
 
@@ -2224,13 +2025,72 @@ async function loadSubscriptions() {
 
 
     console.log(
-        "Subscriptions:",
+        "SUBSCRIPTIONS:",
         currentSubscriptions
     );
+}
 
 
-    renderSubscriptions();
+/* =========================================================
+   LOAD USERS
+========================================================= */
 
+async function loadUsers() {
+
+    usersTableBody.innerHTML = `
+        <tr>
+            <td colspan="5" class="loading">
+                در حال بارگذاری کاربران...
+            </td>
+        </tr>
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("profiles")
+            .select(`
+                id,
+                laboratory_id,
+                full_name,
+                email,
+                role,
+                is_active
+            `)
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(
+            "loadUsers:",
+            error
+        );
+
+        usersTableBody.innerHTML = `
+            <tr>
+                <td colspan="5" class="empty">
+                    خطا در دریافت کاربران.
+                </td>
+            </tr>
+        `;
+
+        currentUsers = [];
+
+        return;
+    }
+
+
+    currentUsers =
+        data || [];
 }
 
 
@@ -2240,9 +2100,7 @@ async function loadSubscriptions() {
 
 function renderLaboratories() {
 
-    if (
-        !currentLaboratories.length
-    ) {
+    if (!currentLaboratories.length) {
 
         labsTableBody.innerHTML = `
             <tr>
@@ -2252,7 +2110,6 @@ function renderLaboratories() {
             </tr>
         `;
 
-
         allLabsTableBody.innerHTML = `
             <tr>
                 <td colspan="7" class="empty">
@@ -2261,217 +2118,173 @@ function renderLaboratories() {
             </tr>
         `;
 
-
         return;
-
     }
 
 
     labsTableBody.innerHTML =
         currentLaboratories
-            .map(
-                lab => {
+            .map(lab => {
 
-                    const subscription =
-                        currentSubscriptions.find(
-                            sub =>
-                                sub.laboratory_id ===
-                                lab.id &&
-                                (
-                                    sub.status ===
-                                    "active" ||
-
-                                    sub.status ===
-                                    "pending_activation"
-                                )
-                        );
+                const subscription =
+                    getCurrentSubscription(
+                        lab.id
+                    );
 
 
-                    let subscriptionText =
-                        "بدون اشتراک";
+                let subscriptionText =
+                    "بدون اشتراک";
 
 
-                    if (
-                        subscription
-                    ) {
+                if (subscription) {
 
-                        subscriptionText = `
-                            ${planLabel(
-                                subscription.plan
-                            )}
-
-                            <br>
-
-                            <span class="status-badge ${statusClass(
-                                subscription.status
-                            )}">
-                                ${statusLabel(
-                                    subscription.status
-                                )}
-                            </span>
-                        `;
-
-                    }
-
-
-                    const canCreate =
-                        !subscription;
-
-
-                    return `
-                        <tr>
-
-                            <td>
-                                <strong>
-                                    ${escapeHtml(
-                                        lab.name
-                                    )}
-                                </strong>
-                            </td>
-
-
-                            <td dir="ltr">
-                                ${escapeHtml(
-                                    lab.lab_code
-                                )}
-                            </td>
-
-
-                            <td>
-                                ${escapeHtml(
-                                    lab.city ||
-                                    "—"
-                                )}
-                            </td>
-
-
-                            <td>
-
-                                <span class="status-badge ${
-                                    lab.is_active
-                                        ? "status-active"
-                                        : "status-cancelled"
-                                }">
-
-                                    ${
-                                        lab.is_active
-                                            ? "فعال"
-                                            : "غیرفعال"
-                                    }
-
-                                </span>
-
-                            </td>
-
-
-                            <td>
-                                ${subscriptionText}
-                            </td>
-
-
-                            <td>
-
-                                <div class="actions">
-
-                                    <button
-                                        class="btn btn-primary"
-                                        onclick="openSubscriptionModal('${lab.id}')"
-                                        ${canCreate ? "" : "disabled"}
-                                    >
-                                        🔑 صدور اشتراک
-                                    </button>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
+                    subscriptionText = `
+                        ${planLabel(subscription.plan)}
+                        <br>
+                        <span class="status-badge ${statusClass(subscription.status)}">
+                            ${statusLabel(subscription.status)}
+                        </span>
                     `;
-
                 }
-            )
+
+
+                const canCreate =
+                    !subscription;
+
+
+                return `
+                    <tr>
+
+                        <td>
+                            <strong>
+                                ${escapeHtml(lab.name)}
+                            </strong>
+                        </td>
+
+                        <td dir="ltr">
+                            ${escapeHtml(lab.lab_code)}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(lab.city || "—")}
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge ${
+                                lab.is_active
+                                    ? "status-active"
+                                    : "status-cancelled"
+                            }">
+
+                                ${
+                                    lab.is_active
+                                        ? "فعال"
+                                        : "غیرفعال"
+                                }
+
+                            </span>
+
+                        </td>
+
+                        <td>
+                            ${subscriptionText}
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="btn btn-primary"
+                                    onclick="openSubscriptionModal('${lab.id}')"
+                                    ${canCreate ? "" : "disabled"}
+                                >
+                                    🔑 صدور اشتراک
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                `;
+
+            })
             .join("");
 
 
     allLabsTableBody.innerHTML =
         currentLaboratories
-            .map(
-                lab => {
+            .map(lab => {
 
-                    return `
-                        <tr>
+                return `
+                    <tr>
 
-                            <td>
-                                ${escapeHtml(
-                                    lab.name
-                                )}
-                            </td>
+                        <td>
+                            ${escapeHtml(lab.name)}
+                        </td>
 
+                        <td dir="ltr">
+                            ${escapeHtml(lab.lab_code)}
+                        </td>
 
-                            <td dir="ltr">
-                                ${escapeHtml(
-                                    lab.lab_code
-                                )}
-                            </td>
+                        <td dir="ltr">
+                            ${escapeHtml(lab.phone || "—")}
+                        </td>
 
+                        <td dir="ltr">
+                            ${escapeHtml(lab.email || "—")}
+                        </td>
 
-                            <td dir="ltr">
-                                ${escapeHtml(
-                                    lab.phone ||
-                                    "—"
-                                )}
-                            </td>
+                        <td>
+                            ${escapeHtml(lab.province || "—")}
+                        </td>
 
+                        <td>
+                            ${escapeHtml(lab.city || "—")}
+                        </td>
 
-                            <td dir="ltr">
-                                ${escapeHtml(
-                                    lab.email ||
-                                    "—"
-                                )}
-                            </td>
+                        <td>
 
+                            <span class="status-badge ${
+                                lab.is_active
+                                    ? "status-active"
+                                    : "status-cancelled"
+                            }">
 
-                            <td>
-                                ${escapeHtml(
-                                    lab.province ||
-                                    "—"
-                                )}
-                            </td>
-
-
-                            <td>
-                                ${escapeHtml(
-                                    lab.city ||
-                                    "—"
-                                )}
-                            </td>
-
-
-                            <td>
-
-                                <span class="status-badge ${
+                                ${
                                     lab.is_active
-                                        ? "status-active"
-                                        : "status-cancelled"
-                                }">
+                                        ? "فعال"
+                                        : "غیرفعال"
+                                }
 
-                                    ${
-                                        lab.is_active
-                                            ? "فعال"
-                                            : "غیرفعال"
-                                    }
+                            </span>
 
-                                </span>
+                        </td>
 
-                            </td>
+                    </tr>
+                `;
 
-                        </tr>
-                    `;
-
-                }
-            )
+            })
             .join("");
+}
 
+
+/* =========================================================
+   GET CURRENT SUBSCRIPTION
+========================================================= */
+
+function getCurrentSubscription(laboratoryId) {
+
+    return currentSubscriptions.find(
+        sub =>
+            sub.laboratory_id === laboratoryId &&
+            (
+                sub.status === "active" ||
+                sub.status === "pending_activation"
+            )
+    ) || null;
 }
 
 
@@ -2481,9 +2294,7 @@ function renderLaboratories() {
 
 function renderSubscriptions() {
 
-    if (
-        !currentSubscriptions.length
-    ) {
+    if (!currentSubscriptions.length) {
 
         subscriptionsTableBody.innerHTML = `
             <tr>
@@ -2493,119 +2304,207 @@ function renderSubscriptions() {
             </tr>
         `;
 
-
         return;
-
     }
 
 
     subscriptionsTableBody.innerHTML =
         currentSubscriptions
-            .map(
-                sub => {
+            .map(sub => {
 
-                    const lab =
-                        currentLaboratories.find(
-                            item =>
-                                item.id ===
-                                sub.laboratory_id
-                        );
+                const lab =
+                    currentLaboratories.find(
+                        item =>
+                            item.id ===
+                            sub.laboratory_id
+                    );
 
 
-                    return `
-                        <tr>
+                return `
+                    <tr>
 
-                            <td>
+                        <td>
 
-                                <strong>
-                                    ${escapeHtml(
+                            <strong>
+                                ${
+                                    escapeHtml(
                                         lab?.name ||
                                         "آزمایشگاه"
-                                    )}
-                                </strong>
-
-                                <br>
-
-                                <small dir="ltr">
-                                    ${escapeHtml(
-                                        lab?.lab_code ||
-                                        ""
-                                    )}
-                                </small>
-
-                            </td>
-
-
-                            <td>
-                                ${planLabel(
-                                    sub.plan
-                                )}
-                            </td>
-
-
-                            <td>
-
-                                <span class="status-badge ${statusClass(
-                                    sub.status
-                                )}">
-
-                                    ${statusLabel(
-                                        sub.status
-                                    )}
-
-                                </span>
-
-                                ${
-                                    sub.activation_code_hint
-                                        ? `
-                                            <br>
-                                            <small>
-                                                Hint:
-                                                <span dir="ltr">
-                                                    ${escapeHtml(
-                                                        sub.activation_code_hint
-                                                    )}
-                                                </span>
-                                            </small>
-                                          `
-                                        : ""
+                                    )
                                 }
+                            </strong>
 
-                            </td>
+                            <br>
 
+                            <small dir="ltr">
+                                ${
+                                    escapeHtml(
+                                        lab?.lab_code || ""
+                                    )
+                                }
+                            </small>
 
-                            <td>
-                                ${formatDate(
-                                    sub.starts_at
-                                )}
-                            </td>
+                        </td>
 
+                        <td>
+                            ${planLabel(sub.plan)}
+                        </td>
 
-                            <td>
-                                ${formatDate(
-                                    sub.expires_at
-                                )}
-                            </td>
+                        <td>
 
+                            <span class="status-badge ${statusClass(sub.status)}">
 
-                            <td>
-                                ${formatDate(
-                                    sub.activated_at
-                                )}
-                            </td>
+                                ${statusLabel(sub.status)}
 
-                        </tr>
-                    `;
+                            </span>
 
-                }
-            )
+                        </td>
+
+                        <td>
+                            ${formatDate(sub.starts_at)}
+                        </td>
+
+                        <td>
+                            ${formatDate(sub.expires_at)}
+                        </td>
+
+                        <td>
+                            ${formatDate(sub.activated_at)}
+                        </td>
+
+                    </tr>
+                `;
+
+            })
             .join("");
-
 }
 
 
 /* =========================================================
-   UPDATE STATISTICS
+   RENDER USERS
+========================================================= */
+
+function renderUsers() {
+
+    if (!currentUsers.length) {
+
+        usersTableBody.innerHTML = `
+            <tr>
+                <td colspan="5" class="empty">
+                    کاربری ثبت نشده است.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    const roleLabels = {
+
+        super_admin:
+            "مدیر ارشد سیستم",
+
+        lab_admin:
+            "مدیر آزمایشگاه",
+
+        lab_manager:
+            "مدیر داخلی",
+
+        technician:
+            "تکنسین",
+
+        receptionist:
+            "پذیرش",
+
+        accountant:
+            "حسابدار",
+
+        doctor:
+            "پزشک",
+
+        patient:
+            "بیمار"
+
+    };
+
+
+    usersTableBody.innerHTML =
+        currentUsers
+            .map(user => {
+
+                const lab =
+                    currentLaboratories.find(
+                        item =>
+                            item.id ===
+                            user.laboratory_id
+                    );
+
+
+                return `
+                    <tr>
+
+                        <td>
+                            ${escapeHtml(
+                                user.full_name ||
+                                "—"
+                            )}
+                        </td>
+
+                        <td dir="ltr">
+                            ${escapeHtml(
+                                user.email ||
+                                "—"
+                            )}
+                        </td>
+
+                        <td>
+                            ${
+                                roleLabels[user.role] ||
+                                user.role ||
+                                "—"
+                            }
+                        </td>
+
+                        <td>
+                            ${
+                                user.role === "super_admin"
+                                    ? "مدیریت مرکزی"
+                                    : escapeHtml(
+                                        lab?.name ||
+                                        "—"
+                                    )
+                            }
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge ${
+                                user.is_active
+                                    ? "status-active"
+                                    : "status-cancelled"
+                            }">
+
+                                ${
+                                    user.is_active
+                                        ? "فعال"
+                                        : "غیرفعال"
+                                }
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+                `;
+
+            })
+            .join("");
+}
+
+
+/* =========================================================
+   STATISTICS
 ========================================================= */
 
 function updateStatistics() {
@@ -2620,9 +2519,8 @@ function updateStatistics() {
         "activeSubscriptions"
     ).textContent =
         currentSubscriptions.filter(
-            sub =>
-                sub.status ===
-                "active"
+            x =>
+                x.status === "active"
         ).length;
 
 
@@ -2630,8 +2528,8 @@ function updateStatistics() {
         "pendingSubscriptions"
     ).textContent =
         currentSubscriptions.filter(
-            sub =>
-                sub.status ===
+            x =>
+                x.status ===
                 "pending_activation"
         ).length;
 
@@ -2640,11 +2538,9 @@ function updateStatistics() {
         "expiredSubscriptions"
     ).textContent =
         currentSubscriptions.filter(
-            sub =>
-                sub.status ===
-                "expired"
+            x =>
+                x.status === "expired"
         ).length;
-
 }
 
 
@@ -2669,25 +2565,13 @@ window.openSubscriptionModal =
                 "آزمایشگاه پیدا نشد."
             );
 
-
             return;
-
         }
 
 
         const existing =
-            currentSubscriptions.find(
-                sub =>
-                    sub.laboratory_id ===
-                    laboratoryId &&
-
-                    (
-                        sub.status ===
-                        "active" ||
-
-                        sub.status ===
-                        "pending_activation"
-                    )
+            getCurrentSubscription(
+                laboratoryId
             );
 
 
@@ -2697,9 +2581,7 @@ window.openSubscriptionModal =
                 "این آزمایشگاه دارای اشتراک فعال یا در انتظار فعال‌سازی است."
             );
 
-
             return;
-
         }
 
 
@@ -2745,17 +2627,12 @@ window.openSubscriptionModal =
             "inline-block";
 
 
-        createSubscriptionBtn.textContent =
-            "🔑 صدور کد فعال‌سازی";
-
-
         clearModalAlert();
 
 
         subscriptionModal.classList.add(
             "show"
         );
-
     };
 
 
@@ -2769,13 +2646,8 @@ function closeSubscriptionModal() {
         "show"
     );
 
-
     selectedLaboratory =
         null;
-
-
-    clearModalAlert();
-
 }
 
 
@@ -2788,23 +2660,6 @@ closeModalBtn.addEventListener(
 cancelModalBtn.addEventListener(
     "click",
     closeSubscriptionModal
-);
-
-
-subscriptionModal.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target ===
-            subscriptionModal
-        ) {
-
-            closeSubscriptionModal();
-
-        }
-
-    }
 );
 
 
@@ -2822,9 +2677,7 @@ createSubscriptionBtn.addEventListener(
                 "آزمایشگاه انتخاب نشده است."
             );
 
-
             return;
-
         }
 
 
@@ -2841,21 +2694,6 @@ createSubscriptionBtn.addEventListener(
             null;
 
 
-        if (
-            plan !== "monthly" &&
-            plan !== "yearly"
-        ) {
-
-            showModalAlert(
-                "نوع اشتراک نامعتبر است."
-            );
-
-
-            return;
-
-        }
-
-
         createSubscriptionBtn.disabled =
             true;
 
@@ -2868,77 +2706,6 @@ createSubscriptionBtn.addEventListener(
 
 
         try {
-
-            /*
-             * ابتدا دوباره بررسی می‌کنیم که
-             * اشتراک فعال یا pending وجود نداشته باشد.
-             */
-
-            const {
-                data: existingSubscriptions,
-                error: existingError
-            } =
-                await supabaseClient
-                    .from(
-                        "laboratory_subscriptions"
-                    )
-                    .select(
-                        "id, status"
-                    )
-                    .eq(
-                        "laboratory_id",
-                        selectedLaboratory.id
-                    )
-                    .in(
-                        "status",
-                        [
-                            "active",
-                            "pending_activation"
-                        ]
-                    )
-                    .limit(1);
-
-
-            if (existingError) {
-
-                throw new Error(
-                    "خطا در بررسی اشتراک قبلی: " +
-                    existingError.message
-                );
-
-            }
-
-
-            if (
-                existingSubscriptions &&
-                existingSubscriptions.length
-            ) {
-
-                throw new Error(
-                    "این آزمایشگاه دارای اشتراک فعال یا در انتظار فعال‌سازی است."
-                );
-
-            }
-
-
-            /*
-             * صدور اشتراک از طریق RPC
-             */
-
-            console.log(
-                "Creating subscription:",
-                {
-                    laboratory_id:
-                        selectedLaboratory.id,
-
-                    plan:
-                        plan,
-
-                    user_id:
-                        currentUser?.id
-                }
-            );
-
 
             const {
                 data,
@@ -2965,54 +2732,53 @@ createSubscriptionBtn.addEventListener(
             if (error) {
 
                 console.error(
-                    "create subscription RPC error:",
+                    "CREATE SUBSCRIPTION ERROR:",
                     error
                 );
-
 
                 throw new Error(
                     error.message
                 );
-
             }
 
 
-            console.log(
-                "Subscription RPC result:",
-                data
-            );
-
-
-            if (
-                !data ||
-                !data.length
-            ) {
+            if (!data) {
 
                 throw new Error(
                     "تابع صدور اشتراک نتیجه‌ای برنگرداند."
                 );
+            }
+
+
+            let result;
+
+
+            if (Array.isArray(data)) {
+
+                result = data[0];
+
+            } else {
+
+                result = data;
 
             }
 
 
-            const result =
-                data[0];
-
-
             if (
+                !result ||
                 !result.activation_code
             ) {
+
+                console.error(
+                    "Unexpected RPC result:",
+                    data
+                );
 
                 throw new Error(
                     "کد فعال‌سازی از سرور دریافت نشد."
                 );
-
             }
 
-
-            /*
-             * نمایش کد خام
-             */
 
             document.getElementById(
                 "activationCode"
@@ -3036,11 +2802,10 @@ createSubscriptionBtn.addEventListener(
             );
 
 
-            /*
-             * تازه‌سازی اطلاعات
-             */
-
             await loadSubscriptions();
+
+
+            renderSubscriptions();
 
             renderLaboratories();
 
@@ -3057,10 +2822,7 @@ createSubscriptionBtn.addEventListener(
 
             showModalAlert(
                 "خطا در ایجاد اشتراک: " +
-                (
-                    error?.message ||
-                    "خطای نامشخص"
-                )
+                error.message
             );
 
 
@@ -3069,16 +2831,8 @@ createSubscriptionBtn.addEventListener(
 
         } finally {
 
-            if (
-                createSubscriptionBtn.style.display !==
-                "none"
-            ) {
-
-                createSubscriptionBtn.textContent =
-                    "🔑 صدور کد فعال‌سازی";
-
-            }
-
+            createSubscriptionBtn.textContent =
+                "🔑 صدور کد فعال‌سازی";
         }
 
     }
@@ -3115,29 +2869,19 @@ copyCodeBtn.addEventListener(
                 "✅ کد کپی شد";
 
 
-            setTimeout(
-                () => {
+            setTimeout(() => {
 
-                    copyCodeBtn.textContent =
-                        "📋 کپی کد";
+                copyCodeBtn.textContent =
+                    "📋 کپی کد";
 
-                },
-                2000
-            );
+            }, 2000);
 
 
-        } catch (error) {
-
-            console.error(
-                "Clipboard error:",
-                error
-            );
-
+        } catch {
 
             showModalAlert(
                 "کپی خودکار انجام نشد. کد را دستی کپی کنید."
             );
-
         }
 
     }
@@ -3156,10 +2900,6 @@ refreshBtn.addEventListener(
             true;
 
 
-        refreshBtn.textContent =
-            "⏳ در حال بروزرسانی...";
-
-
         try {
 
             await loadDashboard();
@@ -3174,7 +2914,6 @@ refreshBtn.addEventListener(
         } catch (error) {
 
             console.error(
-                "Refresh error:",
                 error
             );
 
@@ -3188,11 +2927,6 @@ refreshBtn.addEventListener(
 
             refreshBtn.disabled =
                 false;
-
-
-            refreshBtn.textContent =
-                "🔄 بروزرسانی";
-
         }
 
     }
@@ -3219,23 +2953,19 @@ document.getElementById(
             true;
 
 
-        button.textContent =
-            "⏳ در حال بروزرسانی...";
-
-
         try {
 
             await loadSubscriptions();
 
+            renderSubscriptions();
 
             renderLaboratories();
-
 
             updateStatistics();
 
 
             showAlert(
-                "اشتراک‌ها با موفقیت بروزرسانی شدند.",
+                "اشتراک‌ها بروزرسانی شدند.",
                 "success"
             );
 
@@ -3243,7 +2973,6 @@ document.getElementById(
         } catch (error) {
 
             console.error(
-                "Subscription refresh error:",
                 error
             );
 
@@ -3257,11 +2986,6 @@ document.getElementById(
 
             button.disabled =
                 false;
-
-
-            button.textContent =
-                "🔄 بروزرسانی";
-
         }
 
     }
@@ -3280,26 +3004,16 @@ logoutBtn.addEventListener(
             true;
 
 
-        logoutBtn.textContent =
-            "در حال خروج...";
-
-
         try {
 
             await supabaseClient.auth.signOut();
 
-        } catch (error) {
+        } finally {
 
-            console.error(
-                "Logout error:",
-                error
-            );
+            window.location.href =
+                "admin-login.html";
 
         }
-
-
-        window.location.href =
-            "admin-login.html";
 
     }
 );
@@ -3310,67 +3024,61 @@ logoutBtn.addEventListener(
 ========================================================= */
 
 document
-    .querySelectorAll(
-        ".menu-item"
-    )
-    .forEach(
-        item => {
+    .querySelectorAll(".menu-item")
+    .forEach(item => {
 
-            item.addEventListener(
-                "click",
-                () => {
+        item.addEventListener(
+            "click",
+            () => {
 
-                    document
-                        .querySelectorAll(
-                            ".menu-item"
+                document
+                    .querySelectorAll(
+                        ".menu-item"
+                    )
+                    .forEach(x =>
+                        x.classList.remove(
+                            "active"
                         )
-                        .forEach(
-                            x =>
-                                x.classList.remove(
-                                    "active"
-                                )
-                        );
-
-
-                    item.classList.add(
-                        "active"
                     );
 
 
-                    const section =
-                        item.dataset.section;
+                item.classList.add(
+                    "active"
+                );
 
 
-                    document
-                        .querySelectorAll(
-                            "main section"
-                        )
-                        .forEach(
-                            x =>
-                                x.style.display =
-                                    "none"
-                        );
+                const section =
+                    item.dataset.section;
 
 
-                    const target =
-                        document.getElementById(
-                            section +
-                            "Section"
-                        );
+                document
+                    .querySelectorAll(
+                        "main section"
+                    )
+                    .forEach(x =>
+                        x.style.display =
+                            "none"
+                    );
 
 
-                    if (target) {
+                const target =
+                    document.getElementById(
+                        section +
+                        "Section"
+                    );
 
-                        target.style.display =
-                            "block";
 
-                    }
+                if (target) {
+
+                    target.style.display =
+                        "block";
 
                 }
-            );
 
-        }
-    );
+            }
+        );
+
+    });
 
 
 /* =========================================================
@@ -3378,34 +3086,24 @@ document
 ========================================================= */
 
 supabaseClient.auth.onAuthStateChange(
-    (
-        event,
-        session
-    ) => {
+    (event, session) => {
 
         console.log(
             "Auth state:",
             event,
-            session?.user?.id ||
-            null
+            session?.user?.id || null
         );
 
 
         if (
-            event ===
-            "SIGNED_OUT"
+            event === "SIGNED_OUT" &&
+            !window.location.pathname.endsWith(
+                "admin-login.html"
+            )
         ) {
 
-            if (
-                !window.location.pathname.endsWith(
-                    "admin-login.html"
-                )
-            ) {
-
-                window.location.href =
-                    "admin-login.html";
-
-            }
+            window.location.href =
+                "admin-login.html";
 
         }
 
@@ -3419,41 +3117,14 @@ supabaseClient.auth.onAuthStateChange(
 
 document.addEventListener(
     "DOMContentLoaded",
-    async () => {
+    () => {
 
         console.log(
-            "======================================"
+            "ALPHA LAB Central Admin Dashboard started."
         );
 
 
-        console.log(
-            "ALPHA LAB Admin Dashboard started."
-        );
-
-
-        console.log(
-            "======================================"
-        );
-
-
-        try {
-
-            await checkAuthentication();
-
-        } catch (error) {
-
-            console.error(
-                "Dashboard startup error:",
-                error
-            );
-
-
-            showAlert(
-                "خطای غیرمنتظره در راه‌اندازی داشبورد: " +
-                error.message
-            );
-
-        }
+        checkAuthentication();
 
     }
 );
@@ -3461,5 +3132,5 @@ document.addEventListener(
 </script>
 
 </body>
-
 </html>
+```
